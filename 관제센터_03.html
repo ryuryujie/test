@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안심 돌봄 - 관제센터 03</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-body: #f1f5f9;
+            --bg-sidebar: #ffffff;
+            --bg-panel: #ffffff;
+            --bg-card: #f8fafc;
+            --border-color: #e2e8f0;
+            
+            --primary-green: #059669;
+            --primary-green-light: #ecfdf5;
+            --primary-glow: rgba(5, 150, 105, 0.2);
+            --accent-blue: #0284c7;
+            --danger-red: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.08);
+            --success-green: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            overflow-y: auto;
+            font-size: 15px;
+        }
+
+        /* 1. 사이드바 스타일 */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            flex-shrink: 0;
+            min-height: 100vh;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 12px;
+            background: var(--primary-green-light);
+            border: 1px solid rgba(5, 150, 105, 0.2);
+            border-radius: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+        }
+
+        .brand-text .title { font-weight: 800; font-size: 16px; color: var(--text-main); }
+        .brand-text .subtitle { font-size: 11px; color: var(--primary-green); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        .menu-category {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-dim);
+            margin: 20px 0 8px 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:hover:not(.active) { background-color: #f1f5f9; color: var(--text-main); }
+        .menu-item.active { background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 700; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); }
+        .menu-item .badge { background-color: #e2e8f0; color: var(--text-main); font-size: 12px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+        .menu-item.active .badge { background-color: rgba(0,0,0,0.2); color: #fff; }
+
+        .user-profile {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 38px; height: 38px; background: #e2e8f0; color: var(--text-main);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;
+        }
+        .user-info { flex: 1; }
+        .user-name { font-size: 14px; font-weight: 800; color: var(--text-main); }
+        .user-role { font-size: 12px; color: var(--text-muted); }
+
+        /* 2. 메인 컨테이너 */
+        .main-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: var(--bg-body);
+            min-width: 1024px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background: var(--bg-panel);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .alert-pill {
+            background: var(--danger-bg);
+            color: var(--danger-red);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-container { flex: 1; max-width: 360px; position: relative; }
+        .search-container input {
+            width: 100%; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 10px 14px 10px 38px; font-size: 14px; outline: none; color: var(--text-main); font-weight: 600;
+            transition: all 0.2s;
+        }
+        .search-container input:focus { border-color: var(--primary-green); box-shadow: 0 0 0 3px var(--primary-glow); }
+        .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+
+        .realtime-status {
+            background: var(--bg-card); border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 8px;
+            font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; font-weight: 700;
+        }
+        .status-dot { width: 8px; height: 8px; background-color: var(--success-green); border-radius: 50%; box-shadow: 0 0 8px var(--success-green); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+        .ticker-section {
+            background: var(--bg-panel); border-radius: 12px; padding: 16px; border: 1px solid var(--border-color);
+            display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .ticker-header { display: flex; align-items: center; justify-content: space-between; }
+        .heat-badge { background: var(--primary-green-light); color: var(--primary-green); font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(5,150,105,0.2); }
+        
+        .ticker-cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+        .t-card {
+            flex: 0 0 260px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 12px;
+            cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 8px;
+        }
+        .t-card:hover { border-color: var(--primary-green); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .t-card.active { border-color: var(--primary-green); background: var(--primary-green-light); box-shadow: 0 0 0 1px var(--primary-green); }
+        .t-card-top { display: flex; justify-content: space-between; align-items: center; }
+        .type-tag { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; }
+        .type-tag.critical { background: var(--danger-bg); color: var(--danger-red); border: 1px solid rgba(220,38,38,0.2); }
+        .type-tag.call { background: rgba(2,132,199,0.1); color: var(--accent-blue); border: 1px solid rgba(2,132,199,0.2); }
+        .type-tag.no-act { background: #f1f5f9; color: var(--text-muted); border: 1px solid var(--border-color); }
+        .type-tag.bpm { background: rgba(147,51,234,0.1); color: #9333ea; border: 1px solid rgba(147,51,234,0.2); }
+
+        .dashboard-body { display: flex; flex-direction: column; gap: 16px; }
+        .dashboard-grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .card-panel {
+            background: var(--bg-panel);
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .card-panel::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(180deg, #10b981, #059669);
+        }
+
+        .panel-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: -0.2px;
+        }
+
+        /* 3. 어르신 프로필 및 비상 연락망 스타일 */
+        .profile-card-wrapper {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .profile-top-layout { display: flex; align-items: center; gap: 16px; }
+        .avatar-box-lg {
+            width: 66px; height: 66px; background: linear-gradient(135deg, #ecfdf5, #d1fae5); 
+            border: 2px solid rgba(5,150,105,0.3); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--primary-green); flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(5,150,105,0.1);
+        }
+        .profile-main-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .name-age-row { display: flex; align-items: center; justify-content: space-between; }
+        .name-group { display: flex; align-items: baseline; gap: 10px; }
+        .detail-name-lg { font-size: 20px; font-weight: 900; color: var(--text-main); letter-spacing: -0.5px; }
+        .detail-sub-info { font-size: 13px; color: var(--text-muted); font-weight: 700; }
+        .condition-badge-lg {
+            background: var(--success-bg); color: var(--success-green); font-size: 12px; font-weight: 800;
+            padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(16,185,129,0.3); display: flex; align-items: center; gap: 4px;
+        }
+        .medical-tags-row { display: flex; gap: 6px; flex-wrap: wrap; }
+        .med-chip-modern {
+            background: #fff; border: 1px solid var(--border-color); color: var(--text-muted);
+            font-size: 11px; padding: 3px 10px; border-radius: 6px; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .info-card-box {
+            background: #fff; border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px;
+            display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .info-card-box.highlight-bg {
+            background: linear-gradient(135deg, rgba(2,132,199,0.03), rgba(2,132,199,0.01));
+            border-color: rgba(2,132,199,0.2);
+        }
+        .address-text-group { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: var(--text-main); }
+        .btn-copy-modern {
+            background: var(--bg-card); border: 1px solid var(--border-color); font-size: 12px; padding: 5px 12px;
+            border-radius: 6px; cursor: pointer; color: var(--text-main); font-weight: 800; transition: all 0.2s;
+        }
+        .btn-copy-modern:hover { background: var(--primary-green); color: #fff; border-color: var(--primary-green); }
+
+        .call-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .call-card-item {
+            background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: all 0.2s;
+        }
+        .call-card-item:hover { border-color: var(--text-dim); box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+        .call-info-group { display: flex; flex-direction: column; gap: 2px; }
+        .call-label-sm { font-size: 11px; color: var(--text-dim); font-weight: 800; text-transform: uppercase; }
+        .call-number-lg { font-size: 15px; font-weight: 900; color: var(--text-main); letter-spacing: -0.3px; }
+        .btn-call-modern {
+            background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; padding: 8px 14px;
+            border-radius: 8px; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px;
+            white-space: nowrap; box-shadow: 0 3px 8px rgba(5,150,105,0.25); transition: all 0.2s;
+        }
+        .btn-call-modern:hover { transform: translateY(-1px); opacity: 0.95; }
+        .btn-call-modern.gray { background: linear-gradient(135deg, #64748b, #475569); box-shadow: 0 3px 8px rgba(100,116,139,0.2); }
+
+        /* 4. [새롭게 개선된 AI 예측 분석 및 생체 징후 상단 영역] */
+        .ai-section-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; }
+
+        /* 새롭게 디자인된 하이엔드 위험 카드 컴포넌트 */
+        .ai-risk-card-modern {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        /* 좌측 강조 포인트 라인 */
+        .ai-risk-card-modern::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #ef4444, #dc2626);
+        }
+
+        .risk-score-badge-lg {
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            color: #fff;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.35);
+        }
+        .risk-score-badge-lg .num { font-size: 18px; line-height: 1; letter-spacing: -0.5px; }
+        .risk-score-badge-lg .txt { font-size: 10px; font-weight: 800; margin-top: 2px; opacity: 0.9; }
+
+        .risk-content-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .risk-title-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--danger-red);
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: -0.3px;
+        }
+
+        .risk-desc-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .risk-desc-text strong {
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        /* 위치 추적 컴포넌트 */
+        .radar-box-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .radar-box-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .radar-visual-area {
+            height: 44px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 6px;
+        }
+        .radar-pin { width: 10px; height: 10px; background: var(--primary-green); border: 2px solid #fff; border-radius: 50%; position: absolute; z-index: 2; box-shadow: 0 0 8px var(--primary-green); }
+        .radar-overlay-badge {
+            background: var(--primary-green-light); color: var(--primary-green); font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 800; border: 1px solid rgba(5,150,105,0.2);
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+
+        .chart-box { width: 100%; height: 130px; margin-top: 4px; }
+
+        .ai-guideline-box {
+            background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02)); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 14px; font-size: 13px; color: #b45309; font-weight: 700; line-height: 1.4;
+        }
+
+        .timeline-list { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+        .timeline-item {
+            display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 700;
+        }
+
+        .action-container {
+            display: grid;
+            grid-template-columns: 200px 1.4fr 1.6fr auto;
+            gap: 14px;
+            align-items: center;
+            border-top: 4px solid var(--primary-green);
+            padding: 16px 18px;
+        }
+        
+        .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .status-option {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .status-option:hover { background: #f1f5f9; color: var(--text-main); border-color: var(--text-dim); }
+        .status-option.active { border-color: var(--primary-green); background: var(--primary-green-light); color: var(--primary-green); }
+        .status-option.danger-active { border-color: var(--danger-red); background: var(--danger-bg); color: var(--danger-red); }
+
+        .memo-textarea {
+            width: 100%; height: 68px; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;
+            font-size: 13px; resize: none; outline: none; background: var(--bg-card); color: var(--text-main); font-weight: 600;
+            transition: all 0.2s;
+        }
+        .memo-textarea:focus { border-color: var(--primary-green); box-shadow: 0 0 0 3px var(--primary-glow); }
+
+        .btn-action-primary {
+            height: 68px; background: linear-gradient(135deg, #10b981, #047857); color: #fff; border: none; padding: 0 24px; border-radius: 8px;
+            font-size: 14px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); transition: all 0.2s;
+        }
+        .btn-action-primary:hover { opacity: 0.9; }
+
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; background: #1e293b; color: #fff; padding: 14px 20px;
+            border-radius: 8px; font-size: 14px; font-weight: 800; display: none; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-left: 5px solid var(--primary-green); border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 사이드바 -->
+    <div class="sidebar">
+        <div>
+            <div class="brand">
+                <div class="brand-logo">화</div>
+                <div class="brand-text">
+                    <div class="title">화순군 스마트 관제</div>
+                    <div class="subtitle">Command Center</div>
+                </div>
+            </div>
+
+            <div class="menu-category">운영</div>
+            <a class="menu-item active"><span>운영 현황</span></a>
+
+            <div class="menu-category">안부 확인 건</div>
+            <a class="menu-item"><span>진행 중 건</span><span class="badge">6</span></a>
+            <a class="menu-item"><span>검토 대기</span><span class="badge">3</span></a>
+
+            <div class="menu-category">대상자</div>
+            <a class="menu-item"><span>대상자 조회</span></a>
+            <a class="menu-item"><span>착용 현황</span></a>
+
+            <div class="menu-category">집계와 보고</div>
+            <a class="menu-item"><span>지역·연령 집계</span></a>
+            <a class="menu-item"><span>운영 리포트</span></a>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">관제</div>
+            <div class="user-info">
+                <div class="user-name">박수현 주무관</div>
+                <div class="user-role">통합관제 2팀 (근무중)</div>
+            </div>
+            <i class="fa-solid fa-shield-halved" style="color: var(--primary-green); font-size: 16px;"></i>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="main-container">
+
+        <div class="top-bar">
+            <div class="alert-pill">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>[기상특보] 화순군 폭염주의보 발효 — 고위험 독거어르신 안부 확인 강화</span>
+            </div>
+
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="어르신 성명, 연락처, 기기번호 통합 검색...">
+            </div>
+
+            <div class="realtime-status">
+                <span class="status-dot"></span>
+                <span>실시간 수신 정상 (14:28)</span>
+            </div>
+        </div>
+
+        <div class="ticker-section">
+            <div class="ticker-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="heat-badge"><i class="fa-solid fa-fire"></i> 실시간 긴급 요약</span>
+                    <span style="font-size: 13px; font-weight: 700; color: var(--text-muted);">화순군 최고기온 34.6℃ — 이상 징후 대상자 우선순위 정렬</span>
+                </div>
+                <div style="display: flex; gap: 6px; font-size: 12px; font-weight: 800;">
+                    <span style="background:var(--danger-bg); color:var(--danger-red); padding:3px 8px; border-radius:4px;">SOS 2건</span>
+                    <span style="background:var(--primary-green-light); color:var(--primary-green); padding:3px 8px; border-radius:4px;">자동감지 3건</span>
+                    <span style="background:var(--success-bg); color:var(--success-green); padding:3px 8px; border-radius:4px;">당일완료 41건</span>
+                </div>
+            </div>
+
+            <div class="ticker-cards-row">
+                <div class="t-card active" onclick="loadPersonData('이만수', this)">
+                    <div class="t-card-top">
+                        <span class="type-tag critical">긴급 최상</span>
+                        <strong style="font-size: 14px; color:var(--text-main);">이만수 <span style="font-size:12px; color:var(--text-dim); font-weight:600;">78세·남</span></strong>
+                        <span style="font-size: 13px; font-weight:900; color:var(--danger-red);">87점</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--danger-red); font-weight: 800;"><i class="fa-regular fa-clock"></i> 응급 호출 9분 경과</div>
+                    <div style="font-size: 12px; color: var(--text-muted); display:flex; justify-content:space-between; font-weight:700;">
+                        <span>화순읍 다지리 · 독거</span>
+                        <span style="color:var(--primary-green);">고혈압위험군</span>
+                    </div>
+                </div>
+
+                <div class="t-card" onclick="loadPersonData('김순례', this)">
+                    <div class="t-card-top">
+                        <span class="type-tag call">호출</span>
+                        <strong style="font-size: 14px; color:var(--text-main);">김순례 <span style="font-size:12px; color:var(--text-dim); font-weight:600;">81세·여</span></strong>
+                        <span style="font-size: 13px; font-weight:900; color:var(--accent-blue);">74점</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--accent-blue); font-weight: 800;"><i class="fa-solid fa-sun"></i> 호출 3분 전 · 배정 대기</div>
+                    <div style="font-size: 12px; color: var(--text-muted); display:flex; justify-content:space-between; font-weight:700;">
+                        <span>이양면 율계리 · 부부</span>
+                        <span>안심폰 1차</span>
+                    </div>
+                </div>
+
+                <div class="t-card" onclick="loadPersonData('한옥순', this)">
+                    <div class="t-card-top">
+                        <span class="type-tag no-act">미활동</span>
+                        <strong style="font-size: 14px; color:var(--text-main);">한옥순 <span style="font-size:12px; color:var(--text-dim); font-weight:600;">73세·여</span></strong>
+                        <span style="font-size: 13px; font-weight:900; color:var(--text-dim);">62점</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted); font-weight: 800;"><i class="fa-solid fa-bed"></i> 기상 1시간 12분 지연</div>
+                    <div style="font-size: 12px; color: var(--text-muted); display:flex; justify-content:space-between; font-weight:700;">
+                        <span>능주면 석고리 · 독거</span>
+                        <span>센서 추적중</span>
+                    </div>
+                </div>
+
+                <div class="t-card" onclick="loadPersonData('최봉길', this)">
+                    <div class="t-card-top">
+                        <span class="type-tag bpm">심박</span>
+                        <strong style="font-size: 14px; color:var(--text-main);">최봉길 <span style="font-size:12px; color:var(--text-dim); font-weight:600;">85세·남</span></strong>
+                        <span style="font-size: 13px; font-weight:900; color:var(--text-dim);">45점</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--success-green); font-weight: 800;"><i class="fa-solid fa-heart-pulse"></i> 심박 104 bpm 정상 수신</div>
+                    <div style="font-size: 12px; color: var(--text-muted); display:flex; justify-content:space-between; font-weight:700;">
+                        <span>도곡면 원화리 · 독거</span>
+                        <span>안심케어 2차</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-body">
+            
+            <div class="dashboard-grid-row">
+                
+                <!-- 어르신 프로필 및 비상 연락망 패널 -->
+                <div class="card-panel">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-user-nurse" style="color:var(--primary-green); margin-right:6px;"></i> 어르신 프로필 및 비상 연락망</span>
+                        <span id="p-id" class="id-badge" style="background:var(--primary-green-light); color:var(--primary-green); border:1px solid rgba(5,150,105,0.2); padding:3px 10px; border-radius:6px; font-weight:800; font-size:12px;">HS-0412</span>
+                    </div>
+
+                    <div class="profile-card-wrapper">
+                        <div class="profile-top-layout">
+                            <div class="avatar-box-lg"><i class="fa-solid fa-user"></i></div>
+                            <div class="profile-main-info">
+                                <div class="name-age-row">
+                                    <div class="name-group">
+                                        <span class="detail-name-lg" id="p-name">이만수</span>
+                                        <span class="detail-sub-info" id="p-age-gender">78세 · 남 (독거)</span>
+                                    </div>
+                                    <span class="condition-badge-lg" id="p-condition">
+                                        <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> 고혈압군
+                                    </span>
+                                </div>
+                                <div class="medical-tags-row" id="p-tags">
+                                    <span class="med-chip-modern">혈액형 O+</span>
+                                    <span class="med-chip-modern">아스피린 복용중</span>
+                                    <span class="med-chip-modern">거동 불편</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card-box">
+                            <div class="address-text-group">
+                                <i class="fa-solid fa-location-dot" style="color:var(--primary-green); font-size:16px;"></i>
+                                <span id="p-address">전남 화순군 화순읍 침충로 48</span>
+                            </div>
+                            <button class="btn-copy-modern" onclick="showToast('주소 복사 완료')"><i class="fa-regular fa-copy"></i> 주소복사</button>
+                        </div>
+
+                        <div class="info-card-box highlight-bg">
+                            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+                                <i class="fa-solid fa-id-badge" style="color:var(--accent-blue);"></i>
+                                <span style="font-weight:800; color:var(--accent-blue);">담당 생활지원사:</span>
+                                <span style="color:var(--text-main); font-weight:700;" id="p-helper">전남 김정숙 생활지원사 (어제 대면 완료)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="call-action-grid">
+                        <div class="call-card-item">
+                            <div class="call-info-group">
+                                <span class="call-label-sm">안심폰 직접통화</span>
+                                <span class="call-number-lg" id="p-phone">010-2345-6789</span>
+                            </div>
+                            <button class="btn-call-modern" onclick="showToast('어르신 안심폰 연결 중...')"><i class="fa-solid fa-phone"></i> 통화</button>
+                        </div>
+
+                        <div class="call-card-item">
+                            <div class="call-info-group">
+                                <span class="call-label-sm" id="p-guardian-title">보호자: 이명희 (딸)</span>
+                                <span class="call-number-lg" id="p-guardian-phone">010-8765-4321</span>
+                            </div>
+                            <button class="btn-call-modern gray" onclick="showToast('보호자 통화 연결 중...')"><i class="fa-solid fa-phone"></i> 통화</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 우측 AI 및 생체 패널 (수정된 상단 디자인 적용 완료) -->
+                <div class="card-panel">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-brain" style="color:var(--primary-green); margin-right:6px;"></i> AI 예측 분석 및 실시간 생체 징후</span>
+                        <span style="font-size:12px; color:var(--primary-green); font-weight:800;">ALGORITHM v4.2</span>
+                    </div>
+
+                    <div class="ai-section-grid">
+                        <!-- 새롭게 디자인된 하이엔드 위험도 카드 -->
+                        <div class="ai-risk-card-modern">
+                            <div class="risk-score-badge-lg">
+                                <span class="num" id="p-score">87</span>
+                                <span class="txt">위험</span>
+                            </div>
+                            <div class="risk-content-group">
+                                <div class="risk-title-badge">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    <span id="p-risk-pill">AI 판정 1등급 (긴급 권고)</span>
+                                </div>
+                                <div class="risk-desc-text" id="p-risk-desc">
+                                    최근 48시간 패턴 대비 <strong>이상징후 4건</strong> 포착.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 단말기 위치 추적 위젯 -->
+                        <div class="radar-box-wrapper">
+                            <div class="radar-box-top">
+                                <span><i class="fa-solid fa-location-crosshairs" style="color:var(--primary-green); margin-right:4px;"></i> 단말기 위치 추적</span>
+                                <span style="color:var(--success-green); font-size:11px;">GPS 5m 이내</span>
+                            </div>
+                            <div class="radar-visual-area">
+                                <div class="radar-pin" style="top:40%; left:50%;"></div>
+                                <div class="radar-overlay-badge" id="p-location-title">
+                                    <i class="fa-solid fa-house-chimney" style="font-size:10px;"></i> 자택 실내 (거실) · 12:30 수신
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <canvas id="vitalChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-grid-row">
+                
+                <div class="card-panel">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-lightbulb" style="color:var(--primary-green);"></i> AI 맞춤 행동 가이드 및 특이사항 분석</span>
+                    </div>
+                    <div class="ai-guideline-box">
+                        <div style="font-weight: 900; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> 폭염 연계 고위험군 집중 케어 매뉴얼 발동
+                        </div>
+                        <div>심박 변동성 및 거동량 저하 동시 감지. 온열질환 초기 증상일 가능성이 높으므로 <strong>즉시 유선 통화 후 방문 점검</strong>이 필수적입니다.</div>
+                    </div>
+                    <div style="display: flex; gap: 10px; font-size: 13px; font-weight: 800; margin-top: auto;">
+                        <span style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 8px; border-radius: 6px; color: var(--text-muted); flex: 1; text-align: center;">전화 이력: 금일 2회 시도</span>
+                        <span style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 8px; border-radius: 6px; color: var(--text-muted); flex: 1; text-align: center;">최근 대면: 어제 (김정숙 지원사)</span>
+                    </div>
+                </div>
+
+                <div class="card-panel">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-timeline" style="color:var(--primary-green);"></i> 금일 센서 이벤트 타임라인</span>
+                        <span style="font-size: 12px; color: var(--text-dim); font-weight: 800;">총 4건 수신</span>
+                    </div>
+                    <div class="timeline-list">
+                        <div class="timeline-item">
+                            <span style="color: var(--danger-red); font-weight: 900;"><i class="fa-solid fa-bell"></i> [12:32] 응급 버튼(SOS) 입력 발생</span>
+                            <span style="color: var(--text-muted);">대기중</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span style="color: var(--text-main);"><i class="fa-solid fa-person-walking"></i> [09:15] 거실 동체 센서 감지 확인</span>
+                            <span style="color: var(--success-green);">정상</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span style="color: var(--text-main);"><i class="fa-solid fa-bed"></i> [06:40] 침실 이탈(기상) 감지</span>
+                            <span style="color: var(--success-green);">정상</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-panel action-container">
+                <div>
+                    <div style="font-size: 13px; font-weight: 900; color: var(--text-main); margin-bottom: 4px;">
+                        <i class="fa-solid fa-clipboard-check" style="color:var(--primary-green);"></i> 처리 및 결과 등록
+                    </div>
+                    <div style="font-size: 11px; font-weight: 800; color: var(--danger-red); background: var(--danger-bg); padding: 3px 8px; border-radius: 4px; display:inline-block;">
+                        <i class="fa-regular fa-clock"></i> 최초 인지 후 9분 경과
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-size: 12px; font-weight: 900; color: var(--text-muted); margin-bottom: 4px;">통화 결과 상태 선택</div>
+                    <div class="status-grid">
+                        <div class="status-option active" onclick="selectStatus(this, 'normal')">
+                            <i class="fa-solid fa-user-check"></i> 본인 통화 완료
+                        </div>
+                        <div class="status-option" onclick="selectStatus(this, 'normal')">
+                            <i class="fa-solid fa-users"></i> 보호자 통화 완료
+                        </div>
+                        <div class="status-option" onclick="selectStatus(this, 'normal')">
+                            <i class="fa-solid fa-phone-slash"></i> 부재 및 부응답
+                        </div>
+                        <div class="status-option danger-active" onclick="selectStatus(this, 'danger')">
+                            <i class="fa-solid fa-truck-medical"></i> 119 긴급 출동 연계
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-size: 12px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <span style="color:var(--text-muted);">상담 및 현장 조치 내용 입력</span>
+                        <span style="font-size: 11px; color: var(--success-green); font-weight: 800;">12:43 자동저장</span>
+                    </div>
+                    <textarea id="memoInput" class="memo-textarea" placeholder="어르신 상태 내용을 입력하세요...">가슴이 답답하고 어지러워 버튼을 눌렀다고 함. 현재 앉아 계심. 보호자에게 방문 요청 예정.</textarea>
+                </div>
+
+                <div>
+                    <button class="btn-action-primary" onclick="showToast('최종 관제 결과가 성공적으로 등록되었습니다.')">
+                        <i class="fa-solid fa-check"></i> 등록 완료
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const personDataList = {
+            '이만수': {
+                name: '이만수', ageGender: '78세 · 남 (독거)', id: 'HS-0412', condition: '고혈압군',
+                tags: ['혈액형 O+', '아스피린 복용중', '거동 불편'], address: '전남 화순군 화순읍 침충로 48',
+                helper: '전남 김정숙 생활지원사 (어제 대면 완료)', phone: '010-2345-6789',
+                guardianTitle: '보호자: 이명희 (딸)', guardianPhone: '010-8765-4321',
+                score: '87', riskPill: 'AI 판정 1등급 (긴급 권고)', riskDesc: '최근 48시간 패턴 대비 <strong>이상징후 4건</strong> 포착.',
+                locationTitle: '<i class="fa-solid fa-house-chimney" style="font-size:10px;"></i> 자택 실내 (거실) · 12:30 수신', chartData: [72, 75, 112, 98, 88, 85],
+                memo: '가슴이 답답하고 어지러워 버튼을 눌렀다고 함. 현재 앉아 계심. 보호자에게 방문 요청 예정.'
+            },
+            '김순례': {
+                name: '김순례', ageGender: '81세 · 여 (부부)', id: 'HS-0831', condition: '당뇨 케어',
+                tags: ['혈액형 A+', '인슐린 투여 중'], address: '전남 화순군 이양면 율계리 102',
+                helper: '이양면 박철민 지원사', phone: '010-3344-5566',
+                guardianTitle: '보호자: 김상우 (아들)', guardianPhone: '010-9988-7766',
+                score: '74', riskPill: 'AI 판정 2등급 (주의)', riskDesc: '안심폰 1차 호출 중, 단말기 응답 확인 필요.',
+                locationTitle: '<i class="fa-solid fa-house-chimney" style="font-size:10px;"></i> 자택 안방 구역 · 14:20 수신', chartData: [68, 70, 72, 85, 90, 88],
+                memo: '수신기 안심폰 버튼 클릭. 어르신 통화 연결 대기 중.'
+            },
+            '한옥순': {
+                name: '한옥순', ageGender: '73세 · 여 (독거)', id: 'HS-0192', condition: '관절염',
+                tags: ['혈액형 B+', '관절약 복용중'], address: '전남 화순군 능주면 석고리 45',
+                helper: '능주면 최선희 지원사', phone: '010-7788-1122',
+                guardianTitle: '보호자: 한정수 (조카)', guardianPhone: '010-2233-4455',
+                score: '62', riskPill: 'AI 판정 3등급 (관찰)', riskDesc: '평소 기상 시간 대비 1시간 이상 센서 미수신.',
+                locationTitle: '<i class="fa-solid fa-bed" style="font-size:10px;"></i> 자택 침실 · 3시간 전 센서', chartData: [60, 62, 61, 60, 59, 60],
+                memo: '미활동 감지 건. 전화 통화 미응답 시 현장 확인 요청 예정.'
+            },
+            '최봉길': {
+                name: '최봉길', ageGender: '85세 · 남 (독거)', id: 'HS-0554', condition: '부정맥 케어',
+                tags: ['혈액형 AB+', '부정맥 약 복용중'], address: '전남 화순군 도곡면 원화리 88',
+                helper: '도곡면 정순자 지원사', phone: '010-5566-7788',
+                guardianTitle: '보호자: 최영수 (아들)', guardianPhone: '010-4455-6677',
+                score: '45', riskPill: 'AI 판정 정상', riskDesc: '심박수가 일시적으로 상승하였으나 현재 안정화.',
+                locationTitle: '<i class="fa-solid fa-tree" style="font-size:10px;"></i> 자택 마당 · 14:25 위치 정상', chartData: [80, 82, 104, 100, 92, 85],
+                memo: '심박 104bpm 일시적 상승 후 정상 수치 회복. 특이사항 없음.'
+            }
+        };
+
+        let vitalChart;
+
+        function selectStatus(element, type) {
+            document.querySelectorAll('.status-option').forEach(opt => opt.classList.remove('active', 'danger-active'));
+            if(type === 'danger') element.classList.add('danger-active');
+            else element.classList.add('active');
+        }
+
+        function loadPersonData(name, element) {
+            const data = personDataList[name];
+            if (!data) return;
+
+            document.querySelectorAll('.t-card').forEach(c => c.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            document.getElementById('p-name').innerText = data.name;
+            document.getElementById('p-age-gender').innerText = data.ageGender;
+            document.getElementById('p-id').innerText = data.id;
+            document.getElementById('p-condition').innerHTML = `<i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> ${data.condition}`;
+            document.getElementById('p-tags').innerHTML = data.tags.map(t => `<span class="med-chip-modern">${t}</span>`).join('');
+            document.getElementById('p-address').innerText = data.address;
+            document.getElementById('p-helper').innerText = data.helper;
+            document.getElementById('p-phone').innerText = data.phone;
+            document.getElementById('p-guardian-title').innerText = data.guardianTitle;
+            document.getElementById('p-guardian-phone').innerText = data.guardianPhone;
+            document.getElementById('p-score').innerText = data.score;
+            document.getElementById('p-risk-pill').innerText = data.riskPill;
+            document.getElementById('p-risk-desc').innerHTML = data.riskDesc;
+            document.getElementById('p-location-title').innerHTML = data.locationTitle;
+            document.getElementById('memoInput').value = data.memo;
+
+            if (vitalChart) {
+                vitalChart.data.datasets[0].data = data.chartData;
+                vitalChart.update();
+            }
+            showToast(`${data.name} 어르신 정보를 로드했습니다.`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+
+        window.onload = function() {
+            const ctx = document.getElementById('vitalChart').getContext('2d');
+            vitalChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['10시', '11시', '12시(SOS)', '12시10분', '12시20분', '현재'],
+                    datasets: [{
+                        label: '심박수 (bpm)',
+                        data: personDataList['이만수'].chartData,
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.35
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(226, 232, 240, 0.8)' }, ticks: { font: { size: 11, weight: 'bold' }, color: '#64748b' } },
+                        y: { ticks: { font: { size: 11, weight: 'bold' }, color: '#64748b' }, grid: { color: 'rgba(226, 232, 240, 0.8)' } }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

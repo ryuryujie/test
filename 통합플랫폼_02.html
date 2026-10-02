@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안심 돌봄 - 통합플랫폼 02</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-sidebar: #090d16;
+            --primary-blue: #0284c7;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body { 
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #0f172a;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        /* ---------------- 사이드바 디자인 ---------------- */
+        aside {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            background-image: radial-gradient(circle at top right, rgba(2, 132, 199, 0.2), transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 16px;
+            flex-shrink: 0;
+            z-index: 10;
+            overflow-y: auto;
+            color: #fff;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        aside::-webkit-scrollbar { width: 4px; }
+        aside::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 0 4px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 8px 16px rgba(2, 132, 199, 0.35);
+        }
+
+        .brand-text .title { font-weight: 800; font-size: 16px; color: #ffffff; letter-spacing: -0.3px; }
+        .brand-text .subtitle { font-size: 14px; color: #38bdf8; margin-top: 2px; font-weight: 600; letter-spacing: 0.5px; }
+
+        .menu-category {
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            margin: 18px 0 6px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .menu-item i { width: 20px; text-align: center; font-size: 15px; color: #64748b; transition: color 0.2s; }
+        .menu-item:hover:not(.active) { background-color: rgba(255, 255, 255, 0.05); color: #f8fafc; }
+        .menu-item:hover:not(.active) i { color: #38bdf8; }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+        }
+        .menu-item.active i { color: #fff; }
+
+        .user-profile {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        .user-avatar {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #0284c7, #4f46e5);
+            color: #fff; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: bold;
+        }
+
+        /* ---------------- 메인 컨테이너 영역 ---------------- */
+        .main-container {
+            flex: 1;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            min-width: 0;
+            font-size: 14px;
+        }
+
+        .main-container::-webkit-scrollbar { width: 6px; }
+        .main-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.15); }
+        }
+        .glow-dot { animation: pulse-glow 2s infinite ease-in-out; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-[14px]">
+
+    <!-- Left Sidebar -->
+    <aside class="shrink-0 select-none overflow-y-auto">
+        <div>
+            <!-- Logo Header -->
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                <div class="brand-text">
+                    <div class="title">처리 계층 모니터</div>
+                    <div class="subtitle">ENTERPRISE TELEMETRY</div>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <div>
+                <div class="menu-category">처리 콘솔</div>
+                <div>
+                    <a href="#" class="menu-item active">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>계층과 처리 로그</span>
+                    </a>
+                </div>
+
+                <div class="menu-category">수집과 저장</div>
+                <div>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-wave-square"></i><span>건강데이터 수집</span></a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-broom"></i><span>건강데이터 정제·관리</span></a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-chart-column"></i><span>건강데이터 집계</span></a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-location-dot"></i><span>위치정보 관리</span></a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-rotate"></i><span>배치 처리</span></a>
+                </div>
+
+                <div class="menu-category">판정 & AI</div>
+                <div>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-triangle-exclamation"></i><span>이상징후 판단</span></a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-network-wired"></i><span>AI 서비스 연계</span></a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-brain"></i><span>AI 분석결과 관리</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">운영</div>
+            <div class="user-info flex-1 min-w-0">
+                <div class="font-bold text-white truncate text-[14px]">기술 운영자</div>
+                <div class="text-[14px] text-sky-400 font-medium">통합플랫폼</div>
+            </div>
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 glow-dot"></div>
+        </div>
+    </aside>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Header & Top Utility Bar -->
+        <div class="flex items-center justify-between flex-shrink-0">
+            <div class="flex items-center space-x-3.5">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0284c7] to-[#38bdf8] text-white flex items-center justify-center shadow-lg shadow-sky-500/20 text-lg">
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-black text-[#0f172a] tracking-tight">처리 계층 흐름 모니터</h1>
+                    <p class="text-[14px] text-[#64748b] font-medium">통합플랫폼 · 기술 운영자</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="relative w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8]"></i>
+                    <input type="text" placeholder="트랜잭션 ID 또는 로그 검색..." class="w-full bg-white/90 border border-[#cbd5e1] rounded-xl pl-10 pr-4 py-2.5 text-[14px] font-medium outline-none focus:border-[#0284c7] focus:ring-2 focus:ring-sky-500/10 transition shadow-2xs">
+                </div>
+                <div class="glass-panel px-4 py-2.5 text-[14px] font-bold text-[#334155] flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 glow-dot"></span>
+                    <span class="font-mono">실시간 동기화 중</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스플릿 관제 레이아웃 -->
+        <div class="grid grid-cols-12 gap-5 pb-6 flex-1 min-h-0">
+            
+            <!-- 좌측 패널 (4 컬럼): KPI 및 헬스체크 -->
+            <div class="col-span-4 flex flex-col gap-4 overflow-y-auto pr-1">
+                
+                <!-- 주요 지표 카드 박스 -->
+                <div class="glass-panel p-5 flex flex-col gap-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-[#e2e8f0]/80">
+                        <span class="font-extrabold text-[#0f172a] text-[17px] flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-[#0284c7]"></i> 핵심 성능 지표 (KPI)
+                        </span>
+                        <span class="text-[14px] bg-sky-50 text-[#0284c7] px-2.5 py-1 rounded-lg font-bold border border-sky-100 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check text-xs"></i> 최적 상태
+                        </span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="bg-gradient-to-r from-slate-50 to-white border border-[#e2e8f0] p-3.5 rounded-xl flex items-center justify-between shadow-2xs">
+                            <div>
+                                <p class="text-[14px] font-bold text-[#64748b] mb-0.5 flex items-center gap-1.5"><i class="fa-regular fa-clock text-sky-600"></i> 응급 호출 접수 지연 p95</p>
+                                <span class="text-xl font-black text-[#0f172a]">2.1초</span>
+                            </div>
+                            <span class="text-[14px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg">기준 5초 이내</span>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-slate-50 to-white border border-[#e2e8f0] p-3.5 rounded-xl flex items-center justify-between shadow-2xs">
+                            <div>
+                                <p class="text-[14px] font-bold text-[#64748b] mb-0.5 flex items-center gap-1.5"><i class="fa-solid fa-heart-pulse text-sky-600"></i> 건강정보 수신률</p>
+                                <span class="text-xl font-black text-[#0f172a]">98.4%</span>
+                            </div>
+                            <span class="text-[14px] font-medium text-[#64748b]">미수신 16명</span>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-slate-50 to-white border border-[#e2e8f0] p-3.5 rounded-xl flex items-center justify-between shadow-2xs">
+                            <div>
+                                <p class="text-[14px] font-bold text-[#64748b] mb-0.5 flex items-center gap-1.5"><i class="fa-solid fa-bolt text-amber-500"></i> 탐지 → 관제 표시</p>
+                                <span class="text-xl font-black text-[#0f172a]">6.8초</span>
+                            </div>
+                            <span class="text-[14px] font-medium text-[#64748b]">오늘 42건</span>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-slate-50 to-white border border-[#e2e8f0] p-3.5 rounded-xl flex items-center justify-between shadow-2xs">
+                            <div>
+                                <p class="text-[14px] font-bold text-[#64748b] mb-0.5 flex items-center gap-1.5"><i class="fa-solid fa-rotate-right text-rose-600"></i> 연계 재처리 대기</p>
+                                <span class="text-xl font-black text-rose-600">3건</span>
+                            </div>
+                            <span class="text-[14px] font-bold text-rose-600 bg-rose-50 border border-rose-100 px-2.5 py-1 rounded-lg animate-pulse">자동 재시도</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 파이프라인 계층 헬스체크 -->
+                <div class="glass-panel p-5 flex flex-col gap-3">
+                    <span class="font-extrabold text-[#0f172a] text-[17px] pb-2 border-b border-[#e2e8f0]/80 flex items-center gap-2">
+                        <i class="fa-solid fa-server text-[#0284c7]"></i> 파이프라인 계층 헬스체크
+                    </span>
+
+                    <div class="space-y-2.5 mt-1">
+                        <!-- 1. 수집 -->
+                        <div class="p-3 bg-white border border-[#e2e8f0] rounded-xl shadow-2xs flex flex-col gap-1 hover:border-sky-300 transition">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-download text-xs text-sky-600"></i> 1. 수집 (12,480건/시)</span>
+                                <span class="text-[14px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">정상</span>
+                            </div>
+                            <div class="text-[14px] text-[#64748b] mt-1 space-y-0.5 pl-5">
+                                <div>· 건강정보 수신 / 중복 1회 저장</div>
+                                <div>· 공통 형식 변환 / 늦은 자료 반영</div>
+                            </div>
+                        </div>
+
+                        <!-- 2. 판정 -->
+                        <div class="p-3 bg-white border border-[#e2e8f0] rounded-xl shadow-2xs flex flex-col gap-1 hover:border-sky-300 transition">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-microchip text-xs text-sky-600"></i> 2. 판정 (모델 v1.4)</span>
+                                <span class="text-[14px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">정상</span>
+                            </div>
+                            <div class="text-[14px] text-[#64748b] mt-1 space-y-0.5 pl-5">
+                                <div>· 개인별 패턴 / 생활패턴 규칙 세트</div>
+                                <div>· 위험 점수 및 등급 산출</div>
+                            </div>
+                        </div>
+
+                        <!-- 3. 업무 -->
+                        <div class="p-3 bg-amber-50/60 border border-amber-300 rounded-xl shadow-2xs flex flex-col gap-1">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-briefcase text-xs text-amber-600"></i> 3. 업무 (진행 12건)</span>
+                                <span class="text-[14px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-200">기한 초과 1 (주의)</span>
+                            </div>
+                            <div class="text-[14px] text-[#78716c] mt-1 space-y-0.5 pl-5">
+                                <div>· 안부 확인 건 생성 / 사람 접수 분리</div>
+                                <div>· 기한 초과 재알림 / 복약 알림</div>
+                            </div>
+                        </div>
+
+                        <!-- 4. 인가 -->
+                        <div class="p-3 bg-white border border-[#e2e8f0] rounded-xl shadow-2xs flex flex-col gap-1 hover:border-sky-300 transition">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-shield-halved text-xs text-sky-600"></i> 4. 인가 (차단 2건)</span>
+                                <span class="text-[14px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">정상</span>
+                            </div>
+                            <div class="text-[14px] text-[#64748b] mt-1 space-y-0.5 pl-5">
+                                <div>· 동의 목적별 기록 / 공유 동의 확인</div>
+                                <div>· 역할 및 지역 접근 권한 확인</div>
+                            </div>
+                        </div>
+
+                        <!-- 5. 표현 -->
+                        <div class="p-3 bg-white border border-[#e2e8f0] rounded-xl shadow-2xs flex flex-col gap-1 hover:border-sky-300 transition">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-desktop text-xs text-sky-600"></i> 5. 표현 (p95 180ms)</span>
+                                <span class="text-[14px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">정상</span>
+                            </div>
+                            <div class="text-[14px] text-[#64748b] mt-1 space-y-0.5 pl-5">
+                                <div>· 관제·운영 웹 공통 처리 및 앱 API</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 우측 패널 (8 컬럼): 타임라인 및 긴급 조치 스트림 -->
+            <div class="col-span-8 flex flex-col gap-4 overflow-y-auto pr-1">
+                
+                <!-- 기반 인프라 상태 배지 바 -->
+                <div class="glass-panel px-5 py-3 flex items-center flex-wrap gap-3 text-[14px] flex-shrink-0">
+                    <span class="font-bold text-[#0f172a] flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-sky-600"></i> 기반</span>
+                    <span class="bg-white border border-[#cbd5e1] text-[#334155] px-3 py-1 rounded-lg text-[14px] font-medium shadow-2xs flex items-center gap-1.5"><i class="fa-solid fa-lock text-emerald-600 text-xs"></i> 암호화 점검 적용</span>
+                    <span class="bg-rose-50 border border-rose-200 text-rose-700 px-3 py-1 rounded-lg text-[14px] font-bold shadow-2xs flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-xs"></i> 연계 실패 재처리 3건</span>
+                    <span class="bg-white border border-[#cbd5e1] text-[#334155] px-3 py-1 rounded-lg text-[14px] font-medium shadow-2xs flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i> 장애 알림 0건</span>
+                    <span class="bg-white border border-[#cbd5e1] text-[#334155] px-3 py-1 rounded-lg text-[14px] font-medium shadow-2xs flex items-center gap-1.5"><i class="fa-regular fa-calendar-xmark text-xs text-sky-600"></i> 보관기간 삭제 02:00 예정</span>
+                    <span class="bg-white border border-[#cbd5e1] text-[#334155] px-3 py-1 rounded-lg text-[14px] font-medium shadow-2xs flex items-center gap-1.5"><i class="fa-solid fa-database text-xs text-sky-600"></i> 접근 기록 수집 중</span>
+                </div>
+
+                <!-- 실시간 트랜잭션 타임라인 스트림 -->
+                <div class="glass-panel p-6 flex flex-col gap-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-[#e2e8f0]/80">
+                        <span class="font-extrabold text-[#0f172a] text-[18px] flex items-center gap-2">
+                            <i class="fa-solid fa-timeline text-[#0284c7]"></i> 최근 처리 흐름 <span class="text-[14px] font-normal text-[#64748b] ml-1">위치 응급 호출 · 대상자 HS-0412</span>
+                        </span>
+                        <span class="text-[14px] font-mono text-[#0284c7] bg-sky-50 border border-sky-200 px-3 py-1 rounded-xl font-bold flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-sky-600 glow-dot"></span> LIVE SESSION
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-3 mt-1">
+                        <div class="bg-white border border-[#e2e8f0] p-3.5 rounded-xl flex flex-col gap-1 shadow-2xs relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-slate-900"></div>
+                            <div class="w-6 h-6 rounded-full bg-[#0f172a] text-white flex items-center justify-center text-xs font-bold mb-1">1</div>
+                            <p class="font-bold text-[#0f172a] text-[14px]">위치 SOS</p>
+                            <p class="text-[14px] text-[#64748b]">옆 버튼 3초</p>
+                            <p class="text-[14px] font-mono text-[#334155] mt-2 font-semibold">12:31:02.140</p>
+                        </div>
+
+                        <div class="bg-white border border-[#e2e8f0] p-3.5 rounded-xl flex flex-col gap-1 shadow-2xs relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-slate-900"></div>
+                            <div class="w-6 h-6 rounded-full bg-[#0f172a] text-white flex items-center justify-center text-xs font-bold mb-1">2</div>
+                            <p class="font-bold text-[#0f172a] text-[14px]">판정 생략 · 즉시 접수</p>
+                            <p class="text-[14px] text-[#64748b]">AI 분석 대기 없음</p>
+                            <p class="text-[14px] font-mono text-[#334155] mt-2 font-semibold">12:31:03.020</p>
+                        </div>
+
+                        <div class="bg-white border border-[#e2e8f0] p-3.5 rounded-xl flex flex-col gap-1 shadow-2xs relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                            <div class="w-6 h-6 rounded-full bg-[#0f172a] text-white flex items-center justify-center text-xs font-bold mb-1">3</div>
+                            <p class="font-bold text-[#0f172a] text-[14px]">안부 확인 건 생성</p>
+                            <p class="text-[14px] text-[#64748b]">사람 접수 대기</p>
+                            <p class="text-[14px] font-mono text-[#334155] mt-2 font-semibold">12:31:03.410</p>
+                        </div>
+
+                        <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl flex flex-col gap-1 shadow-2xs relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-emerald-600"></div>
+                            <div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold mb-1"><i class="fa-solid fa-check text-xs"></i></div>
+                            <p class="font-bold text-[#0f172a] text-[14px]">관제 표시</p>
+                            <p class="text-[14px] text-emerald-700 font-medium">화순군 관제센터</p>
+                            <p class="text-[14px] font-mono text-emerald-700 mt-2 font-semibold">12:31:04.260</p>
+                        </div>
+                    </div>
+
+                    <!-- 타임라인 진행 바 및 총 소요 시간 -->
+                    <div class="w-full bg-[#cbd5e1] h-2.5 rounded-full mt-2 overflow-hidden p-0.5">
+                        <div class="bg-gradient-to-r from-[#0f172a] via-amber-500 to-emerald-500 h-full w-[85%] rounded-full shadow-sm"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-[14px] text-[#64748b] px-1">
+                        <span class="font-medium">총 소요 시간</span>
+                        <span class="font-black text-[#0f172a] text-[15px]">2.12초</span>
+                    </div>
+                </div>
+
+                <!-- 확인이 필요한 항목 카드 -->
+                <div class="glass-panel p-6 flex flex-col gap-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-[#e2e8f0]/80">
+                        <span class="font-extrabold text-[#0f172a] text-[18px] flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> 확인이 필요한 항목
+                        </span>
+                        <span class="text-[14px] bg-rose-50 text-rose-600 font-bold px-3 py-1 rounded-xl border border-rose-200">총 4개 항목</span>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between p-3.5 bg-white border border-[#e2e8f0] rounded-xl text-[14px] shadow-2xs hover:bg-rose-50/20 transition">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-600 animate-pulse"></span>
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-regular fa-comment-dots text-rose-600"></i> 문자 발송 연계 실패</span>
+                            </div>
+                            <span class="font-bold font-mono text-rose-600 bg-rose-50 px-3 py-1 rounded-lg text-[14px] border border-rose-100">3건</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3.5 bg-white border border-[#e2e8f0] rounded-xl text-[14px] shadow-2xs hover:bg-amber-50/20 transition">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-regular fa-clock text-amber-600"></i> 처리기한 초과 재알림</span>
+                            </div>
+                            <span class="font-bold font-mono text-amber-700 bg-amber-50 px-3 py-1 rounded-lg text-[14px] border border-amber-100">1건</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3.5 bg-white border border-[#e2e8f0] rounded-xl text-[14px] shadow-2xs hover:bg-amber-50/20 transition">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-user-lock text-amber-600"></i> 공유 동의 없음 · 알림 보류</span>
+                            </div>
+                            <span class="font-bold font-mono text-amber-700 bg-amber-50 px-3 py-1 rounded-lg text-[14px] border border-amber-100">2건</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3.5 bg-white border border-[#e2e8f0] rounded-xl text-[14px] shadow-2xs hover:bg-emerald-50/20 transition">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                <span class="font-bold text-[#0f172a] flex items-center gap-2"><i class="fa-solid fa-check-double text-emerald-600"></i> AI 모델 평가 자료 충분</span>
+                            </div>
+                            <span class="font-bold font-mono text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg text-[14px] border border-emerald-100">v1.4</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full mt-1 bg-gradient-to-r from-[#0f172a] to-[#1e293b] hover:bg-black text-white font-bold py-3.5 rounded-xl transition shadow-md shadow-slate-900/10 text-[14px] flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-list-check"></i> 재처리 목록 열기
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

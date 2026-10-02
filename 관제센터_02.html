@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안심 돌봄 - 관제센터 02</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #f1f5f9;
+            --bg-sidebar: #0f172a;
+            --bg-card: #ffffff;
+            --border-color: #cbd5e1;
+            
+            --primary-navy: #1e293b;
+            --primary-blue: #0284c7;
+            
+            --status-danger: #ef4444;
+            --status-success: #10b981;
+            
+            --text-dark: #0f172a;
+            --text-muted: #334155;
+            --text-light: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 14px; /* 최소 폰트 크기 14px 보장 */
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            display: flex;
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ---------------- 사이드바 ---------------- */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 16px;
+            flex-shrink: 0;
+            color: #fff;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 0 4px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+        }
+
+        .brand-text .title { font-weight: 800; font-size: 16px; color: #ffffff; }
+        .brand-text .subtitle { font-size: 13px; color: #38bdf8; margin-top: 2px; }
+
+        .menu-category {
+            font-size: 12px;
+            font-weight: 700;
+            color: #94a3b8;
+            margin: 18px 0 8px 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item i { width: 22px; margin-right: 8px; font-size: 15px; }
+        .menu-item:hover:not(.active) { background-color: rgba(255, 255, 255, 0.06); color: #ffffff; }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #fff;
+        }
+
+        .menu-item .badge {
+            background-color: #0369a1;
+            color: #bae6fd;
+            font-size: 12px;
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .user-profile {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 38px; height: 38px;
+            background-color: #0284c7;
+            color: #fff; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: bold;
+        }
+
+        .user-info { flex: 1; min-width: 0; }
+        .user-name { font-size: 14px; font-weight: 700; color: #ffffff; }
+        .user-role { font-size: 12px; color: #cbd5e1; }
+
+        /* ---------------- 메인 컨테이너 ---------------- */
+        .main-container {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-shrink: 0;
+            height: 50px;
+        }
+
+        .alert-pill {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            padding: 9px 16px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 420px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 9px 16px 9px 40px;
+            font-size: 14px;
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .status-user-box { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+        .realtime-status {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 9px 16px;
+            border-radius: 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 9px; height: 9px;
+            background-color: var(--status-success);
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .user-avatar-btn {
+            width: 38px; height: 38px;
+            background-color: var(--primary-navy);
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 14px;
+        }
+
+        /* ---------------- 3열 대시보드 레이아웃 ---------------- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr) 360px;
+            gap: 14px;
+            flex: 1;
+            height: calc(100vh - 75px);
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        /* ================= 1열: 실시간 감지 대기열 ================= */
+        .col-list { 
+            display: flex; flex-direction: column; gap: 10px; 
+            background: var(--bg-card); border-radius: 12px; padding: 14px; 
+            border: 1px solid var(--border-color); height: 100%; overflow: hidden; 
+        }
+
+        .queue-header-area {
+            display: flex; align-items: baseline; justify-content: space-between;
+            padding-bottom: 8px; border-bottom: 2px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+        .queue-main-title { font-size: 16px; font-weight: 900; color: var(--primary-navy); }
+        .queue-sub-status { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+
+        .queue-scroll-container {
+            display: flex; flex-direction: column; gap: 10px;
+            overflow-y: auto; padding-right: 4px; flex: 1;
+        }
+
+        .queue-section-label {
+            font-size: 13px; font-weight: 800; color: #c2410c; margin-top: 4px; margin-bottom: -2px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .queue-section-label.auto { color: #b45309; }
+
+        .q-card {
+            background-color: #ffffff; border: 1.5px solid #e2e8f0;
+            border-radius: 10px; padding: 12px; cursor: pointer; transition: all 0.2s ease;
+        }
+        .q-card:hover { border-color: #94a3b8; }
+        
+        .q-card.priority-active {
+            background: linear-gradient(135deg, #fffcfc 0%, #fff5f5 100%);
+            border: 1.5px solid #ea580c;
+        }
+
+        .q-card-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+        .q-name-group { display: flex; align-items: baseline; gap: 8px; }
+        .q-name { font-size: 15px; font-weight: 800; color: var(--text-dark); }
+        .q-age { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+        .q-time { font-size: 13px; font-weight: 800; color: var(--text-muted); }
+        .q-card.priority-active .q-time { color: #c2410c; }
+
+        .q-desc { font-size: 14px; color: #1e293b; font-weight: 600; margin-bottom: 8px; }
+
+        .q-badge-row { display: flex; align-items: center; gap: 6px; }
+        .q-badge { font-size: 13px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+        .q-badge.danger-time { background-color: #ef4444; color: #ffffff; }
+        .q-badge.warning-time { background-color: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+        .q-sub-meta { font-size: 13px; color: var(--text-light); font-weight: 600; }
+
+        /* ================= 2열: 센터 대시보드 ================= */
+        .col-center {
+            display: flex; flex-direction: column; gap: 10px;
+            height: 100%; min-width: 0; overflow-y: auto; padding-right: 4px;
+        }
+
+        /* 1. 히어로 프로필 패널 */
+        .hero-dashboard-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+            flex-shrink: 0;
+        }
+
+        .hero-top-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .hero-user-info { display: flex; align-items: center; gap: 14px; min-width: 0; flex: 1; }
+
+        .hero-avatar {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff;
+            flex-shrink: 0;
+        }
+
+        .hero-name-area { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+        .hero-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .hero-name { font-size: 18px; font-weight: 900; color: #ffffff; white-space: nowrap; }
+        .hero-meta { font-size: 14px; color: #cbd5e1; font-weight: 600; white-space: nowrap; }
+        
+        .hero-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+        .badge-id { background: #0284c7; color: #fff; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+        .badge-cond { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+
+        .hero-score-badge {
+            background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+            border-radius: 10px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            flex-shrink: 0;
+        }
+        .hs-left { display: flex; flex-direction: column; align-items: flex-end; }
+        .hs-label { font-size: 12px; color: #fca5a5; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+        .hs-val { font-size: 20px; font-weight: 900; color: #ffffff; line-height: 1.1; white-space: nowrap; }
+        .hs-icon { font-size: 20px; color: #fee2e2; }
+
+        .hero-details-grid {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px; font-size: 14px; color: #e2e8f0; gap: 10px;
+        }
+        .hero-sub-item { display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .hero-sub-item i { color: #38bdf8; flex-shrink: 0; }
+
+        .hero-call-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .hero-call-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer;
+        }
+        .hero-call-btn:hover { background: rgba(255, 255, 255, 0.12); }
+        .hcb-title { font-size: 12px; color: #cbd5e1; }
+        .hcb-num { font-size: 14px; font-weight: 800; color: #ffffff; margin-top: 2px; }
+        .hcb-action { background: #0284c7; color: #fff; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 4px; display: flex; align-items: center; gap: 5px; }
+
+        /* 2. 세로 정렬 구조 */
+        .danger-tracker-card {
+            background: #ffffff; border: 1.5px solid #fecaca; border-radius: 12px; padding: 14px 16px;
+            display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;
+        }
+        .dtc-header { display: flex; justify-content: space-between; align-items: center; }
+        .dtc-title { font-size: 14px; font-weight: 800; color: #991b1b; display: flex; align-items: center; gap: 8px; }
+        .dtc-score-num { font-size: 14px; font-weight: 900; color: #ef4444; background: #fef2f2; padding: 3px 10px; border-radius: 10px; border: 1px solid #fca5a5; }
+
+        .dtc-progress-track { width: 100%; height: 8px; background: #fee2e2; border-radius: 4px; overflow: hidden; }
+        .dtc-progress-fill { width: 87%; height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 4px; }
+
+        .dtc-list { display: flex; flex-direction: column; gap: 8px; }
+        .dtc-item {
+            background: #fdf2f2; border: 1px solid #f5d0d0; border-radius: 8px; padding: 8px 12px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .dtc-item-left { display: flex; align-items: center; gap: 10px; }
+        .dtc-icon { width: 26px; height: 26px; background: #fee2e2; color: #ef4444; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .dtc-txt { font-size: 14px; font-weight: 700; color: #1e293b; }
+        .dtc-val { font-size: 13px; font-weight: 800; background: #ffffff; color: #dc2626; padding: 3px 8px; border-radius: 4px; border: 1px solid #fca5a5; }
+
+        /* 수신 위치 레이더 카드 */
+        .radar-box-modern {
+            background-color: #ffffff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 14px 16px;
+            display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;
+        }
+        .rbm-header { display: flex; justify-content: space-between; align-items: center; }
+        .rbm-title { font-size: 14px; font-weight: 800; color: var(--primary-navy); display: flex; align-items: center; gap: 8px; }
+        .rbm-title i { color: #ea580c; }
+        .rbm-badge { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 10px; }
+
+        .radar-screen-mod {
+            background-color: #fbf9f5; height: 130px; border-radius: 8px; position: relative; overflow: hidden;
+            border: 1px solid #f3ede2; display: flex; align-items: center; justify-content: center;
+        }
+        .r-circle { position: absolute; border: 1px solid #f3d5b5; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+        .rc-1 { width: 75px; height: 75px; }
+        .rc-2 { width: 140px; height: 140px; }
+        .rc-3 { width: 200px; height: 200px; }
+        .radar-dot-mod { width: 11px; height: 11px; background-color: #ea580c; border: 2px solid #ffedd5; border-radius: 50%; position: absolute; top: 48%; left: 50%; z-index: 2; }
+        .radar-tip-mod { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: #262626; color: #fff; padding: 5px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; z-index: 3; }
+        .radar-tip-mod .rtm-main { font-weight: 800; }
+        .radar-tip-mod .rtm-sub { font-size: 11px; color: #a3a3a3; }
+
+        .rbm-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .rbm-f-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; }
+        .rbm-f-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .rbm-f-val { font-size: 13px; font-weight: 800; color: var(--primary-navy); }
+
+        /* 3. 건강 추이 영역 */
+        .health-trend-section {
+            background: #ffffff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 14px 16px;
+            display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;
+        }
+        .hts-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; }
+        .hts-title { font-size: 14px; font-weight: 800; color: var(--primary-navy); display: flex; align-items: center; gap: 8px; }
+        .hts-badge { font-size: 12px; color: var(--text-muted); background: #f1f5f9; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+
+        .hts-grid-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+        .hts-card-item {
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .hts-ci-top { display: flex; justify-content: space-between; align-items: baseline; }
+        .hts-ci-label { font-size: 13px; color: var(--text-muted); font-weight: 700; }
+        .hts-ci-val { font-size: 16px; font-weight: 900; color: var(--text-dark); }
+        .hts-ci-val.danger { color: #ef4444; }
+
+        .mini-bar-group { display: flex; align-items: flex-end; gap: 6px; height: 48px; width: 100%; padding-top: 6px; }
+        .m-bar { flex: 1; background: #cbd5e1; border-radius: 3px 3px 0 0; }
+        .m-bar.active { background: #ea580c; }
+        .m-bar.danger { background: #ef4444; }
+
+
+        /* ================= 3열: 통화 결과 등록 패널 ================= */
+        .col-action {
+            background-color: #ffffff; border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 14px;
+            height: 100%; overflow-y: auto; min-width: 0;
+        }
+
+        .action-header {
+            background: linear-gradient(135deg, #1e293b 0%, #0284c7 100%); color: #ffffff;
+            padding: 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;
+        }
+
+        .action-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .action-time-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #bae6fd; }
+        .time-tag { background-color: rgba(255, 255, 255, 0.2); padding: 3px 8px; border-radius: 4px; color: #fff; font-weight: 700; }
+
+        .section-subtitle {
+            font-size: 14px; font-weight: 800; color: var(--primary-navy);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+        }
+
+        .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+        .status-card {
+            background-color: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px;
+            padding: 10px 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s;
+        }
+        .status-card.active { background-color: #f0fdf4; border-color: var(--status-success); }
+        .status-card.danger-active { background-color: #fef2f2; border-color: var(--status-danger); }
+
+        .status-icon {
+            width: 30px; height: 30px; border-radius: 6px; background-color: #e2e8f0; color: #475569;
+            display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+        }
+        .status-card.active .status-icon { background-color: var(--status-success); color: #ffffff; }
+        .status-card.danger-active .status-icon { background-color: var(--status-danger); color: #ffffff; }
+
+        .status-info { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
+        .status-main { font-size: 14px; font-weight: 800; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .status-sub { font-size: 12px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .memo-box { background-color: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px; }
+        .memo-textarea { width: 100%; height: 85px; border: none; outline: none; font-size: 14px; color: var(--text-dark); resize: none; line-height: 1.4; }
+        .memo-footer { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light); margin-top: 6px; }
+
+        .option-group-card { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .custom-select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; color: var(--text-dark); outline: none; background-color: #ffffff; font-weight: 600; }
+
+        .btn-sms {
+            width: 100%; background-color: #ffffff; border: 1.5px solid #0284c7; color: #0284c7;
+            padding: 10px; border-radius: 6px; font-size: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-sms:hover { background-color: #f0f9ff; }
+
+        .action-footer-btns { display: flex; gap: 10px; margin-top: auto; }
+        .btn-temp { flex: 1; background-color: #ffffff; border: 1.5px solid #cbd5e1; color: var(--text-dark); padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; }
+        .btn-submit { flex: 1.5; background: linear-gradient(135deg, #0284c7, #1e293b); border: none; color: #ffffff; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; }
+
+        .toast {
+            position: fixed; bottom: 20px; right: 20px; background-color: #0f172a; color: #fff;
+            padding: 14px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; display: none; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 사이드바 -->
+    <div class="sidebar">
+        <div>
+            <div class="brand">
+                <div class="brand-logo">안</div>
+                <div class="brand-text">
+                    <div class="title">화순군 안부살핌</div>
+                    <div class="subtitle">스마트 관제 포털</div>
+                </div>
+            </div>
+
+            <div class="menu-category">종합 관제</div>
+            <a href="javascript:void(0)" class="menu-item active">
+                <span><i class="fa-solid fa-chart-pie"></i> 모니터링 현황</span>
+            </a>
+
+            <div class="menu-category">안부 확인 업무</div>
+            <a href="javascript:void(0)" class="menu-item">
+                <span><i class="fa-solid fa-clock-rotate-left"></i> 진행 중 건</span>
+                <span class="badge">6</span>
+            </a>
+            <a href="javascript:void(0)" class="menu-item">
+                <span><i class="fa-solid fa-circle-exclamation"></i> 검토 대기</span>
+                <span class="badge">3</span>
+            </a>
+
+            <div class="menu-category">대상자 관리</div>
+            <a href="javascript:void(0)" class="menu-item"><span><i class="fa-solid fa-users"></i> 대상자 조회</span></a>
+            <a href="javascript:void(0)" class="menu-item"><span><i class="fa-solid fa-heart-pulse"></i> 활동 현황</span></a>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">상담</div>
+            <div class="user-info">
+                <div class="user-name">박수현 상담원</div>
+                <div class="user-role">관제2팀</div>
+            </div>
+            <i class="fa-solid fa-lock" style="color: #cbd5e1; font-size: 14px;"></i>
+        </div>
+    </div>
+
+    <!-- 메인 컨테이너 -->
+    <div class="main-container">
+
+        <!-- 최상단 헤더 -->
+        <div class="top-bar">
+            <div class="alert-pill">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>기상특보: 화순군 전역 폭염주의보 발효 (야외활동 자제·안부 순회 강화)</span>
+            </div>
+
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="대상자 성명, 연락처, 기기번호 검색...">
+            </div>
+
+            <div class="status-user-box">
+                <div class="realtime-status">
+                    <span class="status-dot"></span>
+                    <span>실시간 관제망 정상</span>
+                </div>
+                <div class="user-avatar-btn" title="내 프로필">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3열 분할 레이아웃 -->
+        <div class="dashboard-grid">
+
+            <!-- 1열: 실시간 감지 대기열 -->
+            <div class="col-list">
+                <div class="queue-header-area">
+                    <span class="queue-main-title">진행 중 건</span>
+                    <span class="queue-sub-status">미접수 2 · 접수 4</span>
+                </div>
+
+                <div class="queue-scroll-container">
+                    <div class="queue-section-label">본인 호출 우선</div>
+
+                    <div class="q-card priority-active">
+                        <div class="q-card-top">
+                            <div class="q-name-group">
+                                <span class="q-name">이만수</span>
+                                <span class="q-age">78세</span>
+                            </div>
+                            <span class="q-time">12:31</span>
+                        </div>
+                        <div class="q-desc">응급 호출 · 워치 옆 버튼</div>
+                        <div class="q-badge-row">
+                            <span class="q-badge danger-time">미접수 9분 경과</span>
+                        </div>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-card-top">
+                            <div class="q-name-group">
+                                <span class="q-name">김순례</span>
+                                <span class="q-age">81세</span>
+                            </div>
+                            <span class="q-time">12:37</span>
+                        </div>
+                        <div class="q-desc">응급 호출 · 워치 옆 버튼</div>
+                        <div class="q-badge-row">
+                            <span class="q-badge warning-time">미접수 3분 경과</span>
+                        </div>
+                    </div>
+
+                    <div class="queue-section-label auto" style="margin-top: 8px;">자동 감지</div>
+
+                    <div class="q-card">
+                        <div class="q-card-top">
+                            <div class="q-name-group">
+                                <span class="q-name">한옥순</span>
+                                <span class="q-age">73세</span>
+                            </div>
+                            <span class="q-time">11:58</span>
+                        </div>
+                        <div class="q-desc">활동 없음 · 기상 지연</div>
+                        <div class="q-sub-meta">담당 · 박수현</div>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-card-top">
+                            <div class="q-name-group">
+                                <span class="q-name">최봉길</span>
+                                <span class="q-age">76세</span>
+                            </div>
+                            <span class="q-time">11:20</span>
+                        </div>
+                        <div class="q-desc">심박 평소 범위 이탈</div>
+                        <div class="q-sub-meta">담당 · 정민호</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2열: 센터 대시보드 (세로 스택 배치) -->
+            <div class="col-center">
+                
+                <!-- 1. 히어로 프로필 패널 (줄바꿈 및 깨짐 수정 완료) -->
+                <div class="hero-dashboard-card">
+                    <div class="hero-top-row">
+                        <div class="hero-user-info">
+                            <div class="hero-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+                            <div class="hero-name-area">
+                                <div class="hero-name-row">
+                                    <span class="hero-name">이만수</span>
+                                    <span class="hero-meta">78세 · 남 (독거)</span>
+                                    <div class="hero-badges">
+                                        <span class="badge-id">HS-0412</span>
+                                        <span class="badge-cond">만성 고혈압</span>
+                                    </div>
+                                </div>
+                                <div style="font-size: 13px; color: #cbd5e1;">혈액형 O+ · 아스피린 복용중 · 거동 불편</div>
+                            </div>
+                        </div>
+
+                        <div class="hero-score-badge">
+                            <div class="hs-left">
+                                <span class="hs-label">통합 위험 점수</span>
+                                <span class="hs-val">87점</span>
+                            </div>
+                            <i class="fa-solid fa-triangle-exclamation hs-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="hero-details-grid">
+                        <div class="hero-sub-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>전남 화순군 화순읍 침충로 48 (다지리 321-4)</span>
+                        </div>
+                        <button onclick="showToast('주소가 복사되었습니다.')" style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; white-space: nowrap; flex-shrink: 0;">주소 복사</button>
+                    </div>
+
+                    <div class="hero-call-row">
+                        <div class="hero-call-btn" onclick="showToast('어르신 직통 연결 중...')">
+                            <div>
+                                <div class="hcb-title">어르신 안심폰 직통</div>
+                                <div class="hcb-num">010-2345-6789</div>
+                            </div>
+                            <div class="hcb-action"><i class="fa-solid fa-phone"></i> 통화</div>
+                        </div>
+                        <div class="hero-call-btn" onclick="showToast('보호자 연결 중...')">
+                            <div>
+                                <div class="hcb-title">보호자: 이명희 (딸)</div>
+                                <div class="hcb-num">010-8765-4321</div>
+                            </div>
+                            <div class="hcb-action" style="background:#475569;"><i class="fa-solid fa-phone"></i> 통화</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 긴급 대응 필요 지수 카드 -->
+                <div class="danger-tracker-card">
+                    <div class="dtc-header">
+                        <span class="dtc-title"><i class="fa-solid fa-fire" style="color:#ef4444;"></i> 긴급 대응 필요 지수</span>
+                        <span class="dtc-score-num">87 / 100</span>
+                    </div>
+                    <div class="dtc-progress-track">
+                        <div class="dtc-progress-fill"></div>
+                    </div>
+                    <div class="dtc-list">
+                        <div class="dtc-item">
+                            <div class="dtc-item-left">
+                                <div class="dtc-icon"><i class="fa-solid fa-bell"></i></div>
+                                <span class="dtc-txt">워치 응급 버튼 호출</span>
+                            </div>
+                            <span class="dtc-val">12:31</span>
+                        </div>
+                        <div class="dtc-item">
+                            <div class="dtc-item-left">
+                                <div class="dtc-icon" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-person-walking"></i></div>
+                                <span class="dtc-txt">직전 10분 활동량</span>
+                            </div>
+                            <span class="dtc-val" style="color:#d97706; border-color:#fde68a; background:#fffbeb;">0보 (정지)</span>
+                        </div>
+                        <div class="dtc-item">
+                            <div class="dtc-item-left">
+                                <div class="dtc-icon" style="background:#ffe4e6; color:#e11d48;"><i class="fa-solid fa-heart-pulse"></i></div>
+                                <span class="dtc-txt">심박수 (평소 58~84)</span>
+                            </div>
+                            <span class="dtc-val">112회/분</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 수신 위치 레이더 카드 -->
+                <div class="radar-box-modern">
+                    <div class="rbm-header">
+                        <span class="rbm-title"><i class="fa-solid fa-bullseye"></i> 수신 위치 레이더</span>
+                        <span class="rbm-badge">GPS 5m 이내</span>
+                    </div>
+                    <div class="radar-screen-mod">
+                        <div class="r-circle rc-1"></div>
+                        <div class="r-circle rc-2"></div>
+                        <div class="r-circle rc-3"></div>
+                        <div class="radar-dot-mod"></div>
+                        <div class="radar-tip-mod">
+                            <div class="rtm-main">자택 실내 (거실 구역)</div>
+                            <div class="rtm-sub">12:30:18 수신 정상</div>
+                        </div>
+                    </div>
+                    <div class="rbm-footer">
+                        <div class="rbm-f-card">
+                            <span class="rbm-f-label">센서 수신 기기</span>
+                            <span class="rbm-f-val" style="color:#ea580c;">A 게이트웨이 4G</span>
+                        </div>
+                        <div class="rbm-f-card">
+                            <span class="rbm-f-label">단말기 배터리</span>
+                            <span class="rbm-f-val" style="color:#10b981;">89% 정상</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. 건강 추이 영역 -->
+                <div class="health-trend-section">
+                    <div class="hts-header">
+                        <span class="hts-title"><i class="fa-solid fa-chart-line" style="color:var(--primary-blue);"></i> 건강 추이 (최근 7일)</span>
+                        <span class="hts-badge">일 단위 집계</span>
+                    </div>
+
+                    <div class="hts-grid-cards">
+                        <div class="hts-card-item">
+                            <div class="hts-ci-top">
+                                <span class="hts-ci-label">걸음 (보/일)</span>
+                                <span class="hts-ci-val">1,240</span>
+                            </div>
+                            <div class="mini-bar-group">
+                                <div class="m-bar" style="height: 60%;"></div>
+                                <div class="m-bar" style="height: 75%;"></div>
+                                <div class="m-bar" style="height: 45%;"></div>
+                                <div class="m-bar" style="height: 65%;"></div>
+                                <div class="m-bar" style="height: 55%;"></div>
+                                <div class="m-bar" style="height: 40%;"></div>
+                                <div class="m-bar active" style="height: 25%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="hts-card-item">
+                            <div class="hts-ci-top">
+                                <span class="hts-ci-label">심박 (평균)</span>
+                                <span class="hts-ci-val danger">112 <span style="font-size:12px; color:#64748b; font-weight:normal;">(급상승)</span></span>
+                            </div>
+                            <div class="mini-bar-group">
+                                <div class="m-bar" style="height: 45%;"></div>
+                                <div class="m-bar" style="height: 50%;"></div>
+                                <div class="m-bar" style="height: 48%;"></div>
+                                <div class="m-bar" style="height: 55%;"></div>
+                                <div class="m-bar" style="height: 52%;"></div>
+                                <div class="m-bar" style="height: 60%;"></div>
+                                <div class="m-bar danger" style="height: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="hts-card-item">
+                            <div class="hts-ci-top">
+                                <span class="hts-ci-label">수면 (시간/일)</span>
+                                <span class="hts-ci-val">4:12</span>
+                            </div>
+                            <div class="mini-bar-group">
+                                <div class="m-bar" style="height: 65%;"></div>
+                                <div class="m-bar" style="height: 70%;"></div>
+                                <div class="m-bar" style="height: 80%;"></div>
+                                <div class="m-bar" style="height: 60%;"></div>
+                                <div class="m-bar" style="height: 65%;"></div>
+                                <div class="m-bar" style="height: 55%;"></div>
+                                <div class="m-bar danger" style="height: 35%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 3열: 통화 결과 등록 패널 -->
+            <div class="col-action">
+                <div class="action-header">
+                    <div class="action-title">
+                        <i class="fa-solid fa-file-signature"></i>
+                        <span>통화 결과 및 처리 등록</span>
+                    </div>
+                    <div class="action-time-row">
+                        <span>최초 발생: 12:31</span>
+                        <span class="time-tag">9분 경과</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-subtitle">
+                        <span>1. 통화 결과 선택</span>
+                        <span style="color:var(--status-danger); font-size:13px;">* 필수</span>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-card active" onclick="selectStatusCard(this, 'normal')">
+                            <div class="status-icon"><i class="fa-solid fa-user-check"></i></div>
+                            <div class="status-info"><span class="status-main">본인 통화</span><span class="status-sub">직접 안부 확인</span></div>
+                        </div>
+                        <div class="status-card" onclick="selectStatusCard(this, 'danger')">
+                            <div class="status-icon"><i class="fa-solid fa-truck-medical"></i></div>
+                            <div class="status-info"><span class="status-main">119 긴급 출동</span><span class="status-sub">응급 상황 연계</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-subtitle"><span>2. 상담 및 처리 기록</span></div>
+                    <div class="memo-box">
+                        <textarea class="memo-textarea">가슴이 답답하고 어지러워 버튼을 눌렀다고 함. 현재 앉아 계심.</textarea>
+                        <div class="memo-footer"><span>작성 중</span><span>32 / 500자</span></div>
+                    </div>
+                </div>
+
+                <div class="option-group-card">
+                    <div class="section-subtitle" style="margin-bottom:6px;">3. 후속 조치</div>
+                    <select class="custom-select">
+                        <option>30분 뒤 다시 전화</option>
+                        <option>현장 출동 지시</option>
+                        <option>상황 종료</option>
+                    </select>
+                    <button class="btn-sms" onclick="showToast('보호자에게 알림 문자가 발송되었습니다.')">
+                        <i class="fa-solid fa-paper-plane"></i> 보호자 SMS 발송
+                    </button>
+                </div>
+
+                <div class="action-footer-btns">
+                    <button class="btn-temp" onclick="showToast('임시 저장되었습니다.')">임시 저장</button>
+                    <button class="btn-submit" onclick="showToast('등록 완료되었습니다.')">결과 등록</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        function selectStatusCard(element, type) {
+            document.querySelectorAll('.status-card').forEach(card => card.classList.remove('active', 'danger-active'));
+            element.classList.add(type === 'danger' ? 'danger-active' : 'active');
+        }
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+    </script>
+</body>
+</html>
