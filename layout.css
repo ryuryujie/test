@@ -1,0 +1,245 @@
+@charset "UTF-8";
+
+:root {
+    --bg-main: #f4f5f7;
+    --bg-sidebar: #ffffff;
+    --bg-sidebar-hover: #f1f5f9;
+    --bg-card: #ffffff;
+    --border-color: #e2e8f0;
+    --primary-orange: #f97316;
+    --primary-dark: #c2410c;
+    --accent-green: #10b981;
+    --danger-red: #ef4444;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---------------- 사이드바 및 레프트 메뉴 영역 ---------------- */
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-dark);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 16px;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 0 4px;
+}
+
+.brand-logo {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #fb923c, var(--primary-orange));
+    color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.brand-text .title {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+.brand-text .subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.menu-category {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    margin: 16px 0 6px 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menu-item i {
+    width: 18px;
+    margin-right: 8px;
+}
+
+.menu-item:hover:not(.active) {
+    background-color: var(--bg-sidebar-hover);
+    color: var(--text-dark);
+}
+
+.menu-item.active {
+    background-color: var(--primary-orange);
+    color: #fff;
+}
+
+.menu-item .badge {
+    background-color: #ffedd5;
+    color: var(--primary-orange);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.menu-item.active .badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* 사용자 프로필 박스 */
+.user-profile {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+    background-color: var(--accent-green);
+    color: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.user-info { flex: 1; }
+.user-name { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.user-role { font-size: 10px; color: var(--text-muted); }
+.shield-icon { color: var(--primary-orange); font-size: 12px; }
+
+
+/* ---------------- 메인 컨테이너 및 뼈대 레이아웃 ---------------- */
+.main-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    min-width: 0;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.content-3col-layout {
+    display: grid;
+    grid-template-columns: 290px 1fr 330px;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.left-event-column {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-subtle);
+}
+
+.center-detail-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.right-action-column-new {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    box-shadow: var(--shadow-subtle);
+}
+
+.profile-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 270px;
+    gap: 14px;
+    align-items: stretch;
+}
+
+.contact-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.call-result-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px; 
+    font-size: 11px; 
+    text-align: center; 
+}
