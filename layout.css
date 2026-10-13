@@ -28,6 +28,7 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
+    font-size: 14px;
 }
 
 /* ---------------- 사이드바 및 레프트 메뉴 영역 ---------------- */
