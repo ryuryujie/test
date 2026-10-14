@@ -29,7 +29,6 @@
 	thead th{text-align: center;}
 	tbody td{padding:12px 14px;border-bottom:1px solid #edf1f6;vertical-align:middle;line-height:1.65}tbody tr.menu-row:hover{background:#f6f9ff}tbody tr:last-child td{border-bottom:0}
 	th:first-child, td.num { text-align: center; width: 55px; color: #8a97aa; }
-	td.portal-cell { text-align: center; width: 115px; color: #5e6f87; font-weight: 600; white-space: nowrap; }
 	td.depth-cell { min-width: 360px; font-weight: 500; }
 	.depth-sep { color: #a7b2c2; padding: 0 5px; font-weight: 400; }
 	td.id-cell { width: 155px; }
@@ -64,9 +63,6 @@
 	<header class="topbar">
 		<div class="top-inner">
 			<div>
-				<!-- <div class="eyebrow">
-					INFORMATION ARCHITECTURE
-				</div> -->
 				<h1>[안심돌봄] 퍼블리싱 IA</h1>
 				<div class="subtitle">
 					관제센터 · 관리자 포털 · 플랫폼 메뉴 구조 및 화면 ID 관리
@@ -74,10 +70,10 @@
 			</div>
 			<div class="header-meta">
 				<div class="meta-chip">
-					<small>전체 메뉴</small><strong id="totalMeta">44</strong>
+					<small>전체 메뉴</small><strong id="totalMeta">0</strong>
 				</div>
 				<div class="meta-chip">
-					<small>화면 ID 등록</small><strong id="idMeta">44</strong>
+					<small>화면 ID 등록</small><strong id="idMeta">0</strong>
 				</div>
 				<div class="meta-chip">
 					<small>진행 상태</small><strong id="progressMeta">0%</strong>
@@ -106,8 +102,8 @@
 				<option value="delete">삭제</option>
 			</select>
 			<div class="summary">
-				<span>표시 <b id="visibleCount">44</b>건</span>
-				<span>화면 ID <b id="idCount">44</b>건</span>
+				<span>표시 <b id="visibleCount">0</b>건</span>
+				<span>화면 ID <b id="idCount">0</b>건</span>
 				<span>완료율 <b id="progressText">0%</b><i class="progress-track"><i class="progress-fill" id="progressFill"></i></i></span>
 			</div>
 		</section>
@@ -121,7 +117,6 @@
 				<table id="menuTable">
 					<colgroup>
 						<col style="width:60px">
-						<col style="width:10%">
 						<col style="width:15%">
 						<col style="width:25%">
 						<col style="width:10%">
@@ -131,7 +126,6 @@
 					<thead>
 						<tr>
 							<th>No.</th>
-							<th>포털 / 구분</th>
 							<th>메뉴 경로 (Depth)</th>
 							<th>File Directory(화면ID)</th>
 							<th>진행 상태</th>
@@ -140,96 +134,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="group-row" data-group="관제센터">
-							<td colspan="7"><span class="group-dot"></span>관제센터<span class="group-count"></span></td>
+						<tr class="group-row" data-group="PUB">
+							<td colspan="6"><span class="group-dot"></span>PUB<span class="group-count"></span></td>
 						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
+						<tr class="menu-row" data-portal="PUB" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell"><b>대시보드</b></td>
-							<td class="id-cell"><a href="./CTR-DSH-001.html" target="_blank"><code>html/CTR-DSH-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill complete"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="depth-cell"><b>guide</b></td>
+							<td class="id-cell"><a href="./layout.html" target="_blank"><code>html/layout.html</code></a></td>
+							<td class="status-cell"><span class="status-pill">-</span></td>
+							<td class="type-cell"><span class="page">레이아웃</span></td>
 							<td class="note-cell"></td>
 						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell"><b>운영 현황</b></td>
-							<td class="id-cell"><a href="./CTR-OPS-001.html" target="_blank"><code>html/CTR-OPS-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill continue"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">사건 <span class="depth-sep">›</span> <b>진행 중 사건</b></td>
-							<td class="id-cell"><a href="./CTR-INC-001.html" target="_blank"><code>html/CTR-INC-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill complete"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">사건 <span class="depth-sep">›</span> <b>처리 이력</b></td>
-							<td class="id-cell"><a href="../CTR-INC-002.html" target="_blank"><code>html/CTR-INC-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">대상자 <span class="depth-sep">›</span> <b>대상자 조회</b></td>
-							<td class="id-cell"><a href="../CTR-SUB-001.html" target="_blank"><code>html/CTR-SUB-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">대상자 <span class="depth-sep">›</span> <b>착용 현황</b></td>
-							<td class="id-cell"><a href="../CTR-SUB-002.html" target="_blank"><code>html/CTR-SUB-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">집계와 보고 <span class="depth-sep">›</span> <b>지역과 연령</b></td>
-							<td class="id-cell"><a href="../CTR-REP-001.html" target="_blank"><code>html/CTR-REP-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">집계와 보고 <span class="depth-sep">›</span> <b>운영 리포트</b></td>
-							<td class="id-cell"><a href="../CTR-REP-002.html" target="_blank"><code>html/CTR-REP-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관제센터" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell">기록 <span class="depth-sep">›</span> <b>접근 이력</b></td>
-							<td class="id-cell"><a href="../CTR-LOG-001.html" target="_blank"><code>html/CTR-LOG-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
+
+						
+
 						<tr class="group-row" data-group="관리자 포털">
-							<td colspan="7"><span class="group-dot"></span>관리자 포털<span class="group-count"></span></td>
+							<td colspan="6"><span class="group-dot"></span>관리자 포털<span class="group-count"></span></td>
 						</tr>
+						<!-- 현황 -->
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
 							<td class="depth-cell">현황 <span class="depth-sep">›</span> <b>운영 대시보드</b></td>
 							<td class="id-cell"><a href="../ADM-DSH-001.html" target="_blank"><code>html/ADM-DSH-001.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
@@ -238,107 +162,118 @@
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">현황 <span class="depth-sep">›</span> <b>이상징후 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MON-001.html" target="_blank"><code>html/ADM-MON-001.html</code></a></td>
+							<td class="depth-cell">현황 <span class="depth-sep">›</span> <b>탐지 기록 조회</b></td>
+							<td class="id-cell"><a href="../ADM-DSH-002.html" target="_blank"><code>html/ADM-DSH-002.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">현황 <span class="depth-sep">›</span> <b>응급상황 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MON-002.html" target="_blank"><code>html/ADM-MON-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
 							<td class="depth-cell">현황 <span class="depth-sep">›</span> <b>알림 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MON-003.html" target="_blank"><code>html/ADM-MON-003.html</code></a></td>
+							<td class="id-cell"><a href="../ADM-DSH-003.html" target="_blank"><code>html/ADM-DSH-003.html</code></a></td>
+							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!-- 운영 -->
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
+							<td class="num"></td>
+							<td class="depth-cell">운영 <span class="depth-sep">›</span> <b>운영 조치</b></td>
+							<td class="id-cell"><a href="../ADM-OPS-001.html" target="_blank"><code>html/ADM-OPS-001.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">관리 <span class="depth-sep">›</span> <b>이용자 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MNG-001.html" target="_blank"><code>html/ADM-MNG-001.html</code></a></td>
+							<td class="depth-cell">운영 <span class="depth-sep">›</span> <b>도움 제공 연락명부</b></td>
+							<td class="id-cell"><a href="../ADM-OPS-002.html" target="_blank"><code>html/ADM-OPS-002.html</code></a></td>
+							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!-- 안부 확인 -->
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
+							<td class="num"></td>
+							<td class="depth-cell">안부 확인 <span class="depth-sep">›</span> <b>안부 확인 목록</b></td>
+							<td class="id-cell"><a href="../ADM-CHK-001.html" target="_blank"><code>html/ADM-CHK-001.html</code></a></td>
+							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!-- 사용자 -->
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
+							<td class="num"></td>
+							<td class="depth-cell">사용자 <span class="depth-sep">›</span> <b>대상자 관리</b></td>
+							<td class="id-cell"><a href="../ADM-USR-001.html" target="_blank"><code>html/ADM-USR-001.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">관리 <span class="depth-sep">›</span> <b>단말/워치 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MNG-002.html" target="_blank"><code>html/ADM-MNG-002.html</code></a></td>
+							<td class="depth-cell">사용자 <span class="depth-sep">›</span> <b>개인정보 권리 요청</b></td>
+							<td class="id-cell"><a href="../ADM-USR-002.html" target="_blank"><code>html/ADM-USR-002.html</code></a></td>
+							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!-- 디바이스 -->
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
+							<td class="num"></td>
+							<td class="depth-cell">디바이스 <span class="depth-sep">›</span> <b>단말/워치 관리</b></td>
+							<td class="id-cell"><a href="../ADM-DEV-001.html" target="_blank"><code>html/ADM-DEV-001.html</code></a></td>
+							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!-- 서비스 -->
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
+							<td class="num"></td>
+							<td class="depth-cell">서비스 <span class="depth-sep">›</span> <b>위험판정 기준 관리</b></td>
+							<td class="id-cell"><a href="../ADM-SVC-001.html" target="_blank"><code>html/ADM-SVC-001.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">관리 <span class="depth-sep">›</span> <b>건강정보 조회</b></td>
-							<td class="id-cell"><a href="../ADM-MNG-003.html" target="_blank"><code>html/ADM-MNG-003.html</code></a></td>
+							<td class="depth-cell">서비스 <span class="depth-sep">›</span> <b>공지와 동의 문서</b></td>
+							<td class="id-cell"><a href="../ADM-SVC-002.html" target="_blank"><code>html/ADM-SVC-002.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">관리 <span class="depth-sep">›</span> <b>AI 분석결과</b></td>
-							<td class="id-cell"><a href="../ADM-MNG-004.html" target="_blank"><code>html/ADM-MNG-004.html</code></a></td>
+							<td class="depth-cell">서비스 <span class="depth-sep">›</span> <b>지자체 현황판 구성</b></td>
+							<td class="id-cell"><a href="../ADM-SVC-003.html" target="_blank"><code>html/ADM-SVC-003.html</code></a></td>
+							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!-- 로그·통계 -->
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
+							<td class="num"></td>
+							<td class="depth-cell">로그·통계 <span class="depth-sep">›</span> <b>통계/리포트</b></td>
+							<td class="id-cell"><a href="../ADM-STA-001.html" target="_blank"><code>html/ADM-STA-001.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">관리 <span class="depth-sep">›</span> <b>콘텐츠 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MNG-005.html" target="_blank"><code>html/ADM-MNG-005.html</code></a></td>
+							<td class="depth-cell">로그·통계 <span class="depth-sep">›</span> <b>로그/감사 조회</b></td>
+							<td class="id-cell"><a href="../ADM-STA-002.html" target="_blank"><code>html/ADM-STA-002.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
+						<!-- 시스템 -->
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">관리 <span class="depth-sep">›</span> <b>관리자/권한 관리</b></td>
-							<td class="id-cell"><a href="../ADM-MNG-006.html" target="_blank"><code>html/ADM-MNG-006.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">기록 <span class="depth-sep">›</span> <b>통계/리포트</b></td>
-							<td class="id-cell"><a href="../ADM-LOG-001.html" target="_blank"><code>html/ADM-LOG-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">기록 <span class="depth-sep">›</span> <b>로그/감사 조회</b></td>
-							<td class="id-cell"><a href="../ADM-LOG-002.html" target="_blank"><code>html/ADM-LOG-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>로그인/권한</b></td>
+							<td class="depth-cell">시스템 <span class="depth-sep">›</span> <b>관리자 계정과 권한</b></td>
 							<td class="id-cell"><a href="../ADM-SYS-001.html" target="_blank"><code>html/ADM-SYS-001.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
@@ -346,8 +281,7 @@
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>공통코드 관리</b></td>
+							<td class="depth-cell">시스템 <span class="depth-sep">›</span> <b>공통코드 관리</b></td>
 							<td class="id-cell"><a href="../ADM-SYS-002.html" target="_blank"><code>html/ADM-SYS-002.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
@@ -355,201 +289,16 @@
 						</tr>
 						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>지자체 관리</b></td>
+							<td class="depth-cell">시스템 <span class="depth-sep">›</span> <b>지자체 관리</b></td>
 							<td class="id-cell"><a href="../ADM-SYS-003.html" target="_blank"><code>html/ADM-SYS-003.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
-						<tr class="group-row" data-group="플랫폼">
-							<td colspan="7"><span class="group-dot"></span>플랫폼<span class="group-count"></span></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
+						<tr class="menu-row" data-portal="관리자 포털" data-state="undecided">
 							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">처리 콘솔 <span class="depth-sep">›</span> <b>계층과 처리 로그</b></td>
-							<td class="id-cell"><a href="../PLT-ING-001.html" target="_blank"><code>html/PLT-ING-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">수집과 저장 <span class="depth-sep">›</span> <b>건강데이터 수집</b></td>
-							<td class="id-cell"><a href="../PLT-ING-002.html" target="_blank"><code>html/PLT-ING-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">수집과 저장 <span class="depth-sep">›</span> <b>건강데이터 정제·관리</b></td>
-							<td class="id-cell"><a href="../PLT-CNS-001.html" target="_blank"><code>html/PLT-CNS-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">수집과 저장 <span class="depth-sep">›</span> <b>건강데이터 집계</b></td>
-							<td class="id-cell"><a href="../PLT-CNS-002.html" target="_blank"><code>html/PLT-CNS-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">수집과 저장 <span class="depth-sep">›</span> <b>위치정보 관리</b></td>
-							<td class="id-cell"><a href="../PLT-CNS-003.html" target="_blank"><code>html/PLT-CNS-003.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">수집과 저장 <span class="depth-sep">›</span> <b>배치 처리</b></td>
-							<td class="id-cell"><a href="../PLT-CNS-004.html" target="_blank"><code>html/PLT-CNS-004.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">판정 <span class="depth-sep">›</span> <b>이상징후 판단</b></td>
-							<td class="id-cell"><a href="../PLT-DEC-001.html" target="_blank"><code>html/PLT-DEC-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">판정 <span class="depth-sep">›</span> <b>AI 서비스 연계</b></td>
-							<td class="id-cell"><a href="../PLT-DEC-002.html" target="_blank"><code>html/PLT-DEC-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">판정 <span class="depth-sep">›</span> <b>AI 분석결과 관리</b></td>
-							<td class="id-cell"><a href="../PLT-DEC-003.html" target="_blank"><code>html/PLT-DEC-003.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">업무 <span class="depth-sep">›</span> <b>응급상황 관리</b></td>
-							<td class="id-cell"><a href="../PLT-BIZ-001.html" target="_blank"><code>html/PLT-BIZ-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">업무 <span class="depth-sep">›</span> <b>알림 관리</b></td>
-							<td class="id-cell"><a href="../PLT-BIZ-002.html" target="_blank"><code>html/PLT-BIZ-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">인가와 보호 <span class="depth-sep">›</span> <b>회원·인증 관리</b></td>
-							<td class="id-cell"><a href="../PLT-SEC-001.html" target="_blank"><code>html/PLT-SEC-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">인가와 보호 <span class="depth-sep">›</span> <b>이용자·보호자 관리</b></td>
-							<td class="id-cell"><a href="../PLT-SEC-002.html" target="_blank"><code>html/PLT-SEC-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">인가와 보호 <span class="depth-sep">›</span> <b>보안·개인정보</b></td>
-							<td class="id-cell"><a href="../PLT-SEC-003.html" target="_blank"><code>html/PLT-SEC-003.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">제공 <span class="depth-sep">›</span> <b>관리자 지원 API</b></td>
-							<td class="id-cell"><a href="../PLT-API-001.html" target="_blank"><code>html/PLT-API-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">제공 <span class="depth-sep">›</span> <b>통계·대시보드 API</b></td>
-							<td class="id-cell"><a href="../PLT-API-002.html" target="_blank"><code>html/PLT-API-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>단말·워치 관리</b></td>
-							<td class="id-cell"><a href="../PLT-INF-001.html" target="_blank"><code>html/PLT-INF-001.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>콘텐츠 관리</b></td>
-							<td class="id-cell"><a href="../PLT-INF-002.html" target="_blank"><code>html/PLT-INF-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>공통기능</b></td>
-							<td class="id-cell"><a href="../PLT-INF-003.html" target="_blank"><code>html/PLT-INF-003.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>로그·감사 관리</b></td>
-							<td class="id-cell"><a href="../PLT-INF-004.html" target="_blank"><code>html/PLT-INF-004.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
-							<td class="note-cell"></td>
-						</tr>
-						<tr class="menu-row" data-portal="플랫폼" data-state="undecided">
-							<td class="num"></td>
-							<td class="portal-cell">플랫폼</td>
-							<td class="depth-cell">기반 <span class="depth-sep">›</span> <b>연계·예외처리 공통</b></td>
-							<td class="id-cell"><a href="../PLT-INF-005.html" target="_blank"><code>html/PLT-INF-005.html</code></a></td>
+							<td class="depth-cell">시스템 <span class="depth-sep">›</span> <b>연계와 버전</b></td>
+							<td class="id-cell"><a href="../ADM-SYS-004.html" target="_blank"><code>html/ADM-SYS-004.html</code></a></td>
 							<td class="status-cell"><span class="status-pill undecided"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
@@ -586,32 +335,18 @@
 				}
 			}
 		}
-
-		/* const link = r.querySelector('.id-cell a');
-		if(link) {
-			link.addEventListener('click', function(e) {
-				if(r.dataset.state === 'undecided') {
-					e.preventDefault();
-					alert('준비중입니다.');
-				}
-			});
-		} */
-
-		const link = r.querySelector('.id-cell a');
-		if(link) {
-			link.addEventListener('click', function(e) {
-				// complete가 아닐 경우 모두 기본 동작을 막고 얼럿창을 띄웁니다.
-				if(r.dataset.state !== 'complete') {
-					e.preventDefault();
-					alert('준비중입니다.');
-				}
-			});
-		}
-
 	});
 
-	rows.forEach((r,i)=>{r.querySelector('.num').textContent=String(i+1).padStart(2,'0')});
-	groups.forEach(g=>{const p=g.dataset.group;g.querySelector('.group-count').textContent='· '+rows.filter(r=>r.dataset.portal===p).length+'개 메뉴'});
+	// 그룹별로 순번(01부터 시작) 및 메뉴 개수 설정
+	groups.forEach(g => {
+		const p = g.dataset.group;
+		const pRows = rows.filter(r => r.dataset.portal === p);
+		pRows.forEach((r, i) => {
+			r.querySelector('.num').textContent = String(i + 1).padStart(2, '0');
+		});
+		g.querySelector('.group-count').textContent = '· ' + pRows.length + '개 메뉴';
+	});
+
 	const ids=rows.filter(r=>r.querySelector('code')).length;
 	document.getElementById('totalMeta').textContent=rows.length;
 	document.getElementById('idMeta').textContent=ids;

@@ -7333,3 +7333,22 @@ body.action-drawer-open .action-drawer-overlay {
     box-sizing: border-box !important;
 }
 
+/* 건강 지표 카드 내부 레이아웃을 Flex로 고정하여 하단 영역 밀착 정렬 */
+.center-detail-column .health-metric-card-v2 {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important; /* 내부 콘텐츠를 위아래로 분산시켜 하단 푸터를 바닥에 고정 */
+    height: 100% !important;
+}
+
+/* 카드 하단 날짜/라벨 영역 라인 완벽 정렬 */
+.center-detail-column .health-metric-footer-v2 {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: auto !important; /* 남은 여백을 위로 밀어내어 항상 카드의 맨 아래에 위치 */
+    padding-top: 8px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    font-size: 10px !important;
+    color: #9ca3af !important;
+}
