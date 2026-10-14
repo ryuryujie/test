@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 운영 현황 템플릿</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 공통 레이아웃 및 컨텐츠 CSS 링크 -->
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="content.css">
+   
+    <style>
+    
+:root {
+    --ds-done: #10b981;
+    --ds-done-bg: #ecfdf5;
+    --ds-done-line: #a7f3d0;
+    --ds-done-text: #047857;
+
+    --ds-wip: #6366f1;
+    --ds-wip-bg: #eef2ff;
+    --ds-wip-line: #c7d2fe;
+    --ds-wip-text: #4338ca;
+
+    --ds-warn: #f59e0b;
+    --ds-warn-bg: #fffbeb;
+    --ds-warn-line: #fde68a;
+    --ds-warn-text: #b45309;
+
+    --ds-track: #e8edf3;
+}
+
+.ds-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 16px;
+    align-items: stretch;
+}
+
+.ds-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+/* ---------- 카드 헤더 ---------- */
+.ds-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ds-head-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.ds-head-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+.ds-head-icon.is-amber  { background: var(--ds-warn-bg); color: var(--ds-warn-text); }
+.ds-head-icon.is-indigo { background: var(--ds-wip-bg);  color: var(--ds-wip-text); }
+
+.ds-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+}
+
+.ds-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.ds-pill {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sub);
+    background: #f1f5f9;
+    border-radius: 999px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.ds-pill strong { color: var(--text-main); font-weight: 700; }
+
+/* =========================================================
+   좌측: 오늘 처리 상태
+   ========================================================= */
+.ds-status-body {
+    display: grid;
+    grid-template-columns: 148px minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+}
+
+/* 도넛 */
+.ds-donut {
+    --done: 50;
+    --wip: 8.3;
+    position: relative;
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    background: conic-gradient(
+        var(--ds-done) 0 calc(var(--done) * 1%),
+        var(--ds-wip)  calc(var(--done) * 1%) calc((var(--done) + var(--wip)) * 1%),
+        var(--ds-warn) calc((var(--done) + var(--wip)) * 1%) 100%
+    );
+}
+.ds-donut::after {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    background: var(--bg-card);
+    border-radius: 50%;
+}
+.ds-donut-center {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ds-donut-num {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1;
+    letter-spacing: -1px;
+}
+.ds-donut-num small { font-size: 14px; font-weight: 600; margin-left: 1px; }
+.ds-donut-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+/* 상태 행 */
+.ds-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+}
+
+.ds-status-row {
+    border: 1px solid var(--row-line);
+    background: var(--row-bg);
+    border-radius: 12px;
+    padding: 11px 14px 12px;
+}
+.ds-status-row.is-done { --row-line: var(--ds-done-line); --row-bg: var(--ds-done-bg); --row-color: var(--ds-done); --row-text: var(--ds-done-text); }
+.ds-status-row.is-wip  { --row-line: var(--ds-wip-line);  --row-bg: var(--ds-wip-bg);  --row-color: var(--ds-wip);  --row-text: var(--ds-wip-text); }
+.ds-status-row.is-warn { --row-line: var(--ds-warn-line); --row-bg: var(--ds-warn-bg); --row-color: var(--ds-warn);  --row-text: var(--ds-warn-text); }
+
+/* 가장 급한 항목(미확인)은 테두리를 진하게 */
+.ds-status-row.is-warn { border-width: 1.5px; border-color: var(--ds-warn); }
+
+.ds-status-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.ds-status-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--row-text);
+}
+.ds-status-name i { font-size: 13px; }
+
+.ds-status-count {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+.ds-status-count small {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sub);
+    margin-left: 4px;
+}
+
+.ds-bar {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18);
+    margin-top: 9px;
+    overflow: hidden;
+}
+.ds-bar > span {
+    display: block;
+    height: 100%;
+    width: var(--w, 0%);
+    min-width: 6px;
+    border-radius: inherit;
+    background: var(--row-color);
+    transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 안내 문구 */
+.ds-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--ds-warn-bg);
+    border: 1px solid var(--ds-warn-line);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ds-warn-text);
+    margin-top: auto;
+}
+.ds-note i { margin-top: 2px; font-size: 13px; }
+.ds-note strong { font-weight: 700; }
+
+/* =========================================================
+   우측: 읍면별 진행 현황
+   ========================================================= */
+.ds-tabs {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    align-self: flex-start;
+}
+
+.ds-tab {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-sub);
+    padding: 7px 14px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.ds-tab em {
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 4px;
+    color: var(--text-muted);
+}
+.ds-tab:hover { color: var(--text-main); }
+.ds-tab[aria-pressed="true"] {
+    background: #fff;
+    color: var(--text-main);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
+}
+.ds-tab[aria-pressed="true"] em { color: var(--primary-orange); }
+
+.ds-region-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    list-style: none;
+}
+
+.ds-region {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 14px 16px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+/* 진행 중인 지역은 좌측 앰버 막대로 구분 */
+.ds-region.has-wip::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--ds-warn);
+}
+.ds-region.is-quiet { background: #fbfcfe; }
+.ds-region:hover { border-color: #cbd5e1; box-shadow: var(--shadow-md); }
+
+.ds-region-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.ds-region-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.2px;
+}
+.ds-region.is-quiet .ds-region-name { color: var(--text-sub); }
+
+.ds-region-total {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-sub);
+}
+.ds-region-total b { color: var(--text-main); font-weight: 800; font-size: 13px; }
+
+/* 진행/완료 비율 막대 */
+.ds-split {
+    display: flex;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--ds-track);
+    overflow: hidden;
+    gap: 2px;
+}
+.ds-split > span { display: block; height: 100%; }
+.ds-split .is-wip  { background: var(--ds-warn); }
+.ds-split .is-done { background: var(--ds-done); }
+
+.ds-region-nums {
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--text-sub);
+}
+.ds-region-nums span { display: inline-flex; align-items: center; gap: 6px; }
+.ds-region-nums i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.ds-region-nums .n-wip i  { background: var(--ds-warn); }
+.ds-region-nums .n-done i { background: var(--ds-done); }
+.ds-region-nums b { font-weight: 800; color: var(--text-main); font-size: 13px; }
+.ds-region-nums .n-zero b { color: var(--text-muted); }
+
+.ds-legend-hint {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: auto;
+}
+
+.ds-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 28px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* =========================================================
+   접근성 / 반응형
+   ========================================================= */
+.ds-tab:focus-visible {
+    outline: 2px solid var(--primary-orange);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ds-bar > span, .ds-tab, .ds-region { transition: none; }
+}
+
+@media (max-width: 1280px) {
+    .ds-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .ds-card { padding: 18px 16px 20px; }
+    .ds-head { flex-wrap: wrap; }
+    .ds-status-body { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+    .ds-status-list { width: 100%; }
+    .ds-region-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <!-- 브랜드 로고 -->
+        <div class="brand">
+            <div class="brand-logo">화</div>
+            <div class="brand-text">
+                <div class="title">화순군 안심 돌봄</div>
+                <div class="subtitle">스마트 관제 포털</div>
+            </div>
+        </div>
+
+        <!-- 네비게이션 메뉴 -->
+        <nav class="sidebar-nav">
+            <!-- 활성화된 메인 카테고리 -->
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-shapes"></i></span>
+                        <span class="nav-label">운영 현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item active"><a href="#">실시간 모니터링</a></li>
+                </ul>
+            </div>
+
+            <!-- 사건 관리 -->
+            <div class="nav-group ">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box-blank"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                        <span class="nav-label">사건 관리</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">진행 중 사건 <span class="badge">12</span></a></li>
+                    <li class="sub-item"><a href="#">처리 이력</a></li>
+                </ul>
+            </div>
+
+            <!-- 대상자 관리 -->
+            <div class="nav-group">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span>
+                        <span class="nav-label">대상자 관리</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">대상자 조회</a></li>
+                    <li class="sub-item"><a href="#">착용 현황</a></li>
+                </ul>
+            </div>
+
+            <!-- 통계 및 보고 -->
+            <div class="nav-group">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span>
+                        <span class="nav-label">통계 및 보고</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">지역과 연령</a></li>
+                    <li class="sub-item"><a href="#">운영 리포트</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 사이드바 하단 프로필 -->
+        <div class="sidebar-footer">
+            <!-- 프로필 카드 -->
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="main-container">
+
+        <!-- 상단 헤더 / 탑바 -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="search-box">
+                    <input type="text" placeholder="어르신 이름, 대상자 코드, 연락처 검색...">
+                    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="icon-badge-btn">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge-count">12</span>
+                </div>
+
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </header>
+
+        <!-- 공지 및 안내 띠 배너 -->
+        <div class="alert-banner">
+            <i class="fa-solid fa-shield-halved alert-icon"></i>
+            <span><strong>[보안 공지]</strong> 목적 외 개인정보 조회를 엄격히 금하며, 자리 비움 시 화면을 반드시 잠가 주십시오.</span>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">운영 현황</h2>
+                <span class="page-sub-desc">오늘 우리 센터가 어디까지 했는가</span>
+            </div>
+            <div class="breadcrumb">
+                <span>운영 현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">현황</span>
+            </div>
+        </div>
+		
+
+		<div class="content-body">
+
+
+            
+            <div class="ds-grid">
+
+                <!-- 좌측: 오늘 처리 상태 -->
+                <section class="ds-card" aria-labelledby="ds-status-title">
+                    <header class="ds-head">
+                        <div class="ds-head-left">
+                            <div class="ds-head-icon is-amber"><i class="fa-solid fa-chart-pie"></i></div>
+                            <div>
+                                <h3 class="ds-title" id="ds-status-title">오늘 처리 상태</h3>
+                                <p class="ds-desc">실시간 관제 건수 요약</p>
+                            </div>
+                        </div>
+                        <span class="ds-pill">총 이상 <strong>12건</strong></span>
+                    </header>
+
+                    <div class="ds-status-body">
+                        <div class="ds-donut" style="--done:50; --wip:8.3;" role="img"
+                            aria-label="전체 12건 중 확인 완료 6건, 처리 중 1건, 미확인 5건">
+                            <div class="ds-donut-center">
+                                <div class="ds-donut-num">12<small>건</small></div>
+                                <div class="ds-donut-label">오늘 총 이상</div>
+                            </div>
+                        </div>
+
+                        <ul class="ds-status-list">
+                            <li class="ds-status-row is-warn">
+                                <div class="ds-status-top">
+                                    <span class="ds-status-name"><i class="fa-solid fa-triangle-exclamation"></i>미확인</span>
+                                    <span class="ds-status-count">5건<small>41.7%</small></span>
+                                </div>
+                                <div class="ds-bar"><span style="--w:41.7%"></span></div>
+                            </li>
+                            <li class="ds-status-row is-wip">
+                                <div class="ds-status-top">
+                                    <span class="ds-status-name"><i class="fa-solid fa-spinner"></i>처리 중</span>
+                                    <span class="ds-status-count">1건<small>8.3%</small></span>
+                                </div>
+                                <div class="ds-bar"><span style="--w:8.3%"></span></div>
+                            </li>
+                            <li class="ds-status-row is-done">
+                                <div class="ds-status-top">
+                                    <span class="ds-status-name"><i class="fa-solid fa-circle-check"></i>확인 완료</span>
+                                    <span class="ds-status-count">6건<small>50%</small></span>
+                                </div>
+                                <div class="ds-bar"><span style="--w:50%"></span></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <p class="ds-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span><strong>골든타임 경과 건</strong>은 왼쪽 「진행 중 사건」에서 긴급 마킹됩니다.</span>
+                    </p>
+                </section>
+
+                <!-- 우측: 읍면별 진행 현황 -->
+                <section class="ds-card" aria-labelledby="ds-region-title">
+                    <header class="ds-head">
+                        <div class="ds-head-left">
+                            <div class="ds-head-icon is-indigo"><i class="fa-solid fa-map-location-dot"></i></div>
+                            <div>
+                                <h3 class="ds-title" id="ds-region-title">읍면별 진행 현황</h3>
+                                <p class="ds-desc">화순군 13개 읍·면 관할</p>
+                            </div>
+                        </div>
+                        <span class="ds-pill">대상 지역 <strong>6곳</strong> 활성</span>
+                    </header>
+
+                    <div class="ds-tabs" role="group" aria-label="지역 필터">
+                        <button type="button" class="ds-tab" data-filter="all"  aria-pressed="true">전체<em id="ds-cnt-all">6</em></button>
+                        <button type="button" class="ds-tab" data-filter="wip"  aria-pressed="false">진행 중<em id="ds-cnt-wip">4</em></button>
+                        <button type="button" class="ds-tab" data-filter="done" aria-pressed="false">진행 없음<em id="ds-cnt-done">2</em></button>
+                    </div>
+
+                    <ul class="ds-region-grid" id="ds-region-grid"></ul>
+
+                    <p class="ds-legend-hint">진행 건수가 많은 지역부터 표시됩니다.</p>
+                </section>
+
+            </div>
+
+            <script>
+            (function () {
+                // 데이터만 바꾸면 카드가 자동으로 다시 그려집니다.
+                var regions = [
+                    { name: '화순읍', wip: 2, done: 1 },
+                    { name: '춘양면', wip: 1, done: 2 },
+                    { name: '도곡면', wip: 2, done: 0 },
+                    { name: '이양면', wip: 1, done: 0 },
+                    { name: '이서면', wip: 0, done: 1 },
+                    { name: '농주면', wip: 0, done: 1 }
+                ];
+
+                // 진행 건수 많은 순 → 전체 건수 많은 순
+                regions.sort(function (a, b) {
+                    return (b.wip - a.wip) || ((b.wip + b.done) - (a.wip + a.done));
+                });
+
+                var grid = document.getElementById('ds-region-grid');
+                var tabs = document.querySelectorAll('.ds-tab');
+
+                function render(filter) {
+                    var list = regions.filter(function (r) {
+                        if (filter === 'wip')  return r.wip > 0;
+                        if (filter === 'done') return r.wip === 0;
+                        return true;
+                    });
+
+                    if (!list.length) {
+                        grid.innerHTML = '<li class="ds-empty">해당하는 지역이 없습니다.</li>';
+                        return;
+                    }
+
+                    grid.innerHTML = list.map(function (r) {
+                        var total = r.wip + r.done;
+                        var wipW  = total ? (r.wip  / total * 100) : 0;
+                        var doneW = total ? (r.done / total * 100) : 0;
+                        var cls   = r.wip > 0 ? 'has-wip' : 'is-quiet';
+                        return '' +
+                        '<li class="ds-region ' + cls + '">' +
+                            '<div class="ds-region-top">' +
+                                '<span class="ds-region-name">' + r.name + '</span>' +
+                                '<span class="ds-region-total">총 <b>' + total + '</b>건</span>' +
+                            '</div>' +
+                            '<div class="ds-split" role="img" aria-label="진행 ' + r.wip + '건, 완료 ' + r.done + '건">' +
+                                (r.wip  ? '<span class="is-wip"  style="width:' + wipW  + '%"></span>' : '') +
+                                (r.done ? '<span class="is-done" style="width:' + doneW + '%"></span>' : '') +
+                            '</div>' +
+                            '<div class="ds-region-nums">' +
+                                '<span class="n-wip'  + (r.wip  ? '' : ' n-zero') + '"><i></i>진행 <b>' + r.wip  + '건</b></span>' +
+                                '<span class="n-done' + (r.done ? '' : ' n-zero') + '"><i></i>완료 <b>' + r.done + '건</b></span>' +
+                            '</div>' +
+                        '</li>';
+                    }).join('');
+                }
+
+                tabs.forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        tabs.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+                        render(btn.getAttribute('data-filter'));
+                    });
+                });
+
+                render('all');
+            })();
+            </script>
+
+            
+
+        </div>
+    </div>
+</body>
+</html>
