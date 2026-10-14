@@ -335,6 +335,17 @@
 				}
 			}
 		}
+
+		// PUB 포털이 아니고 진행상태가 완료가 아닌 경우 링크 클릭 제어
+		const link = r.querySelector('.id-cell a');
+		if (link) {
+			link.addEventListener('click', function(e) {
+				if (r.dataset.portal !== 'PUB' && r.dataset.state !== 'complete') {
+					e.preventDefault(); // 링크 이동 막기
+					alert('아직 완료되지 않은 화면입니다.');
+				}
+			});
+		}
 	});
 
 	// 그룹별로 순번(01부터 시작) 및 메뉴 개수 설정
