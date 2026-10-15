@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <!-- Chart.js 라이브러리 (시각화 그래프용) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <!-- 사이드바 영역 -->
     <aside class="sidebar">
-        <!-- 브랜드 로고 -->
         <div class="brand">
             <div class="brand-logo">안</div>
             <div class="brand-text">
@@ -24,7 +26,6 @@
             </div>
         </div>
 
-        <!-- 네비게이션 메뉴 (이미지 기반 개편) -->
         <nav class="sidebar-nav">
             
             <!-- 1. 현황 -->
@@ -143,7 +144,6 @@
 
         </nav>
 
-        <!-- 사이드바 하단 프로필 -->
         <div class="sidebar-footer">
             <div class="user-profile-card">
                 <div class="user-avatar">
@@ -158,14 +158,13 @@
     </aside>
 
     <!-- 메인 컨테이너 -->
-    <div class="main-container">
+    <div class="container">
 
-        <!-- 상단 헤더 / 탑바 -->
-        <header class="top-header">
+        <!-- 상단 헤더 -->
+        <div class="top-header">
             <div class="header-welcome-text">
                 <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
             </div>
-
             <div class="header-right">
                 <div class="user-status-info">
                     <span class="user-title">ITeyes 관리자 홍길동 님</span>
@@ -176,7 +175,7 @@
                     <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
                 </div>
             </div>
-        </header>
+        </div>
 
         <!-- 페이지 타이틀 바 -->
         <div class="page-title-bar">
@@ -189,13 +188,13 @@
             </div>
         </div>
         
-        <!-- 실제 컨텐츠 시작 영역 -->
-        <main class="content-body">
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
             <div class="content-inner-box">
-                컨텐츠 시작
+                
+                컨텐츠
             </div>
-        </main>
-
+        </div>
     </div>
 
 </body>
