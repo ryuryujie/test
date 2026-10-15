@@ -218,7 +218,7 @@
                                     </div>
                                 </div>
 
-                                <table class="dashboard-table">
+                                <table class="list-table">
                                     <thead>
                                         <tr>
                                             <th>등급</th>
@@ -276,8 +276,8 @@
                                     <div class="section-title"><i class="fa-solid fa-location-dot"></i> 읍면동별 현황</div>
                                     <a href="#" class="section-header-link">더보기</a>
                                 </div>
-                                <div class="dashboard-table-scroll">
-                                    <table class="dashboard-table">
+                                <div class="list-table-scroll">
+                                    <table class="list-table">
                                         <thead>
                                             <tr>
                                                 <th>읍면동</th>
@@ -288,6 +288,48 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr>
+                                                <td class="u-text-left u-font-semibold">가동</td>
+                                                <td>168명</td>
+                                                <td>91%</td>
+                                                <td>96%</td>
+                                                <td>3건</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="u-text-left u-font-semibold">가동</td>
+                                                <td>168명</td>
+                                                <td>91%</td>
+                                                <td>96%</td>
+                                                <td>3건</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="u-text-left u-font-semibold">가동</td>
+                                                <td>168명</td>
+                                                <td>91%</td>
+                                                <td>96%</td>
+                                                <td>3건</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="u-text-left u-font-semibold">가동</td>
+                                                <td>168명</td>
+                                                <td>91%</td>
+                                                <td>96%</td>
+                                                <td>3건</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="u-text-left u-font-semibold">가동</td>
+                                                <td>168명</td>
+                                                <td>91%</td>
+                                                <td>96%</td>
+                                                <td>3건</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="u-text-left u-font-semibold">가동</td>
+                                                <td>168명</td>
+                                                <td>91%</td>
+                                                <td>96%</td>
+                                                <td>3건</td>
+                                            </tr>
                                             <tr>
                                                 <td class="u-text-left u-font-semibold">가동</td>
                                                 <td>168명</td>
@@ -330,28 +372,34 @@
                             <div class="section-header-flex dsh-sm-header u-mb-0">
                                 <div class="section-title dsh-sm-title"><i class="fa-solid fa-user-plus"></i> 가입 단계별 인원 <span class="dsh-sub-count">(등록됨 15명)</span></div>
                             </div>
-                            <div class="dsh-step-wrapper">
-                                <div class="dsh-step-row">
-                                    <span class="dsh-step-name">동의 전</span>
-                                    <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 40%; background-color: #3b82f6;"></div></div>
-                                    <span class="dsh-step-count">2명</span>
+                          
+
+                            <div>
+                                <!-- 차트 영역 -->
+                                <div style="position: relative; width: 100%; height: 140px; margin-bottom: 8px;">
+                                    <canvas id="joinStepChart"></canvas>
                                 </div>
-                                <div class="dsh-step-row">
-                                    <span class="dsh-step-name">위치 배정 전</span>
-                                    <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 65%; background-color: #3b82f6;"></div></div>
-                                    <span class="dsh-step-count">4명</span>
-                                </div>
-                                <div class="dsh-step-row">
-                                    <span class="dsh-step-name">앱 연결 전</span>
-                                    <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 85%; background-color: #3b82f6;"></div></div>
-                                    <span class="dsh-step-count">6명</span>
-                                </div>
-                                <div class="dsh-step-row">
-                                    <span class="dsh-step-name">첫 수신 전</span>
-                                    <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 50%; background-color: #3b82f6;"></div></div>
-                                    <span class="dsh-step-count">3명</span>
+                                <!-- 우측 상세 범례 영역 -->
+                                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px;">
+                                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center;">
+                                        <div style="font-size: 11px; color: #64748b; font-weight: 600;">동의 전</div>
+                                        <div style="font-size: 18px; font-weight: 700; color: #3b82f6; margin-top: 4px;">2명 <span style="font-size: 11px; font-weight: normal; color: #94a3b8;">(13%)</span></div>
+                                    </div>
+                                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center;">
+                                        <div style="font-size: 11px; color: #64748b; font-weight: 600;">위치 배정 전</div>
+                                        <div style="font-size: 18px; font-weight: 700; color: #6366f1; margin-top: 4px;">4명 <span style="font-size: 11px; font-weight: normal; color: #94a3b8;">(27%)</span></div>
+                                    </div>
+                                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center;">
+                                        <div style="font-size: 11px; color: #64748b; font-weight: 600;">앱 연결 전</div>
+                                        <div style="font-size: 18px; font-weight: 700; color: #10b981; margin-top: 4px;">6명 <span style="font-size: 11px; font-weight: normal; color: #94a3b8;">(40%)</span></div>
+                                    </div>
+                                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center;">
+                                        <div style="font-size: 11px; color: #64748b; font-weight: 600;">첫 수신 전</div>
+                                        <div style="font-size: 18px; font-weight: 700; color: #f59e0b; margin-top: 4px;">3명 <span style="font-size: 11px; font-weight: normal; color: #94a3b8;">(20%)</span></div>
+                                    </div>
                                 </div>
                             </div>
+                            
                             <div class="common-notice-box u-mt-0">
                                 <p>
                                     <i class="fa-solid fa-circle-info"></i> 
@@ -373,7 +421,7 @@
                                 </div>
                                 
                                 <div class="dsh-device-grid">
-                                    <table class="dashboard-table dsh-table-sm">
+                                    <table class="list-table dsh-table-sm">
                                         <thead>
                                             <tr>
                                                 <th>배정 상태</th>
@@ -465,13 +513,44 @@
                     <!-- 검색 영역 컴포넌트화 (항목 추가가 용이한 구조) -->
                     <div class="search-filter-component">
                         <!-- 첫 번째 행: 검색옵션 -->
-                        <div class="search-filter-row">
+                        <!-- <div class="search-filter-row">
                             <span class="search-filter-label">검색옵션</span>
                             <div class="checkbox-group-inline">
                                 <label class="checkbox-label"><input type="checkbox" checked> 전체</label>
                                 <label class="checkbox-label"><input type="checkbox"> 구분 전체</label>
                                 <label class="checkbox-label"><input type="checkbox"> 읍면동 전체</label>
                                 <label class="checkbox-label"><input type="checkbox"> 운영 조치 전체</label>
+                            </div>
+                        </div> -->
+
+                        <div class="search-filter-row">
+                            <span class="search-filter-label">검색옵션</span>
+                            <div class="checkbox-group-inline">
+                                <select class="filter-select">
+                                    <option value="all">전체</option>
+                                </select>
+
+                                <select class="filter-select">
+                                    <option value="">구분 전체</option>
+                                    <option value="disconnect">수신 끊김</option>
+                                    <option value="not_worn">미착용</option>
+                                </select>
+
+                                <select class="filter-select">
+                                    <option value="">읍면동 전체</option>
+                                    <option value="ga">가동</option>
+                                    <option value="na">나동</option>
+                                    <option value="da">다면</option>
+                                    <option value="ra">라면</option>
+                                </select>
+
+                                <select class="filter-select">
+                                    <option value="">운영 조치 전체</option>
+                                    <option value="none">없음</option>
+                                    <option value="pending">처리 대기</option>
+                                    <option value="progress">처리 중</option>
+                                    <option value="complete">처리 완료</option>
+                                </select>
                             </div>
                         </div>
                         
@@ -509,7 +588,7 @@
                         </div>
                     </div>
                     
-                    <table class="dashboard-table">
+                    <table class="list-table">
                         <thead>
                             <tr>
                                 <th class="th-checkbox"><input type="checkbox"></th>
@@ -529,9 +608,9 @@
                                 <td>수신 끊김</td>
                                 <td><strong>서촌자</strong> (86)</td>
                                 <td>나동</td>
-                                <td class="text-code">W-A-000152</td>
+                                <td>W-A-000152</td>
                                 <td>10-12 21:10</td>
-                                <td class="u-text-danger">1일 11시간</td>
+                                <td>1일 11시간</td>
                                 <td>-</td>
                                 <td>처리 중</td>
                             </tr>
@@ -540,7 +619,7 @@
                                 <td>수신 끊김</td>
                                 <td><strong>문태식</strong> (82)</td>
                                 <td>나동</td>
-                                <td class="text-code">W-A-000274</td>
+                                <td>W-A-000274</td>
                                 <td>10-13 19:40</td>
                                 <td>13시간 20분</td>
                                 <td>-</td>
@@ -551,7 +630,7 @@
                                 <td>미착용</td>
                                 <td><strong>강옥희</strong> (83)</td>
                                 <td>가동</td>
-                                <td class="text-code">W-A-000140</td>
+                                <td>W-A-000140</td>
                                 <td>10-14 08:58</td>
                                 <td>12시간 5분</td>
                                 <td>41%</td>
@@ -562,7 +641,7 @@
                                 <td>미착용</td>
                                 <td><strong>오금자</strong> (84)</td>
                                 <td>가동</td>
-                                <td class="text-code">W-A-000226</td>
+                                <td>W-A-000226</td>
                                 <td>10-14 08:57</td>
                                 <td>9시간 40분</td>
                                 <td>18%</td>
@@ -573,7 +652,7 @@
                                 <td>수신 끊김</td>
                                 <td><strong>한상철</strong> (80)</td>
                                 <td>다면</td>
-                                <td class="text-code">W-A-000305</td>
+                                <td>W-A-000305</td>
                                 <td>10-14 03:15</td>
                                 <td>5시간 45분</td>
                                 <td>-</td>
@@ -584,7 +663,7 @@
                                 <td>미착용</td>
                                 <td><strong>윤병국</strong> (78)</td>
                                 <td>다면</td>
-                                <td class="text-code">W-A-000233</td>
+                                <td>W-A-000233</td>
                                 <td>10-14 08:59</td>
                                 <td>3시간 10분</td>
                                 <td>77%</td>
@@ -717,6 +796,68 @@
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 closeModal();
+            }
+        });
+
+
+        // 가입 단계별 인원 차트 생성
+        // 가입 단계별 인원 가로형 바 차트 생성
+        const ctx = document.getElementById('joinStepChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['동의 전', '위치 배정 전', '앱 연결 전', '첫 수신 전'],
+                datasets: [{
+                    data: [2, 4, 6, 3],
+                    backgroundColor: ['#3b82f6', '#6366f1', '#10b981', '#f59e0b'],
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    barThickness: 16
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const total = 15; // 전체 등록 인원 15명 기준 비율 계산
+                                const percentage = Math.round((value / total) * 100);
+                                return ` 해당 단계: ${value}명 (전체 15명의 ${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: { size: 11 },
+                            color: '#64748b',
+                            stepSize: 2
+                        }
+                        // max: 8 강제 설정을 제거하여 데이터 범위에 맞게 자동 조절되도록 함
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: { size: 12, weight: '600' },
+                            color: '#334155'
+                        }
+                    }
+                }
             }
         });
     </script>

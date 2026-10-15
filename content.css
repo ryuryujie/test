@@ -201,7 +201,7 @@
 /* 시각적 테이블 스타일 */
 
 
-.dashboard-table {
+.list-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -210,7 +210,7 @@
 }
 
 
-.dashboard-table th {
+.list-table th {
     background-color: #f8fafc;
     color: #475569;
     font-weight: 600;
@@ -220,26 +220,26 @@
 }
 
 
-.dashboard-table th:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+.list-table th:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
 
 
-.dashboard-table th:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+.list-table th:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
 
 
 
-.dashboard-table td {
+.list-table td {
     padding: 12px 10px;
     color: #1e293b;
     border-bottom: 1px solid #f1f5f9;
 }
 
 
-.dashboard-table tr:hover td {
+.list-table tr:hover td {
     background-color: #f8fafc;
 }
 
 
-.dashboard-table tr.total-row td {
+.list-table tr.total-row td {
     font-weight: 700;
     background-color: #f8fafc;
     border-top: 2px solid #cbd5e1;
@@ -256,9 +256,7 @@
 
 
 /* 테이블 스크롤 래퍼 */
-
-
-.dashboard-table-scroll {
+.list-table-scroll {
     max-height: 220px;
     overflow-y: auto;
     border-radius: 10px;
@@ -267,13 +265,13 @@
 }
 
 
-.dashboard-table-scroll::-webkit-scrollbar { width: 6px; }
+.list-table-scroll::-webkit-scrollbar { width: 6px; }
 
 
-.dashboard-table-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+.list-table-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
 
 
-.dashboard-table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+.list-table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
 
 
@@ -423,30 +421,6 @@
 .dsh-sub-count { font-size: 12px; font-weight: 500; color: #64748b; }
 
 
-
-.dsh-step-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    font-size: 13px;
-    padding: 2px 0;
-}
-
-
-.dsh-step-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-.dsh-step-name { width: 95px; color: #475569; font-weight: 500; }
-
-
-.dsh-step-wrapper .mini-progress-bar { flex: 1; margin: 0 12px; height: 8px; }
-
-
-.dsh-step-count { font-weight: 700; width: 35px; text-align: right; color: #0f172a; }
 
 
 
@@ -1133,8 +1107,6 @@
 
 .u-text-blue { color: #2563eb !important; }
 
-
-.text-code { color: #64748b !important; font-family: monospace !important; }
 
 
 .tr-bg-light { background-color: #f8fafc !important; }
