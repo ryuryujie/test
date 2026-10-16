@@ -85,11 +85,11 @@
         <!-- 페이지 타이틀 바 -->
         <div class="page-title-bar">
             <div class="page-title-left">
-                <h2 class="page-main-title">운영 대시보드</h2>
+                <h2 class="page-main-title">워치 관리</h2>
                 <span class="page-sub-desc">안심 돌봄 시스템 통합 현황</span>
             </div>
             <div class="breadcrumb">
-                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">운영 대시보드</span>
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">워치 관리</span>
             </div>
         </div>
         
@@ -133,66 +133,65 @@
 
                 <div class="search-filter-finder">
 
-    <!-- 구분 / 읍면동 : 2열 -->
-    <div class="search-filter-grid">
+                    <div class="search-filter-grid">
 
-        <!-- 구분 -->
-        <div class="search-filter-row">
-            <span class="search-filter-label">구분</span>
-            <div class="radio-group-inline">
-                <label class="radio-label"><input type="radio" name="disconnectType" value="all" checked> 전체</label>
-                <label class="radio-label"><input type="radio" name="disconnectType" value="disconnect"> 수신 끊김</label>
-                <label class="radio-label"><input type="radio" name="disconnectType" value="not_worn"> 미착용</label>
-            </div>
-        </div>
+                        <!-- 구분 -->
+                        <div class="search-filter-row">
+                            <span class="search-filter-label">구분</span>
+                            <div class="radio-group-inline">
+                                <label class="radio-label"><input type="radio" name="disconnectType" value="all" checked> 전체</label>
+                                <label class="radio-label"><input type="radio" name="disconnectType" value="disconnect"> 수신 끊김</label>
+                                <label class="radio-label"><input type="radio" name="disconnectType" value="not_worn"> 미착용</label>
+                            </div>
+                        </div>
 
-        <!-- 읍면동 -->
-        <div class="search-filter-row">
-            <label class="search-filter-label" for="districtSelect">읍면동</label>
-            <div class="search-control-group">
-                <select id="districtSelect" class="filter-select">
-                    <option value="">전체</option>
-                    <option value="ga">가동</option>
-                    <option value="na">나동</option>
-                    <option value="da">다면</option>
-                    <option value="ra">라면</option>
-                </select>
-            </div>
-        </div>
+                        <!-- 읍면동 -->
+                        <div class="search-filter-row">
+                            <label class="search-filter-label" for="districtSelect">읍면동</label>
+                            <div class="search-control-group">
+                                <select id="districtSelect" class="filter-select">
+                                    <option value="">전체</option>
+                                    <option value="ga">가동</option>
+                                    <option value="na">나동</option>
+                                    <option value="da">다면</option>
+                                    <option value="ra">라면</option>
+                                </select>
+                            </div>
+                        </div>
 
-    </div>
+                    </div>
 
-    <!-- 운영 조치 -->
-    <div class="search-filter-row">
-        <span class="search-filter-label">운영 조치</span>
-        <div class="radio-group-inline">
-            <label class="radio-label"><input type="radio" name="operationStatus" value="all" checked> 전체</label>
-            <label class="radio-label"><input type="radio" name="operationStatus" value="none"> 없음</label>
-            <label class="radio-label"><input type="radio" name="operationStatus" value="pending"> 처리 대기</label>
-            <label class="radio-label"><input type="radio" name="operationStatus" value="progress"> 처리 중</label>
-            <label class="radio-label"><input type="radio" name="operationStatus" value="complete"> 처리 완료</label>
-        </div>
-    </div>
+                    <!-- 운영 조치 -->
+                    <div class="search-filter-row">
+                        <span class="search-filter-label">운영 조치</span>
+                        <div class="radio-group-inline">
+                            <label class="radio-label"><input type="radio" name="operationStatus" value="all" checked> 전체</label>
+                            <label class="radio-label"><input type="radio" name="operationStatus" value="none"> 없음</label>
+                            <label class="radio-label"><input type="radio" name="operationStatus" value="pending"> 처리 대기</label>
+                            <label class="radio-label"><input type="radio" name="operationStatus" value="progress"> 처리 중</label>
+                            <label class="radio-label"><input type="radio" name="operationStatus" value="complete"> 처리 완료</label>
+                        </div>
+                    </div>
 
-    <!-- 검색명 -->
-    <div class="search-filter-row">
-        <label class="search-filter-label" for="finderKeyword">검색명</label>
-        <div class="search-keyword-group">
-            <select class="filter-select" aria-label="검색 대상">
-                <option value="name_code">이름/코드</option>
-                <option value="name">이름</option>
-                <option value="code">코드</option>
-            </select>
-            <input type="text" id="finderKeyword" class="filter-input" placeholder="검색어를 입력해주세요.">
-        </div>
-    </div>
+                    <!-- 검색명 -->
+                    <div class="search-filter-row">
+                        <label class="search-filter-label" for="finderKeyword">검색명</label>
+                        <div class="search-keyword-group">
+                            <select class="filter-select" aria-label="검색 대상">
+                                <option value="name_code">이름/코드</option>
+                                <option value="name">이름</option>
+                                <option value="code">코드</option>
+                            </select>
+                            <input type="text" id="finderKeyword" class="filter-input" placeholder="검색어를 입력해주세요.">
+                        </div>
+                    </div>
 
-    <!-- 검색 버튼 -->
-    <div class="search-submit-row">
-        <button type="button" class="btn-search">검색</button>
-    </div>
+                    <!-- 검색 버튼 -->
+                    <div class="search-submit-row">
+                        <button type="button" class="btn-search">검색</button>
+                    </div>
 
-</div>
+                </div>
 
 
 
