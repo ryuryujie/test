@@ -30,9 +30,23 @@
 	tbody td{padding:12px 14px;border-bottom:1px solid #edf1f6;vertical-align:middle;line-height:1.65}tbody tr.menu-row:hover{background:#f6f9ff}tbody tr:last-child td{border-bottom:0}
 	th:first-child, td.num { text-align: center; width: 55px; color: #8a97aa; }
 	td.portal-cell { text-align: center; width: 115px; color: #5e6f87; font-weight: 600; white-space: nowrap; }
-	td.depth-cell { min-width: 360px; font-weight: 500; }
-	.depth-cell span + b::before { content: "›"; color: #a7b2c2; margin-right:5px; padding: 0 5px; font-weight: 400; }
-	td.id-cell { width: 155px; }
+	td.depth-cell {
+		min-width: 360px;
+		font-weight: 500;
+	}
+
+	td.depth-cell span + span::before,
+	td.depth-cell span + b::before {
+		content: "›";
+		color: #a7b2c2;
+		margin-right: 5px;
+		padding: 0 5px;
+		font-weight: 400;
+	}
+
+	td.id-cell {
+		width: 155px;
+	}
 	code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #3454b4; background: #edf2ff; border: 1px solid #dfe7ff; border-radius: 5px; padding: 4px 7px; font-size: 14px; white-space: nowrap; }
 	.empty { color: #a0aabb; font-size: 11px; }
 	td.id-cell a { text-decoration: none; color: inherit; display: inline-block; cursor: pointer; }
@@ -155,9 +169,18 @@
 						<tr class="menu-row" data-portal="관리자 포털">
 							<td class="num"></td>
 							<td class="portal-cell">관리자 포털</td>
-							<td class="depth-cell"><span>현황</span> <b>탐지 기록 조회</b></td>
-							<td class="id-cell"><a href="./ADM-MON-002.html" target="_blank"><code>html/ADM-MON-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="depth-cell"><span>현황</span> <b>탐지 기록 - 목록 </b></td>
+							<td class="id-cell"><a href="./ADM-MON-001.html" target="_blank"><code>html/ADM-MON-001.html</code></a></td>
+							<td class="status-cell"><span class="status-pill complete"></span></td>
+							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<tr class="menu-row" data-portal="관리자 포털">
+							<td class="num"></td>
+							<td class="portal-cell">관리자 포털</td>
+							<td class="depth-cell"><span>현황</span> <b>탐지 기록 - 상세 </b></td>
+							<td class="id-cell"><a href="./ADM-MON-001-01.html" target="_blank"><code>html/ADM-MON-001-01.html</code></a></td>
+							<td class="status-cell"><span class="status-pill complete"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
@@ -321,25 +344,34 @@
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
-						<!-- <tr class="menu-row" data-portal="관제센터">
+						<tr class="menu-row" data-portal="관제센터">
 							<td class="num"></td>
 							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell"><span>현황</span> <b>탐지 기록 조회</b></td>
-							<td class="id-cell"><a href="./CTR-DSH-002.html" target="_blank"><code>html/CTR-DSH-002.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
+							<td class="depth-cell"><b>(임시메뉴)워치관리</b></td>
+							<td class="id-cell"><a href="./CTR-DSH-001-01.html" target="_blank"><code>html/CTR-DSH-001-01.html</code></a></td>
+							<td class="status-cell"><span class="status-pill complete"></span></td>
 							<td class="type-cell"><span class="page">페이지</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관제센터">
 							<td class="num"></td>
 							<td class="portal-cell">관제센터</td>
-							<td class="depth-cell"><span>현황</span> <b>알림 관리</b></td>
-							<td class="id-cell"><a href="./CTR-DSH-003.html" target="_blank"><code>html/CTR-DSH-003.html</code></a></td>
-							<td class="status-cell"><span class="status-pill undecided"></span></td>
-							<td class="type-cell"><span class="page">페이지</span></td>
+							<td class="depth-cell"><span>현황</span> <span>알림 관리</span>  <b>유형별 발송 현황</b></td>
+							<td class="id-cell"><a href="./CTR-NTF-001.html" target="_blank"><code>html/CTR-NTF-001.html</code></a></td>
+							<td class="status-cell"><span class="status-pill complete"></span></td>
+							<td class="type-cell"><span class="page">탭</span></td>
 							<td class="note-cell"></td>
 						</tr>
 						<tr class="menu-row" data-portal="관제센터">
+							<td class="num"></td>
+							<td class="portal-cell">관제센터</td>
+							<td class="depth-cell"><span>현황</span> <span>알림 관리</span>  <b>발송 이력</b></td>
+							<td class="id-cell"><a href="./CTR-NTF-002.html" target="_blank"><code>html/CTR-NTF-002.html</code></a></td>
+							<td class="status-cell"><span class="status-pill continue"></span></td>
+							<td class="type-cell"><span class="page">탭</span></td>
+							<td class="note-cell"></td>
+						</tr>
+						<!--<tr class="menu-row" data-portal="관제센터">
 							<td class="num"></td>
 							<td class="portal-cell">관제센터</td>
 							<td class="depth-cell"><span>운영</span> <b>운영 조치</b></td>

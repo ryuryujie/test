@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+
+    .status-list {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--content-bg, #ffffff);
+        border: 1px solid var(--content-border, #f1f5f9);
+        border-radius: var(--content-radius-md, 12px);
+        overflow: hidden;
+    }
+
+    .status-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 16px;
+        min-width: 0;
+    }
+
+    .status-list-item + .status-list-item {
+        border-top: 1px solid var(--content-border, #f1f5f9);
+    }
+
+    .status-list-main {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .status-list-icon {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: var(--content-radius-sm, 8px);
+        background-color: var(--content-primary-light, #fff2ef);
+        color: var(--content-primary, #F3703A);
+        font-size: 14px;
+    }
+
+    .status-list-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--content-text, #0f172a);
+        overflow-wrap: anywhere;
+    }
+
+    .status-list-detail {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .status-list-description {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--content-text-muted, #64748b);
+        text-align: right;
+    }
+
+    /* 모바일 */
+    @media (max-width: 600px) {
+        .status-list-item {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .status-list-detail {
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            padding-left: 42px;
+        }
+
+        .status-list-description {
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
+    }
+    </style>
+
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">운영 대시보드</a></li>
+                    <li class="sub-item"><a href="#">탐지 기록</a></li>
+                    <li class="sub-item active"><a href="#">알림 관리</a></li>
+                </ul>
+            </div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">ITeyes 관리자 홍길동 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">알림 관리</h2>
+                <span class="page-sub-desc"></span>
+            </div>
+            <div class="breadcrumb">
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">알림 관리</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+                <!-- 1. 새로 만든 탭 메뉴 컴포넌트 -->
+                <div class="tab-menu-wrap">
+                    <button type="button" class="tab-item-btn active">유형별 발송 현황</button>
+                    <button type="button" class="tab-item-btn">발송 이력</button>
+                    <button type="button" class="tab-item-btn">알림 템플릿</button>
+                </div>
+
+                <!-- 2. 상단 요약 카드 그리드 (4개) -->
+                <!-- 상단 요약 카드 그리드 (아이콘 + 값 영역 구조 개선) -->
+                <div class="summary-cards-grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 20px;">
+                    
+                    <!-- 오늘 보낸 알림 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box primary">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </div>
+                        <div class="card-info  card-info-right">
+                            <div class="card-title">오늘 보낸 알림</div>
+                            <div class="card-value-area">
+                                <span class="card-number">109</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 성공 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box success">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="card-info  card-info-right">
+                            <div class="card-title">성공</div>
+                            <div class="card-value-area">
+                                <span class="card-number">100</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 실패 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box danger">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </div>
+                        <div class="card-info  card-info-right">
+                            <div class="card-title">실패</div>
+                            <div class="card-value-area">
+                                <span class="card-number" style="color: var(--content-danger);">4</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 대기 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box warning">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div class="card-info  card-info-right">
+                            <div class="card-title">대기</div>
+                            <div class="card-value-area">
+                                <span class="card-number">5</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             
+                <div class="section-caption section-caption-filter">
+                    <div class="caption-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>유형별 발송 현황</span>
+                    </div>
+
+                    <div class="filter-toolbar">
+                        <div class="filter-condition">
+                            <select class="filter-select">
+                                <option value="today">기간 오늘</option>
+                                <option value="7days">기간 최근 7일</option>
+                                <option value="30days">기간 최근 30일</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-action">
+                            <button type="button" class="btn-outline btn-type-01">
+                                검색
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>알림 유형</th>
+                            <th>받는 사람</th>
+                            <th>경로</th>
+                            <th>성공</th>
+                            <th>실패</th>
+                            <th>대기</th>
+                            <th>성공률</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="u-text-left">
+                                <a href="#" class="btn-link openActionModalBtn">긴급 안부 확인 발생</a>
+                            </td>
+                            <td>보호자</td>
+                            <td>앱 알림</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>75%</td>
+                        </tr>
+                        <tr>
+                            <td class="u-text-left">
+                                <a href="#" class="btn-link openActionModalBtn">119 연결 안내</a>
+                            </td>
+                            <td>보호자</td>
+                            <td>앱 알림</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="u-text-left">
+                                <a href="#" class="btn-link openActionModalBtn">공지</a>
+                            </td>
+                            <td>어르신, 보호자</td>
+                            <td>앱 알림</td>
+                            <td>96</td>
+                            <td><span class="u-text-danger">3</span></td>
+                            <td>5</td>
+                            <td>92%</td>
+                        </tr>
+                        <tr>
+                            <td class="u-text-left">
+                                <a href="#" class="btn-link openActionModalBtn">보호자 초대 안내</a>
+                            </td>
+                            <td>보호자</td>
+                            <td>문자</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+   <!-- ==========================================
+        레이어 팝업 (Modal)
+   ========================================== -->
+    <div class="modal-overlay" id="actionModal">
+        <div class="modal-container">
+            <!-- 팝업 헤더 -->
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-layer-group"></i> 
+                    경로별 상태
+                </div>
+                <button type="button" class="modal-close-btn" id="closeActionModalBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- 팝업 본문 -->
+            <div class="modal-body">
+                
+                <div class="status-list">
+                    
+                    <!-- 상태 항목 -->
+                    <div class="status-list-item">
+                        <div class="status-list-main">
+                            <i class="fa-solid fa-comment-sms status-list-icon"></i>
+                            <span class="status-list-name">문자 발송 대행</span>
+                        </div>
+
+                        <div class="status-list-detail">
+                            <span class="status-badge warning">
+                                <span class="status-dot"></span>
+                                지연
+                            </span>
+                            <span class="status-list-description">
+                                마지막 성공 · 10-14 08:47
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="status-list-item">
+                        <div class="status-list-main">
+                            <i class="fa-solid fa-mobile-screen-button status-list-icon"></i>
+                            <span class="status-list-name">앱 알림 발송</span>
+                        </div>
+
+                        <div class="status-list-detail">
+                            <span class="status-badge success">
+                                <span class="status-dot"></span>
+                                정상
+                            </span>
+                            <span class="status-list-description">
+                                마지막 성공 · 10-14 08:59
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+         
+
+                <div class="modal-notice-box">
+                    <i class="fa-solid fa-circle-info u-mr-1"></i> 지연이나 끊김일 때 보낸 알림은 대기로 남았다가 결과가 오면 성공이나 실패로 바뀜
+                </div>
+            </div>
+
+            <!-- 팝업 하단 버튼 -->
+            <div class="modal-footer">
+                <button type="button" class="btn-default btn-type-01" id="confirmActionModalBtn">확인</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('actionModal');
+        const openBtns = document.querySelectorAll('.openActionModalBtn');
+        const closeBtn = document.getElementById('closeActionModalBtn');
+        const cancelBtn = document.getElementById('cancelActionModalBtn');
+        const confirmBtn = document.getElementById('confirmActionModalBtn'); // 추가
+
+        // 필수 요소 확인
+        if (!modal) {
+            console.error('모달 요소 #actionModal을 찾을 수 없습니다.');
+            return;
+        }
+
+        // 여러 링크에서 모달 열기
+        openBtns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+            });
+        });
+
+        // 모달 닫기
+        const closeModal = () => {
+            modal.classList.remove('active');
+        };
+
+        closeBtn?.addEventListener('click', closeModal);
+        cancelBtn?.addEventListener('click', closeModal);
+        confirmBtn?.addEventListener('click', closeModal); // 추가
+
+        // 배경 클릭 시 닫기
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        console.log('모달 초기화 완료:', {
+            modalFound: !!modal,
+            openButtonCount: openBtns.length,
+            closeButtonFound: !!closeBtn,
+            cancelButtonFound: !!cancelBtn,
+            confirmButtonFound: !!confirmBtn
+        });
+    });
+
+    </script>
+
+
+</body>
+</html>

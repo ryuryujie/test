@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 퍼블리싱 컴포넌트 가이드</title>
+    <!-- FontAwesome 아이콘 및 폰트 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <style>
+        .guide-wrap { 
+            padding: 30px; 
+            background-color: #f8fafc; 
+            min-height: 100vh; 
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .guide-section { 
+            background: #fff; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 12px; 
+            padding: 24px; 
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02); 
+        }
+        .guide-title { 
+            font-size: 18px; 
+            font-weight: 700; 
+            color: #0f172a; 
+            margin-bottom: 16px; 
+            padding-bottom: 8px; 
+            border-bottom: 2px solid #f1f5f9; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .guide-sub-title { 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: #475569; 
+            margin: 16px 0 10px; 
+        }
+        .guide-row { 
+            display: flex; 
+            gap: 12px; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            margin-bottom: 12px; 
+        }
+    </style>
+</head>
+<body class="guide-wrap">
+
+    <div class="page-title-bar" style="margin-bottom: 0;">
+        <div class="page-title-left">
+            <h2 class="page-main-title">UI 컴포넌트 가이드</h2>
+            <span class="page-sub-desc">스마트 안심 돌봄 관제 포털 공통 퍼블리싱 요소 정의</span>
+        </div>
+    </div>
+
+
+    <!-- 버튼 컴포넌트 -->
+    <div class="guide-section">
+        <div class="guide-title">버튼 컴포넌트</div>
+        <div class="guide-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+
+            <button type="button" class="btn-default btn-type-01">저장</button>
+            <button type="button" class="btn-default btn-type-02">임시저장</button>
+            <button type="button" class="btn-default btn-type-03">삭제</button>
+            <button type="button" class="btn-default btn-excel-download">엑셀 다운로드</button>
+
+            <button type="button" class="btn-outline btn-type-01">목록</button>
+            <button type="button" class="btn-outline btn-type-02">취소</button>
+            <button type="button" class="btn-outline btn-type-03">삭제</button>
+
+        </div>
+    </div>
+
+
+    <!-- 링크형 버튼 컴포넌트 -->
+    <div class="guide-section">
+        <div class="guide-title">링크형 버튼 컴포넌트 (.btn-link)</div>
+        <div class="guide-row">
+            <a href="#" class="btn-link">안부 확인 보기 &gt;</a>
+        </div>
+    </div>
+
+
+    <!-- 상태 뱃지 컴포넌트 -->
+    <div class="guide-section">
+        <div class="guide-title">상태 뱃지 </div>
+        <div class="guide-row">
+            <span class="status-badge danger"><span class="status-dot"></span>긴급 (danger)</span>
+            <span class="status-badge warning"><span class="status-dot"></span>확인 필요 / 지연 (warning)</span>
+            <span class="status-badge success"><span class="status-dot"></span>성공 (success)</span>
+            <span class="status-badge progress"><span class="status-dot"></span>대응 중 / 진행 (progress)</span>
+        </div>
+    </div>
+
+    
+
+<!-- ==========================================
+     검색 필터 컴포넌트
+========================================== -->
+
+<div class="search-filter-finder">
+
+    <!-- 2열 -->
+    <div class="search-filter-grid">
+        <div class="search-filter-row">
+            <span class="search-filter-label">기간</span>
+            <div class="radio-group-inline">
+                <label class="radio-label"><input type="radio" name="searchPeriod" value="7days" checked> 최근 7일</label>
+                <label class="radio-label"><input type="radio" name="searchPeriod" value="30days"> 최근 30일</label>
+            </div>
+        </div>
+        <div class="search-filter-row">
+            <span class="search-filter-label">유형</span>
+            <div class="radio-group-inline">
+                <label class="radio-label"><input type="radio" name="alertType" value="all" checked> 전체</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="fall"> 낙상</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="heart"> 심박 이상</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="no_move"> 장시간 움직임 없음</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="sos"> 응급호출</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-filter-row">
+        <span class="search-filter-label">오탐 표시</span>
+        <div class="radio-group-inline">
+            <label class="radio-label"><input type="radio" name="falsePositive" value="all" checked> 전체</label>
+            <label class="radio-label"><input type="radio" name="falsePositive" value="normal"> 정상 탐지</label>
+            <label class="radio-label"><input type="radio" name="falsePositive" value="candidate"> 오탐 후보</label>
+            <label class="radio-label"><input type="radio" name="falsePositive" value="wear"> 오탐·착용 상태</label>
+        </div>
+    </div>
+
+    
+    <!-- 체크박스 -->
+    <div class="search-filter-row">
+        <span class="search-filter-label">대상 구분</span>
+        <div class="checkbox-group-inline">
+            <label class="checkbox-label"><input type="checkbox" name="targetType" value="all" checked> 전체</label>
+            <label class="checkbox-label"><input type="checkbox" name="targetType" value="resident"> 대상자</label>
+            <label class="checkbox-label"><input type="checkbox" name="targetType" value="location"> 위치</label>
+        </div>
+    </div>
+
+
+    <!-- 검색어 : 인풋 단독 -->
+    <div class="search-filter-row">
+        <label class="search-filter-label" for="alertSearchKeyword">검색어</label>
+        <div class="search-keyword-group">
+            <input type="text" id="alertSearchKeyword" class="filter-input" placeholder="대상자 코드, 위치 관리번호">
+        </div>
+    </div>
+
+    <!-- 검색어 : 셀렉트 + 인풋 -->
+    <div class="search-filter-row">
+        <label class="search-filter-label" for="targetSearchKeyword">검색 대상</label>
+        <div class="search-keyword-group">
+            <select class="filter-select" aria-label="검색 대상 선택">
+                <option value="name">이름</option>
+                <option value="code">대상자 코드</option>
+                <option value="location">위치 관리번호</option>
+            </select>
+            <input type="text" id="targetSearchKeyword" class="filter-input" placeholder="검색어를 입력하세요.">
+        </div>
+    </div>
+
+    <!-- 조회 기간 : 날짜 범위 -->
+    <div class="search-filter-row">
+        <span class="search-filter-label">조회 기간</span>
+        <div class="search-date-group">
+            <input type="date" class="filter-input" aria-label="조회 시작일">
+            <span class="search-date-separator">~</span>
+            <input type="date" class="filter-input" aria-label="조회 종료일">
+        </div>
+    </div>
+
+    <!-- 검색 버튼 -->
+    <div class="search-submit-row">
+        <button type="button" class="btn-search">검색</button>
+    </div>
+
+</div>
+
+
+
+    <!-- 칩 컴포넌트 모음 (라디오 / 체크박스 / 토글 칩) -->
+    <div class="guide-section">
+        <div class="guide-title">선택 칩 컴포넌트 (Radio / Checkbox Chips)</div>
+        
+        <div class="guide-sub-title">1. 단일 선택 칩 그룹 (.chip-group - Radio)</div>
+        <div class="guide-row">
+            <div class="chip-group">
+                <label>
+                    <input type="radio" name="guide-error-status" value="false" checked>
+                    <span class="chip-item">오탐</span>
+                </label>
+                <label>
+                    <input type="radio" name="guide-error-status" value="true">
+                    <span class="chip-item">정상 탐지</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="guide-sub-title">2. 다중 선택 칩 그룹 (.chip-group - Checkbox)</div>
+        <div class="guide-row">
+            <div class="chip-group">
+                <label>
+                    <input type="checkbox" name="guide-error-reason" value="device" checked>
+                    <span class="chip-item">기기</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="guide-error-reason" value="network">
+                    <span class="chip-item">통신</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="guide-error-reason" value="standard" checked>
+                    <span class="chip-item">기준값</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="guide-error-reason" value="wear">
+                    <span class="chip-item">착용 상태</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- 테이블 컴포넌트 -->
+    <div class="guide-section">
+        <div class="guide-title">리스트 테이블 (.list-table)</div>
+       
+
+
+        <!-- <div class="section-title">
+            <div class="section-title-group">
+                <i class="fa-solid fa-grip-vertical title-icon"></i>
+                <span>목록</span>
+                <div class="table-top-info-bar">
+                    <div class="table-count-text">전체 <strong>3</strong>건 (선택항목: <strong class="u-text-blue">1개</strong>)</div>
+                </div>
+            </div>
+            <div class="control-group">
+                <button type="button" class="btn-default">등록</button>
+            </div>
+        </div> -->
+
+
+        
+
+        <!-- 제목 + 검색 필터 -->
+        <div class="section-caption section-caption-filter">
+            <div class="caption-group">
+                <i class="fa-solid fa-grip-vertical title-icon"></i>
+                <span>목록</span>
+            </div>
+
+            <div class="filter-toolbar">
+                <div class="filter-condition">
+                    <select class="filter-select">
+                        <option value="today">기간 오늘</option>
+                        <option value="7days">기간 최근 7일</option>
+                        <option value="30days">기간 최근 30일</option>
+                    </select>
+                </div>
+
+                <div class="filter-action">
+                    <button type="button" class="btn-outline btn-type-01">
+                        검색
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 제목 + 목록 툴바 -->
+        <div class="section-caption">
+            <div class="caption-group">
+                <i class="fa-solid fa-grip-vertical title-icon"></i>
+                <span>목록</span>
+            </div>
+        </div>
+
+        <div class="table-toolbar">
+            <div class="toolbar-info">
+                <div class="table-count-text">
+                    전체 <strong>3</strong>건
+                    (선택항목: <strong class="u-text-blue">1개</strong>)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <button type="button" class="btn-default btn-type-01">등록</button>
+            </div>
+        </div>
+
+
+
+
+
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th class="th-checkbox"><input type="checkbox"></th>
+                    <th>구분</th>
+                    <th>대상자</th>
+                    <th>상태</th>
+                    <th>진행률 예시</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>수신 끊김</td>
+                    <td><strong>홍길동</strong> (80세)</td>
+                    <td><span class="status-badge danger"><span class="status-dot"></span>긴급</span></td>
+                    <td>
+                        89%
+                        <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 89%; background-color: #10b981;"></div></div>
+                    </td>
+                </tr>
+                <tr class="tr-bg-light">
+                    <td><input type="checkbox" checked></td>
+                    <td>미착용</td>
+                    <td><strong>김철수</strong> (75세)</td>
+                    <td><span class="status-badge warning"><span class="status-dot"></span>지연</span></td>
+                    <td>
+                        65%
+                        <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 65%; background-color: #3b82f6;"></div></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- 상세 테이블 컴포넌트 -->
+    <div class="guide-section">
+        <div class="guide-title">상세 테이블 (.detail-table)</div>
+        <table class="detail-table">
+            <colgroup>
+                <col style="width: 15%;">
+                <col style="width: 85%;">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>오탐 여부 <span class="required">*</span></th>
+                    <td>
+                        <div class="chip-group">
+                            <label>
+                                <input type="radio" name="error-status" value="false" checked>
+                                <span class="chip-item">오탐</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="error-status" value="true">
+                                <span class="chip-item">정상 탐지</span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>오탐 원인 <span class="required">*</span></th>
+                    <td>
+                        <div class="chip-group">
+                            <label>
+                                <input type="radio" name="error-reason" value="device">
+                                <span class="chip-item">기기</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="error-reason" value="network">
+                                <span class="chip-item">통신</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="error-reason" value="standard" checked>
+                                <span class="chip-item">기준값</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="error-reason" value="wear">
+                                <span class="chip-item">착용 상태</span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>메모</th>
+                    <td>
+                        <textarea class="modal-form-textarea" placeholder="메모를 입력하세요.">평소 심박이 낮은 대상자. 개인 범위 반영 필요</textarea>
+                        <div class="form-helper-text">
+                            * 표시한 사람과 시각이 시스템에 기록됩니다.
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- 상세 테이블 폼 컴포넌트 모음 -->
+    <style>
+        /* ==========================================================
+   상세 테이블 내부 폼 컴포넌트 모음
+   ================================================---------- */
+
+/* 공통 폼 컨트롤 기본 설정 */
+.form-input,
+.form-select {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--border-subtle, #cbd5e1);
+    border-radius: var(--content-radius-sm, 8px);
+    background-color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-main, #0f172a);
+    box-sizing: border-box;
+    transition: var(--content-transition, all 0.2s ease);
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--content-primary, #F3703A);
+}
+
+.form-input:disabled,
+.form-select:disabled {
+    background-color: var(--bg-main, #f8fafc);
+    color: var(--content-text-muted, #94a3b8);
+    cursor: not-allowed;
+}
+
+/* 읽기 전용 텍스트 필드 */
+.form-text-readonly {
+    font-size: 13px;
+    color: var(--text-sub, #334155);
+    line-height: 1.5;
+}
+
+/* 인라인 그룹 (입력창 + 버튼 또는 인풋 여러 개 조합) */
+.form-inline-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* 파일 첨부 영역 */
+.form-file-box {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.form-file-box .file-name-display {
+    flex: 1;
+    height: 36px;
+    padding: 0 12px;
+    background-color: var(--bg-main, #f8fafc);
+    border: 1px solid var(--border-subtle, #cbd5e1);
+    border-radius: var(--content-radius-sm, 8px);
+    font-size: 13px;
+    color: var(--text-muted, #64748b);
+    display: flex;
+    align-items: center;
+}
+</style>
+    <div class="guide-section">
+        <div class="guide-title">상세 테이블 폼 컴포넌트 모음</div>
+        <table class="detail-table">
+            <colgroup>
+                <col style="width: 20%;">
+                <col style="width: 80%;">
+            </colgroup>
+            <tbody>
+                <!-- 1. 기본 텍스트 입력 (Input Text) -->
+                <tr>
+                    <th>대상자 이름 <span class="required">*</span></th>
+                    <td>
+                        <input type="text" class="form-input" placeholder="이름을 입력하세요." value="홍길동">
+                    </td>
+                </tr>
+
+                <!-- 2. 읽기 전용 텍스트 (Readonly Text) -->
+                <tr>
+                    <th>등록일시</th>
+                    <td>
+                        <div class="form-text-readonly">2026-10-16 14:30:00 (시스템 자동생성)</div>
+                    </td>
+                </tr>
+
+                <!-- 3. 셀렉트 박스 (Select Box) -->
+                <tr>
+                    <th>관할 읍면동 <span class="required">*</span></th>
+                    <td>
+                        <select class="form-select">
+                            <option value="">선택해주세요</option>
+                            <option value="A" selected>중앙동</option>
+                            <option value="B">서부동</option>
+                            <option value="C">동부동</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <!-- 4. 인라인 조합 (인풋 + 버튼) -->
+                <tr>
+                    <th>연락처 <span class="required">*</span></th>
+                    <td>
+                        <div class="form-inline-group">
+                            <input type="text" class="form-input" value="010-1234-5678" style="max-width: 280px;">
+                            <button type="button" class="btn-outline btn-type-01 btn-sm">중복확인</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 5. 날짜 선택 (Date Picker) -->
+                <tr>
+                    <th>생년월일</th>
+                    <td>
+                        <input type="date" class="form-input" value="1950-05-15" style="max-width: 200px;">
+                    </td>
+                </tr>
+
+                <!-- 6. 파일 첨부 (File Upload) -->
+                <tr>
+                    <th>증빙 서류</th>
+                    <td>
+                        <div class="form-file-box">
+                            <div class="file-name-display">첨부된 파일이 없습니다.</div>
+                            <!-- 실제 파일 인풋은 숨기고 레이블로 버튼 대용 -->
+                            <label class="btn-outline btn-type-01 btn-sm" style="margin: 0; cursor: pointer;">
+                                파일찾기 <input type="file" style="display: none;">
+                            </label>
+                        </div>
+                        <div class="form-helper-text">* PDF, JPG, PNG 형식의 파일만 최대 10MB까지 업로드 가능합니다.</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 6. 요약 카드 컴포넌트 -->
+    <!-- <div class="guide-section">
+        <div class="guide-title"><i class="fa-solid fa-id-card"></i> 6. 요약 카드 컴포넌트 (.summary-card)</div>
+        <div class="summary-cards-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="summary-card">
+                <div class="card-info">
+                    <div class="card-title">참여자 요약</div>
+                    <div class="card-value-area">
+                        <span class="card-number">694</span>
+                        <span class="card-unit">명</span>
+                    </div>
+                </div>
+                <div class="progress-ring-container">
+                    <svg class="progress-ring-svg">
+                        <circle class="progress-ring-circle-bg" cx="28" cy="28" r="22"/>
+                        <circle class="progress-ring-circle" cx="28" cy="28" r="22" stroke="#6366f1" stroke-dasharray="138.2" stroke-dashoffset="20"/>
+                    </svg>
+                    <i class="fa-solid fa-users progress-icon" style="color: #6366f1;"></i>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</body>
+</html>

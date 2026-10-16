@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">운영 대시보드</a></li>
+                    <li class="sub-item active"><a href="#">탐지 기록</a></li>
+                    <li class="sub-item"><a href="#">알림 관리</a></li>
+                </ul>
+            </div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">ITeyes 관리자 홍길동 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">탐지 기록 상세</h2>
+                <span class="page-sub-desc"></span>
+            </div>
+            <div class="breadcrumb">
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span>탐지 기록</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">상세</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+                <!-- 탐지 정보 요약 타이틀 -->
+                <div class="section-caption">
+                    <div class="caption-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>탐지 상세 정보 &bull; 10-12 10:15 심박 이상 &bull; A-000120</span>
+                    </div>
+                </div>
+
+                <!-- 상세 정보 테이블 -->
+                <table class="detail-table">
+                    <colgroup>
+                        <col style="width: 15%;">
+                        <col style="width: 35%;">
+                        <col style="width: 15%;">
+                        <col style="width: 35%;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>지자체</th>
+                            <td>A시</td>
+                            <th>대상자 코드</th>
+                            <td>A-000120</td>
+                        </tr>
+                        <tr>
+                            <th>탐지 시각</th>
+                            <td>10-12 10:15</td>
+                            <th>유형 / 등급</th>
+                            <td>심박 이상 / <span style="color: #d97706; font-weight: 600;">확인 필요</span></td>
+                        </tr>
+                        <tr>
+                            <th>근거 측정값</th>
+                            <td colspan="3">심박 41회가 10분 이어짐 (기준: 50회 미만 10분)</td>
+                        </tr>
+                        <tr>
+                            <th>워치 및 기기 정보</th>
+                            <td colspan="3">W-A-000120 &bull; 착용 &bull; 연결 정상 &bull; 배터리 34%</td>
+                        </tr>
+                        <tr>
+                            <th>안부 확인 결과</th>
+                            <td colspan="3">종결 &bull; 이상 없음 &bull; 접수까지 22분 
+                                <a href="#" class="btn-link">안부 확인 보기 &gt;</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>측정값 추이 그래프</th>
+                            <td colspan="3">
+                                <div style="font-size: 12px; color: var(--content-text-muted); margin-bottom: 6px;">심박 &bull; 탐지 앞뒤 2시간</div>
+                                <div style="height: 140px; background: #fafafa; border: 1px solid #e2e8f0; border-radius: 6px; position: relative;">
+                                    <canvas id="detailChart"></canvas>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 오탐 관리 타이틀 -->
+                <div class="section-caption">
+                    <div class="caption-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>오탐 표시 및 처리 관리</span>
+                    </div>
+                </div>
+
+                <!-- 오탐 관리 입력 테이블 -->
+                <table class="detail-table">
+                    <colgroup>
+                        <col style="width: 15%;">
+                        <col style="width: 85%;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>오탐 여부 <span class="required">*</span></th>
+                            <td>
+                                <div class="chip-group">
+                                    <label>
+                                        <input type="radio" name="error-status" value="false" checked>
+                                        <span class="chip-item">오탐</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="error-status" value="true">
+                                        <span class="chip-item">정상 탐지</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>오탐 원인 <span class="required">*</span></th>
+                            <td>
+                                <div class="chip-group">
+                                    <label>
+                                        <input type="radio" name="error-reason" value="device">
+                                        <span class="chip-item">기기</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="error-reason" value="network">
+                                        <span class="chip-item">통신</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="error-reason" value="standard" checked>
+                                        <span class="chip-item">기준값</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="error-reason" value="wear">
+                                        <span class="chip-item">착용 상태</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>메모</th>
+                            <td>
+                                <textarea class="modal-form-textarea" placeholder="메모를 입력하세요." style="width: 100%; min-height: 80px;">평소 심박이 낮은 대상자. 개인 범위 반영 필요</textarea>
+                                <div class="form-helper-text">
+                                    * 표시한 사람과 시각이 시스템에 기록됩니다.
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 게시판 하단 버튼 영역 -->
+                <div class="board-actions">
+                    <button type="button" class="btn-outline btn-type-01 btn-lg">목록</button>
+                    
+                    <div class="btn-group-right">
+                        <button type="button" class="btn-default btn-type-01 btn-lg">저장</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js 샘플 스크립트 -->
+    <script>
+        const ctx = document.getElementById('detailChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '09:00', '10:00', '10:15', '11:00', '12:00'],
+                datasets: [{
+                    label: '심박 측정값',
+                    data: [65, 62, 58, 41, 60, 63],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.1
+                }, {
+                    label: '기준 50회',
+                    data: [50, 50, 50, 50, 50, 50],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { min: 20, max: 100 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

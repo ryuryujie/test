@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item active"><a href="#">운영 대시보드</a></li>
+                    <li class="sub-item"><a href="#">탐지 기록</a></li>
+                    <li class="sub-item"><a href="#">알림 관리</a></li>
+                </ul>
+            </div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">ITeyes 관리자 홍길동 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">운영 대시보드</h2>
+                <span class="page-sub-desc">안심 돌봄 시스템 통합 현황</span>
+            </div>
+            <div class="breadcrumb">
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">운영 대시보드</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+
+                <div style="display: flex; gap: 16px; margin-bottom: 20px; align-items: stretch;">
+                    <div style="display: flex; gap: 16px; width: 450px;">
+                        <!-- 수신 끊김 카드 (상단 워치와 착용 우측 카드와 동일한 alert-card 스타일 적용) -->
+                        <div class="dsh-status-card alert-card" style="flex: 1; padding: 18px 20px; cursor: pointer;">
+                            <div class="dsh-card-top-flex" style="margin-bottom: 6px;">
+                                <div class="dsh-status-label" style="font-size: 13px !important; font-weight: 700; color: #334155;">수신 끊김</div>
+                                <div class="dsh-card-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background-color: #fee2e2; color: #ef4444;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            </div>
+                            <div class="dsh-status-number u-text-danger" style="font-size: 26px !important; font-weight: 800; margin-top: 0; display: flex; align-items: baseline; justify-content: flex-end; gap: 4px;">
+                                14 <span class="dsh-status-unit" style="font-size: 14px !important; font-weight: 600;">명</span>
+                            </div>
+                        </div>
+                        <!-- 미착용 카드 (상단 워치와 착용 우측 카드와 동일한 warning-card 스타일 적용) -->
+                        <div class="dsh-status-card warning-card" style="flex: 1; padding: 18px 20px; cursor: pointer;">
+                            <div class="dsh-card-top-flex" style="margin-bottom: 6px;">
+                                <div class="dsh-status-label" style="font-size: 13px !important; font-weight: 700; color: #334155;">미착용</div>
+                                <div class="dsh-card-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background-color: #fef3c7; color: #d97706;"><i class="fa-solid fa-user-slash"></i></div>
+                            </div>
+                            <div class="dsh-status-number" style="font-size: 26px !important; font-weight: 800; margin-top: 0; color: #d97706; display: flex; align-items: baseline; justify-content: flex-end; gap: 4px;">
+                                31 <span class="dsh-status-unit" style="font-size: 14px !important; font-weight: 600;">명</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="common-notice-box notice-box-flex">
+                            <p>
+                                <i class="fa-solid fa-circle-info"></i> 
+                                    안부 확인을 만들지 않고 알림도 보내지 않는 목록임. 기준: 수신 끊김 2시간, 미착용 3시간
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-filter-finder">
+
+    <!-- 구분 / 읍면동 : 2열 -->
+    <div class="search-filter-grid">
+
+        <!-- 구분 -->
+        <div class="search-filter-row">
+            <span class="search-filter-label">구분</span>
+            <div class="radio-group-inline">
+                <label class="radio-label"><input type="radio" name="disconnectType" value="all" checked> 전체</label>
+                <label class="radio-label"><input type="radio" name="disconnectType" value="disconnect"> 수신 끊김</label>
+                <label class="radio-label"><input type="radio" name="disconnectType" value="not_worn"> 미착용</label>
+            </div>
+        </div>
+
+        <!-- 읍면동 -->
+        <div class="search-filter-row">
+            <label class="search-filter-label" for="districtSelect">읍면동</label>
+            <div class="search-control-group">
+                <select id="districtSelect" class="filter-select">
+                    <option value="">전체</option>
+                    <option value="ga">가동</option>
+                    <option value="na">나동</option>
+                    <option value="da">다면</option>
+                    <option value="ra">라면</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 운영 조치 -->
+    <div class="search-filter-row">
+        <span class="search-filter-label">운영 조치</span>
+        <div class="radio-group-inline">
+            <label class="radio-label"><input type="radio" name="operationStatus" value="all" checked> 전체</label>
+            <label class="radio-label"><input type="radio" name="operationStatus" value="none"> 없음</label>
+            <label class="radio-label"><input type="radio" name="operationStatus" value="pending"> 처리 대기</label>
+            <label class="radio-label"><input type="radio" name="operationStatus" value="progress"> 처리 중</label>
+            <label class="radio-label"><input type="radio" name="operationStatus" value="complete"> 처리 완료</label>
+        </div>
+    </div>
+
+    <!-- 검색명 -->
+    <div class="search-filter-row">
+        <label class="search-filter-label" for="finderKeyword">검색명</label>
+        <div class="search-keyword-group">
+            <select class="filter-select" aria-label="검색 대상">
+                <option value="name_code">이름/코드</option>
+                <option value="name">이름</option>
+                <option value="code">코드</option>
+            </select>
+            <input type="text" id="finderKeyword" class="filter-input" placeholder="검색어를 입력해주세요.">
+        </div>
+    </div>
+
+    <!-- 검색 버튼 -->
+    <div class="search-submit-row">
+        <button type="button" class="btn-search">검색</button>
+    </div>
+
+</div>
+
+
+
+
+
+
+ 
+
+                <div class="section-caption">
+                    <div class="captione-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>수신 끊김 / 미착용</span>
+                    </div>
+                </div>
+
+                <div class="table-toolbar">
+                    <div class="toolbar-info">
+                        <div class="table-count-text">
+                            전체 45건 (선택한 항목: <strong class="u-text-blue">2명</strong>)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <button type="button" class="btn-default btn-type-01">안부 확인 등록</button>
+                        <button type="button" class="btn-default btn-type-01" id="openActionModalBtn">운영 조치 등록</button>
+                    </div>
+                </div>
+
+                
+                
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox"><input type="checkbox"></th>
+                            <th>구분</th>
+                            <th>대상자</th>
+                            <th>읍면동</th>
+                            <th>위치</th>
+                            <th>마지막 수신</th>
+                            <th>지속 시간</th>
+                            <th>배터리</th>
+                            <th>운영 조치</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>수신 끊김</td>
+                            <td><strong>서촌자</strong> (86)</td>
+                            <td>나동</td>
+                            <td>W-A-000152</td>
+                            <td>10-12 21:10</td>
+                            <td>1일 11시간</td>
+                            <td>-</td>
+                            <td>처리 중</td>
+                        </tr>
+                        <tr class="tr-bg-light">
+                            <td><input type="checkbox" checked></td>
+                            <td>수신 끊김</td>
+                            <td><strong>문태식</strong> (82)</td>
+                            <td>나동</td>
+                            <td>W-A-000274</td>
+                            <td>10-13 19:40</td>
+                            <td>13시간 20분</td>
+                            <td>-</td>
+                            <td style="color: #64748b;">없음</td>
+                        </tr>
+                        <tr class="tr-bg-light">
+                            <td><input type="checkbox" checked></td>
+                            <td>미착용</td>
+                            <td><strong>강옥희</strong> (83)</td>
+                            <td>가동</td>
+                            <td>W-A-000140</td>
+                            <td>10-14 08:58</td>
+                            <td>12시간 5분</td>
+                            <td>41%</td>
+                            <td style="color: #64748b;">없음</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>미착용</td>
+                            <td><strong>오금자</strong> (84)</td>
+                            <td>가동</td>
+                            <td>W-A-000226</td>
+                            <td>10-14 08:57</td>
+                            <td>9시간 40분</td>
+                            <td>18%</td>
+                            <td>처리 대기</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>수신 끊김</td>
+                            <td><strong>한상철</strong> (80)</td>
+                            <td>다면</td>
+                            <td>W-A-000305</td>
+                            <td>10-14 03:15</td>
+                            <td>5시간 45분</td>
+                            <td>-</td>
+                            <td style="color: #64748b;">없음</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>미착용</td>
+                            <td><strong>윤병국</strong> (78)</td>
+                            <td>다면</td>
+                            <td>W-A-000233</td>
+                            <td>10-14 08:59</td>
+                            <td>3시간 10분</td>
+                            <td>77%</td>
+                            <td style="color: #64748b;">없음</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="common-notice-box">
+                    <p>
+                        <i class="fa-solid fa-circle-info"></i> 
+                        미착용은 위치 데이터는 오지만 손목에 차지 않은 상태라 마지막 수신 시각이 최근임
+                    </p>
+                </div>
+
+                <!-- 페이징 영역 -->
+                <div class="pagination-area">
+                    <div class="pagination-num">
+                        <a href="#" title="처음 페이지"><i class="fa-solid fa-angles-left"></i></a>
+                        <a href="#" title="이전 페이지"><i class="fa-solid fa-angle-left"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span style="border: none; background: transparent; padding: 0 4px; color: #94a3b8;">...</span>
+                        <a href="#">8</a>
+                        <a href="#" title="다음 페이지"><i class="fa-solid fa-angle-right"></i></a>
+                        <a href="#" title="마지막 페이지"><i class="fa-solid fa-angles-right"></i></a>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+
+
+   <!-- ==========================================
+   운영 조치 등록 레이어 팝업 (Modal)
+   ========================================== -->
+    <div class="modal-overlay" id="actionModal">
+        <div class="modal-container">
+            <!-- 팝업 헤더 -->
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-layer-group"></i> 
+                    운영 조치 등록
+                </div>
+                <button type="button" class="modal-close-btn" id="closeActionModalBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- 팝업 본문 -->
+            <div class="modal-body">
+                <!-- 대상자 요약 정보 -->
+                <div class="modal-target-box">
+                    <div class="modal-target-label">선택된 대상자 (총 2명)</div>
+                    <div class="modal-target-list">
+                        <div class="modal-target-item">
+                            <i class="fa-solid fa-user user-icon-sm"></i>
+                            <strong>문태식 (82)</strong> &bull; 수신 끊김 13시간 20분
+                        </div>
+                        <div class="modal-target-item">
+                            <i class="fa-solid fa-user user-icon-sm"></i>
+                            <strong>강옥희 (83)</strong> &bull; 미착용 12시간 5분
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 입력 필드 영역 -->
+                <div class="modal-form-grid">
+                    <div class="modal-form-group">
+                        <label class="modal-form-label">유형</label>
+                        <select class="modal-form-select">
+                            <option>구분에 따라 자동</option>
+                            <option>끊김</option>
+                            <option>미착용</option>
+                        </select>
+                    </div>
+                    <div class="modal-form-group">
+                        <label class="modal-form-label">수행자</label>
+                        <select class="modal-form-select">
+                            <option>지자체 담당자</option>
+                            <option>관제 센터 상담원</option>
+                            <option>케어 매니저</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-form-group">
+                    <label class="modal-form-label">내용</label>
+                    <textarea class="modal-form-textarea" placeholder="조치 내용을 입력해주세요.">전화로 착용 여부와 충전 상태 확인</textarea>
+                </div>
+
+                <div class="modal-notice-box">
+                    <i class="fa-solid fa-circle-info u-mr-1"></i> 대상자마다 운영 조치가 하나씩 등록됨. 등록하면 처리 대기로 생기고 「운영 조치」의 목록에 나옴
+                </div>
+            </div>
+
+            <!-- 팝업 하단 버튼 -->
+            <div class="modal-footer">
+                <button type="button" class="btn-default btn-type-01" id="submitActionModalBtn">등록</button>
+                <button type="button" class="btn-outline btn-type-02" id="cancelActionModalBtn">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 간단한 JS 인터랙션 코드 -->
+    <script>
+        const modal = document.getElementById('actionModal');
+        const openBtn = document.getElementById('openActionModalBtn');
+        const closeBtn = document.getElementById('closeActionModalBtn');
+        const cancelBtn = document.getElementById('cancelActionModalBtn');
+
+        // 열기
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        // 닫기 함수
+        const closeModal = () => {
+            modal.classList.remove('active');
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        
+        // 백드롭 클릭 시 닫기
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+
+        // 가입 단계별 인원 차트 생성
+        // 가입 단계별 인원 가로형 바 차트 생성
+        const ctx = document.getElementById('joinStepChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['동의 전', '위치 배정 전', '앱 연결 전', '첫 수신 전'],
+                datasets: [{
+                    data: [2, 4, 6, 3],
+                    backgroundColor: ['#3b82f6', '#6366f1', '#10b981', '#f59e0b'],
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    barThickness: 16
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const total = 15; // 전체 등록 인원 15명 기준 비율 계산
+                                const percentage = Math.round((value / total) * 100);
+                                return ` 해당 단계: ${value}명 (전체 15명의 ${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: { size: 11 },
+                            color: '#64748b',
+                            stepSize: 2
+                        }
+                        // max: 8 강제 설정을 제거하여 데이터 범위에 맞게 자동 조절되도록 함
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: { size: 12, weight: '600' },
+                            color: '#334155'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">운영 대시보드</a></li>
+                    <li class="sub-item active"><a href="#">탐지 기록</a></li>
+                    <li class="sub-item"><a href="#">알림 관리</a></li>
+                </ul>
+            </div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">ITeyes 관리자 홍길동 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">탐지 기록</h2>
+                <span class="page-sub-desc"></span>
+            </div>
+            <div class="breadcrumb">
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">탐지 기록</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+      
+
+<div class="search-filter-finder">
+    <!-- 기간 / 유형 -->
+    <div class="search-filter-grid">
+
+        <!-- 기간 -->
+        <div class="search-filter-row">
+            <span class="search-filter-label">기간</span>
+            <div class="radio-group-inline">
+                <label class="radio-label"><input type="radio" name="searchPeriod" value="7days" checked> 최근 7일</label>
+                <label class="radio-label"><input type="radio" name="searchPeriod" value="30days"> 최근 30일</label>
+            </div>
+        </div>
+
+        <!-- 유형 -->
+        <div class="search-filter-row">
+            <span class="search-filter-label">유형</span>
+            <div class="radio-group-inline">
+                <label class="radio-label"><input type="radio" name="alertType" value="all" checked> 전체</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="fall"> 낙상</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="heart"> 심박 이상</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="no_move"> 장시간 움직임 없음</label>
+                <label class="radio-label"><input type="radio" name="alertType" value="sos"> 응급호출</label>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 오탐 표시 -->
+    <div class="search-filter-row">
+        <span class="search-filter-label">오탐 표시</span>
+        <div class="radio-group-inline">
+            <label class="radio-label"><input type="radio" name="falsePositive" value="all" checked> 전체</label>
+            <label class="radio-label"><input type="radio" name="falsePositive" value="normal"> 정상 탐지</label>
+            <label class="radio-label"><input type="radio" name="falsePositive" value="candidate"> 오탐 후보</label>
+            <label class="radio-label"><input type="radio" name="falsePositive" value="wear"> 오탐·착용 상태</label>
+        </div>
+    </div>
+
+    <!-- 검색어 -->
+    <div class="search-filter-row">
+        <label class="search-filter-label" for="alertSearchKeyword">검색어</label>
+        <div class="search-keyword-group">
+            <input type="text" id="alertSearchKeyword" class="filter-input" placeholder="대상자 코드, 위치 관리번호">
+        </div>
+    </div>
+
+    <!-- 검색 버튼 -->
+    <div class="search-submit-row">
+        <button type="button" class="btn-search">검색</button>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="section-caption">
+                    <div class="caption-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>목록</span>
+                    </div>
+                </div>
+
+                <div class="table-toolbar">
+                    <div class="toolbar-info">
+                        <div class="table-count-text">
+                            전체 <strong>3</strong>건
+                            (선택항목: <strong class="u-text-blue">1개</strong>)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <button type="button" class="btn-default btn-excel-download">
+                            <i class="fa-solid fa-file-excel"></i>
+                            엑셀 내려받기
+                        </button>
+                    </div>
+                </div>
+                
+                
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>탐지 시각</th>
+                            <th>지자체</th>
+                            <th>유형</th>
+                            <th>등급</th>
+                            <th>대상자</th>
+                            <th>근거 측정값</th>
+                            <th>안부 확인</th>
+                            <th>오탐 표시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10-14 08:42</td>
+                            <td>A시</td>
+                            <td>낙상</td>
+                            <td><span style="color: #ef4444; font-weight: 600;">긴급</span></td>
+                            <td>A-000120</td>
+                            <td>충격 뒤 60초 움직임 없음</td>
+                            <td>접수 대기</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>10-14 08:20</td>
+                            <td>A시</td>
+                            <td>심박 이상</td>
+                            <td>확인 필요</td>
+                            <td>A-000388</td>
+                            <td>심박 128회 12분</td>
+                            <td>접수 대기</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>10-13 14:02</td>
+                            <td>A시</td>
+                            <td>낙상</td>
+                            <td><span style="color: #ef4444; font-weight: 600;">긴급</span></td>
+                            <td>A-000180</td>
+                            <td>충격 뒤 60초 움직임 없음</td>
+                            <td>종결 &bull; 현장 확인함</td>
+                            <td>정상 탐지</td>
+                        </tr>
+                        <tr class="tr-bg-light">
+                            <td>10-12 10:15</td>
+                            <td>A시</td>
+                            <td>심박 이상</td>
+                            <td>확인 필요</td>
+                            <td>A-000120</td>
+                            <td>심박 41회 10분</td>
+                            <td>종결 &bull; 이상 없음</td>
+                            <td><span style="color: #d97706; font-weight: 600;">오탐 후보</span></td>
+                        </tr>
+                        <tr>
+                            <td>10-10 09:30</td>
+                            <td>A시</td>
+                            <td>장시간 움직임 없음</td>
+                            <td>확인 필요</td>
+                            <td>A-000131</td>
+                            <td>움직임 없음 4시간</td>
+                            <td>종결 &bull; 기기&middot;통신 문제</td>
+                            <td><span style="color: #ef4444; font-weight: 600;">오탐&middot;착용 상태</span></td>
+                        </tr>
+                        <tr>
+                            <td>10-09 22:11</td>
+                            <td>B군</td>
+                            <td>응급호출</td>
+                            <td><span style="color: #ef4444; font-weight: 600;">긴급</span></td>
+                            <td>B-000044</td>
+                            <td>버튼 5초 누름</td>
+                            <td>종결 &bull; 이상 없음</td>
+                            <td><span style="color: #d97706; font-weight: 600;">오탐 후보</span></td>
+                        </tr>
+                        <tr>
+                            <td>10-09 07:05</td>
+                            <td>C구</td>
+                            <td>심박 이상</td>
+                            <td>확인 필요</td>
+                            <td>C-000310</td>
+                            <td>심박 131회 15분</td>
+                            <td>종결 &bull; 보호자가 확인함</td>
+                            <td>정상 탐지</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="common-notice-box">
+                    <p>
+                        <i class="fa-solid fa-circle-info"></i> 
+                        최근 7일 탐지 58건 &bull; 오탐 후보 9건 &bull; 오탐 6건 &bull; 정상 탐지 31건 &bull; 표시 안 함 12건
+                    </p>
+                </div>
+
+                <!-- 페이징 영역 -->
+                <div class="pagination-area">
+                    <div class="pagination-num">
+                        <a href="#" title="처음 페이지"><i class="fa-solid fa-angles-left"></i></a>
+                        <a href="#" title="이전 페이지"><i class="fa-solid fa-angle-left"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span style="border: none; background: transparent; padding: 0 4px; color: #94a3b8;">...</span>
+                        <a href="#">8</a>
+                        <a href="#" title="다음 페이지"><i class="fa-solid fa-angle-right"></i></a>
+                        <a href="#" title="마지막 페이지"><i class="fa-solid fa-angles-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+ 
+
+</body>
+</html>
