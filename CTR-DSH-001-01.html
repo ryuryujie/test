@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="layout.css" rel="stylesheet">
     <link href="content.css" rel="stylesheet">
+    <script src="modal.js"></script>
     <!-- Chart.js 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -99,37 +100,49 @@
          
 
                 <div style="display: flex; gap: 16px; margin-bottom: 20px; align-items: stretch;">
-                    <div style="display: flex; gap: 16px; width: 450px;">
-                        <!-- 수신 끊김 카드 (상단 워치와 착용 우측 카드와 동일한 alert-card 스타일 적용) -->
-                        <div class="dsh-status-card alert-card" style="flex: 1; padding: 18px 20px; cursor: pointer;">
-                            <div class="dsh-card-top-flex" style="margin-bottom: 6px;">
-                                <div class="dsh-status-label" style="font-size: 13px !important; font-weight: 700; color: #334155;">수신 끊김</div>
-                                <div class="dsh-card-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background-color: #fee2e2; color: #ef4444;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div style="display: flex; gap: 16px; width: 480px;">
+                        
+                        <!-- 수신 끊김 카드 (이미지 스타일 적용) -->
+                        <div class="summary-card" style="flex: 1; cursor: pointer;">
+                            <div class="card-icon-box danger">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
                             </div>
-                            <div class="dsh-status-number u-text-danger" style="font-size: 26px !important; font-weight: 800; margin-top: 0; display: flex; align-items: baseline; justify-content: flex-end; gap: 4px;">
-                                14 <span class="dsh-status-unit" style="font-size: 14px !important; font-weight: 600;">명</span>
-                            </div>
-                        </div>
-                        <!-- 미착용 카드 (상단 워치와 착용 우측 카드와 동일한 warning-card 스타일 적용) -->
-                        <div class="dsh-status-card warning-card" style="flex: 1; padding: 18px 20px; cursor: pointer;">
-                            <div class="dsh-card-top-flex" style="margin-bottom: 6px;">
-                                <div class="dsh-status-label" style="font-size: 13px !important; font-weight: 700; color: #334155;">미착용</div>
-                                <div class="dsh-card-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background-color: #fef3c7; color: #d97706;"><i class="fa-solid fa-user-slash"></i></div>
-                            </div>
-                            <div class="dsh-status-number" style="font-size: 26px !important; font-weight: 800; margin-top: 0; color: #d97706; display: flex; align-items: baseline; justify-content: flex-end; gap: 4px;">
-                                31 <span class="dsh-status-unit" style="font-size: 14px !important; font-weight: 600;">명</span>
+                            <div class="card-info card-info-right">
+                                <div class="card-title">수신 끊김</div>
+                                <div class="card-value-area">
+                                    <span class="card-number" style="color: var(--content-danger);">14</span>
+                                    <span class="card-unit">명</span>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- 미착용 카드 (이미지 스타일 적용) -->
+                        <div class="summary-card" style="flex: 1; cursor: pointer;">
+                            <div class="card-icon-box warning">
+                                <i class="fa-solid fa-user-slash"></i>
+                            </div>
+                            <div class="card-info card-info-right">
+                                <div class="card-title">미착용</div>
+                                <div class="card-value-area">
+                                    <span class="card-number" style="color: #d97706;">31</span>
+                                    <span class="card-unit">명</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                    
+                    <!-- 우측 안내 박스 -->
                     <div style="flex: 1;">
-                        <div class="common-notice-box notice-box-flex">
-                            <p>
-                                <i class="fa-solid fa-circle-info"></i> 
-                                    안부 확인을 만들지 않고 알림도 보내지 않는 목록임. 기준: 수신 끊김 2시간, 미착용 3시간
+                        <div class="common-notice-box notice-box-flex" style="height: 100%; box-sizing: border-box; display: flex; align-items: center;">
+                            <p style="margin: 0; font-size: 12px; line-height: 1.5; color: var(--content-text-muted);">
+                                <i class="fa-solid fa-circle-info" style="color: var(--content-primary); margin-right: 4px;"></i> 
+                                안부 확인을 만들지 않고 알림도 보내지 않는 목록임. 기준: 수신 끊김 2시간, 미착용 3시간
                             </p>
                         </div>
                     </div>
                 </div>
+                
 
                 <div class="search-filter-finder">
 
@@ -190,15 +203,7 @@
                     <div class="search-submit-row">
                         <button type="button" class="btn-search">검색</button>
                     </div>
-
                 </div>
-
-
-
-
-
-
- 
 
                 <div class="section-caption">
                     <div class="captione-group">
@@ -216,11 +221,10 @@
 
                     <div class="control-group">
                         <button type="button" class="btn-default btn-type-01">안부 확인 등록</button>
-                        <button type="button" class="btn-default btn-type-01" id="openActionModalBtn">운영 조치 등록</button>
+                        <button type="button" class="btn-default btn-type-01 open-modal-btn" data-target="actionModal1">운영 조치 등록</button>
                     </div>
                 </div>
 
-                
                 
                 <table class="list-table">
                     <thead>
@@ -335,9 +339,9 @@
 
 
    <!-- ==========================================
-   운영 조치 등록 레이어 팝업 (Modal)
+   운영 조치 등록 레이어 팝업
    ========================================== -->
-    <div class="modal-overlay" id="actionModal">
+    <div class="modal-overlay" id="actionModal1">
         <div class="modal-container">
             <!-- 팝업 헤더 -->
             <div class="modal-header">
@@ -399,40 +403,14 @@
 
             <!-- 팝업 하단 버튼 -->
             <div class="modal-footer">
-                <button type="button" class="btn-default btn-type-01" id="submitActionModalBtn">등록</button>
-                <button type="button" class="btn-outline btn-type-02" id="cancelActionModalBtn">취소</button>
+                <button type="button" class="btn-outline btn-type-02">취소</button>
+                <button type="button" class="btn-default btn-type-01">등록</button>
             </div>
         </div>
     </div>
 
-    <!-- 간단한 JS 인터랙션 코드 -->
+
     <script>
-        const modal = document.getElementById('actionModal');
-        const openBtn = document.getElementById('openActionModalBtn');
-        const closeBtn = document.getElementById('closeActionModalBtn');
-        const cancelBtn = document.getElementById('cancelActionModalBtn');
-
-        // 열기
-        openBtn.addEventListener('click', () => {
-            modal.classList.add('active');
-        });
-
-        // 닫기 함수
-        const closeModal = () => {
-            modal.classList.remove('active');
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-        
-        // 백드롭 클릭 시 닫기
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-
         // 가입 단계별 인원 차트 생성
         // 가입 단계별 인원 가로형 바 차트 생성
         const ctx = document.getElementById('joinStepChart').getContext('2d');

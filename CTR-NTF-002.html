@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="layout.css" rel="stylesheet">
     <link href="content.css" rel="stylesheet">
+    <script src="modal.js"></script>
     <!-- Chart.js 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -159,19 +160,6 @@
                         </div>
                     </div>
 
-                    <!-- 실패 원인 -->
-                    <div class="search-filter-row">
-                        <label class="search-filter-label" for="failureReason">실패 원인</label>
-                        <div class="search-control-group">
-                            <select id="failureReason" class="filter-select">
-                                <option value="">전체</option>
-                                <option value="notification_off">앱 알림 꺼짐</option>
-                                <option value="device_disconnected">기기 연결 안 됨</option>
-                                <option value="no_response">응답 없음</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <!-- 검색 -->
                     <div class="search-filter-row">
                         <label class="search-filter-label" for="recipientType">검색</label>
@@ -229,43 +217,53 @@
                     <tbody>
                         <tr>
                             <td>10-14 08:42</td>
-                            <td>긴급 안부 확인 발생</td>
+                            <td>
+                                <a href="#" class="open-modal-btn" data-target="actionModal1" onclick="event.stopPropagation(); return false;">긴급 안부 확인 발생</a>
+                            </td>
                             <td>김민수 (보호자)</td>
                             <td>앱 알림</td>
                             <td><span class="u-text-danger">실패</span></td>
                             <td>앱 알림 꺼짐</td>
-                            <td>0회 <button type="button" class="btn-default btn-sm">재발송</button></td>
+                            <td>0회 <button type="button" class="btn-default btn-sm open-modal-btn" data-target="resendModal">재발송</button></td>
                         </tr>
                         <tr>
                             <td>10-14 08:30</td>
-                            <td>공지</td>
+                            <td>
+                                <a href="#" class="open-modal-btn" data-target="actionModal1" onclick="event.stopPropagation(); return false;">공지</a>
+                            </td>
                             <td>박순덕 (어르신)</td>
                             <td>앱 알림</td>
                             <td><span class="u-text-danger">실패</span></td>
                             <td>기기 연결 안 됨</td>
-                            <td>1회 <button type="button" class="btn-default btn-sm">재발송</button></td>
+                            <td>1회 <button type="button" class="btn-default btn-sm open-modal-btn" data-target="resendModal">재발송</button></td>
                         </tr>
                         <tr>
                             <td>10-14 08:30</td>
-                            <td>공지</td>
+                            <td>
+                                <a href="#" class="open-modal-btn" data-target="actionModal1" onclick="event.stopPropagation(); return false;">공지</a>
+                            </td>
                             <td>이정희 (보호자)</td>
                             <td>앱 알림</td>
                             <td><span class="u-text-danger">실패</span></td>
                             <td>응답 없음</td>
-                            <td>0회 <button type="button" class="btn-default btn-sm">재발송</button></td>
+                            <td>0회 <button type="button" class="btn-default btn-sm open-modal-btn" data-target="resendModal">재발송</button></td>
                         </tr>
                         <tr>
                             <td>10-14 08:30</td>
-                            <td>공지</td>
+                            <td>
+                                <a href="#" class="open-modal-btn" data-target="actionModal1" onclick="event.stopPropagation(); return false;">공지</a>
+                            </td>
                             <td>한상철 (어르신)</td>
                             <td>앱 알림</td>
                             <td><span class="u-text-danger">실패</span></td>
                             <td>기기 연결 안 됨</td>
-                            <td>0회 <button type="button" class="btn-default btn-sm">재발송</button></td>
+                            <td>0회 <button type="button" class="btn-default btn-sm open-modal-btn" data-target="resendModal">재발송</button></td>
                         </tr>
                         <tr>
                             <td>10-14 08:44</td>
-                            <td>긴급 안부 확인 발생</td>
+                            <td>
+                                <a href="#" class="open-modal-btn" data-target="actionModal1" onclick="event.stopPropagation(); return false;">긴급 안부 확인 발생</a>
+                            </td>
                             <td>김민수 (보호자)</td>
                             <td>앱 알림</td>
                             <td>성공</td>
@@ -295,129 +293,98 @@
     </div>
 
 
-
    <!-- ==========================================
-        레이어 팝업 (Modal)
+   보낸 내용 상세 레이어 팝업
    ========================================== -->
-    <div class="modal-overlay" id="actionModal">
+    <div class="modal-overlay" id="actionModal1">
         <div class="modal-container">
             <!-- 팝업 헤더 -->
             <div class="modal-header">
                 <div class="modal-title">
                     <i class="fa-solid fa-layer-group"></i> 
-                    경로별 상태
+                    보낸 내용 
                 </div>
-                <button type="button" class="modal-close-btn" id="closeActionModalBtn">
+                <button type="button" class="modal-close-btn" id="closeActionModalBtn1">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <!-- 팝업 본문 -->
             <div class="modal-body">
-                
-                <div class="status-list">
-                    
-                    <!-- 상태 항목 -->
-                    <div class="status-list-item">
-                        <div class="status-list-main">
-                            <i class="fa-solid fa-comment-sms status-list-icon"></i>
-                            <span class="status-list-name">문자 발송 대행</span>
+                <div class="modal-target-box">
+                    <div class="modal-target-list">
+                        <div class="modal-target-item">
+                            <span style="font-weight: 600; color: var(--content-text-muted);">템플릿</span> 
+                            <span>긴급 안부 확인 발생 &bull; 보호자 &bull; 앱 알림</span>
                         </div>
-
-                        <div class="status-list-detail">
-                            <span class="status-badge warning">
-                                <span class="status-dot"></span>
-                                지연
-                            </span>
-                            <span class="status-list-description">
-                                마지막 성공 · 10-14 08:47
-                            </span>
+                        <div class="modal-target-item" style="margin-top: 4px;">
+                            <span style="font-weight: 600; color: var(--content-text-muted);">받는 사람</span> 
+                            <span>김민수 (자녀) &bull; 010-****-6789</span>
                         </div>
                     </div>
-
-                    <div class="status-list-item">
-                        <div class="status-list-main">
-                            <i class="fa-solid fa-mobile-screen-button status-list-icon"></i>
-                            <span class="status-list-name">앱 알림 발송</span>
-                        </div>
-
-                        <div class="status-list-detail">
-                            <span class="status-badge success">
-                                <span class="status-dot"></span>
-                                정상
-                            </span>
-                            <span class="status-list-description">
-                                마지막 성공 · 10-14 08:59
-                            </span>
-                        </div>
-                    </div>
-
                 </div>
-         
-
-                <div class="modal-notice-box">
-                    <i class="fa-solid fa-circle-info u-mr-1"></i> 지연이나 끊김일 때 보낸 알림은 대기로 남았다가 결과가 오면 성공이나 실패로 바뀜
+                <div class="modal-form-group">
+                    <div class="modal-form-textarea" readonly style="background-color: #ffffff; cursor: default; resize: none; min-height: 110px;">[안심 돌봄] 김영자 님의 위치에서 낙상이 감지되었습니다.
+                        08:42 - A시 가동
+                        지금 연락해 보시고, 연락이 닿지 않으면 119에 신고해 주세요.
+                    </div>
+                </div>
+                <div>
+                    <a href="#" class="btn-link">연결된 안부 확인 보기 &gt;</a>
                 </div>
             </div>
 
             <!-- 팝업 하단 버튼 -->
             <div class="modal-footer">
-                <button type="button" class="btn-default btn-type-01" id="confirmActionModalBtn">확인</button>
+                <button type="button" class="btn-default btn-type-01">확인</button>
             </div>
         </div>
     </div>
 
-    
-    <script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById('actionModal');
-        const openBtns = document.querySelectorAll('.openActionModalBtn');
-        const closeBtn = document.getElementById('closeActionModalBtn');
-        const cancelBtn = document.getElementById('cancelActionModalBtn');
-        const confirmBtn = document.getElementById('confirmActionModalBtn'); // 추가
 
-        // 필수 요소 확인
-        if (!modal) {
-            console.error('모달 요소 #actionModal을 찾을 수 없습니다.');
-            return;
-        }
+    <!-- ==========================================
+   재발송 레이어 팝업
+   ========================================== -->
+    <div class="modal-overlay" id="resendModal">
+        <div class="modal-container" style="max-width: 480px;">
+            <!-- 팝업 헤더 -->
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-paper-plane"></i> 
+                    알림 재발송
+                </div>
+                <button type="button" class="modal-close-btn modal-cancel-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
 
-        // 여러 링크에서 모달 열기
-        openBtns.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.classList.add('active');
-            });
-        });
+            <!-- 팝업 본문 -->
+            <div class="modal-body" style="gap: 16px;">
+                
+                <!-- 상단 안내 메시지 박스 -->
+                <div class="modal-target-box" style="background-color: #f0fdf4; border-color: #bbf7d0; color: #166534; font-weight: 500;">
+                    김민수 님에게 같은 알림을 다시 보냈습니다 (08:44)
+                </div>
 
-        // 모달 닫기
-        const closeModal = () => {
-            modal.classList.remove('active');
-        };
+                <!-- 하단 주의사항 안내 영역 -->
+                <div style="font-size: 13px; color: var(--content-text-sub); line-height: 1.6;">
+                    <div style="font-weight: 600; margin-bottom: 4px; color: var(--content-text);">확인 창 없이 바로 보냄</div>
+                    <div style="font-weight: 600; margin-bottom: 4px; color: var(--content-text);">보내지 않는 경우:</div>
+                    <ul style="margin: 0; padding-left: 18px; color: var(--content-text-muted);">
+                        <li>대상자가 참여 종료됨</li>
+                        <li>보호자 연결이 풀림</li>
+                        <li>같은 알림을 1분 안에 이미 다시 보냄</li>
+                    </ul>
+                </div>
 
-        closeBtn?.addEventListener('click', closeModal);
-        cancelBtn?.addEventListener('click', closeModal);
-        confirmBtn?.addEventListener('click', closeModal); // 추가
+            </div>
 
-        // 배경 클릭 시 닫기
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        console.log('모달 초기화 완료:', {
-            modalFound: !!modal,
-            openButtonCount: openBtns.length,
-            closeButtonFound: !!closeBtn,
-            cancelButtonFound: !!cancelBtn,
-            confirmButtonFound: !!confirmBtn
-        });
-    });
-
-    </script>
-
+            <!-- 팝업 하단 버튼 -->
+            <div class="modal-footer">
+                <button type="button" class="btn-default btn-type-01 modal-cancel-btn">확인</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

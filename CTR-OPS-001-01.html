@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">운영 대시보드</a></li>
+                    <li class="sub-item active"><a href="#">탐지 기록</a></li>
+                    <li class="sub-item"><a href="#">알림 관리</a></li>
+                </ul>
+            </div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">ITeyes 관리자 홍길동 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">탐지 기록 상세</h2>
+                <span class="page-sub-desc"></span>
+            </div>
+            <div class="breadcrumb">
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span>탐지 기록</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">상세</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+                <!-- 탐지 정보 요약 타이틀 -->
+                <div class="section-caption">
+                    <div class="caption-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>탐지 상세 정보 &bull; 10-12 10:15 심박 이상 &bull; A-000120</span>
+                    </div>
+                </div>
+
+                <!-- 상세 정보 테이블 -->
+                <table class="detail-table">
+                    <colgroup>
+                        <col style="width: 15%;">
+                        <col style="width: 35%;">
+                        <col style="width: 15%;">
+                        <col style="width: 35%;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>지자체</th>
+                            <td>A시 다면</td>
+                            <th>대상자 정보</th>
+                            <td>최정호 (81세, 남) / <a href="#" class="btn-link">대상자 상세</a></td>
+                        </tr>
+                        <tr>
+                            <th>등록 시각 / 경과</th>
+                            <td>2026-10-14 08:30 (경과 30분)</td>
+                            <th>처리 상태</th>
+                            <td><span style="color: #2563eb; font-weight: 600;">처리 중</span></td>
+                        </tr>
+                        <tr>
+                            <th>문제 내용</th>
+                            <td colspan="3">
+                                등록 경로: 운영 대시보드 &bull; 수신 끊김 / 미착용 목록<br>
+                                등록한 사람: 김담당 (10-14 08:30)<br>
+                                내용: 어제 저녁부터 데이터가 들어오지 않음<br>
+                                원인이 된 안부 확인: 없음
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>워치 및 기기 정보</th>
+                            <td colspan="3">
+                                W-A-000210 &bull; 배정 상태: 사용 중 &bull; 연결 상태: 수신 끊김<br>
+                                마지막 수신: 2026-10-13 19:42 &bull; 배터리 8% (마지막 수신 때) &bull; 미착용
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>수행자</th>
+                            <td colspan="3">
+                                지자체 담당자 (10-14 08:30 김담당이 정함)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>안부 확인 등록</th>
+                            <td colspan="3">
+                                처리하다가 어르신의 안전이 걱정되면 안부 확인을 등록함
+                                <div style="margin-top: 8px;">
+                                    <button type="button" class="btn-default btn-type-02">안부 확인 등록</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>처리 기록 쓰기</th>
+                            <td colspan="3">
+                                <div style="font-size: 11px; color: var(--content-text-muted); margin-bottom: 4px;">한 일</div>
+                                <textarea class="modal-form-textarea" placeholder="내용을 입력하세요." style="width: 100%; min-height: 80px;">어르신과 통화함. 워치를 충전기에 올려 둔 채 차지 않았다고 함</textarea>
+                                <div style="margin-top: 8px; text-align: right;">
+                                    <button type="button" class="btn-default btn-type-01">기록 저장</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>종결 처리</th>
+                            <td colspan="3">
+                                <div style="font-size: 11px; color: var(--content-text-muted); margin-bottom: 4px;">처리 결과 *</div>
+                                <textarea class="modal-form-textarea" placeholder="결과를 입력하세요." style="width: 100%; min-height: 80px;">다시 착용하도록 안내함. 09:20 수신 재개 확인</textarea>
+                                <div style="margin-top: 8px; text-align: right;">
+                                    <button type="button" class="btn-default btn-type-02">종결</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>처리 이력</th>
+                            <td colspan="3">
+                                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                                    <li><strong>10-14 08:30</strong> &bull; <strong>김담당</strong><br><span style="color: var(--content-text-muted);">운영 대시보드에서 등록. 수행자 지자체 담당자</span></li>
+                                    <li><strong>10-14 08:41</strong> &bull; <strong>김담당</strong><br>어르신 통화: 받지 않음</li>
+                                    <li><strong>10-14 08:55</strong> &bull; <strong>홍길동</strong> (ITeyes 관리자)<br>서버 수신 기록 확인. 10-13 19:42 뒤 없음</li>
+                                    <li><strong>10-14 09:05</strong> &bull; <strong>김담당</strong><br>어르신과 통화함. 충전기에 올려 둔 채 차지 않음</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                
+
+                <!-- 게시판 하단 버튼 영역 -->
+                <div class="board-actions">
+                    <button type="button" class="btn-outline btn-type-01 btn-lg">목록</button>
+                    
+                    <div class="btn-group-right">
+                        <button type="button" class="btn-default btn-type-01 btn-lg">저장</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js 샘플 스크립트 -->
+    <script>
+        const ctx = document.getElementById('detailChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '09:00', '10:00', '10:15', '11:00', '12:00'],
+                datasets: [{
+                    label: '심박 측정값',
+                    data: [65, 62, 58, 41, 60, 63],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.1
+                }, {
+                    label: '기준 50회',
+                    data: [50, 50, 50, 50, 50, 50],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { min: 20, max: 100 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <script src="modal.js"></script>
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group active">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+                <ul class="sub-menu">
+                    <li class="sub-item"><a href="#">운영 대시보드</a></li>
+                    <li class="sub-item"><a href="#">탐지 기록</a></li>
+                    <li class="sub-item active"><a href="#">알림 관리</a></li>
+                </ul>
+            </div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">A시 담당자 김담당 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">알림 관리</h2>
+                <span class="page-sub-desc"></span>
+            </div>
+            <div class="breadcrumb">
+                <span>현황</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">알림 관리</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+                <!-- 탭 메뉴 -->
+                <div class="tab-menu-wrap">
+                    <button type="button" class="tab-item-btn">유형별 발송 현황</button>
+                    <button type="button" class="tab-item-btn">발송 이력</button>
+                    <button type="button" class="tab-item-btn active">알림 템플릿</button>
+                </div>
+
+                <!-- 메인 2열 그리드 레이아웃 -->
+                <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; align-items: start;">
+                    
+                    <!-- [1] 템플릿 목록 -->
+                    <div class="dashboard-section" style="display: flex; flex-direction: column; gap: 16px;">
+                        <div class="section-caption" style="margin-bottom: 0;">
+                            <div class="caption-group">
+                                <i class="fa-solid fa-list-check title-icon"></i>
+                                <span>템플릿 목록</span>
+                            </div>
+                        </div>
+
+                        <table class="list-table">
+                            <colgroup>
+                                <col style="width: 42%;">
+                                <col style="width: 26%;">
+                                <col style="width: 18%;">
+                                <col style="width: 14%;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>알림 유형</th>
+                                    <th>받는 사람</th>
+                                    <th>경로</th>
+                                    <th>적용</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 활성화(선택)된 행 -->
+                                <tr style="background-color: var(--content-primary-light); cursor: pointer; border-left: 3px solid var(--content-primary);">
+                                    <td class="u-text-left" style="font-weight: 700; color: var(--content-text);">긴급 안부 확인 발생</td>
+                                    <td>보호자</td>
+                                    <td>앱 알림</td>
+                                    <td><span class="u-text-blue" style="font-weight: 700;">A시</span></td>
+                                </tr>
+                                <tr style="cursor: pointer;">
+                                    <td class="u-text-left">119 연결 안내</td>
+                                    <td>보호자</td>
+                                    <td>앱 알림</td>
+                                    <td>기본</td>
+                                </tr>
+                                <tr style="cursor: pointer;">
+                                    <td class="u-text-left">공지</td>
+                                    <td>어르신, 보호자</td>
+                                    <td>앱 알림</td>
+                                    <td>기본</td>
+                                </tr>
+                                <tr style="cursor: pointer;">
+                                    <td class="u-text-left">보호자 초대 안내</td>
+                                    <td>보호자</td>
+                                    <td>문자</td>
+                                    <td>기본</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- 하단 범위 설명 캡션 -->
+                        <div style="font-size: 11px; color: var(--content-text-muted); line-height: 1.6; padding-top: 8px; border-top: 1px dashed var(--content-border-strong);">
+                            <div>• 기본: ITeyes 관리자가 넣은 문구</div>
+                            <div>• A시: 이 지자체가 고친 문구</div>
+                        </div>
+                    </div>
+
+                    <!-- [2~6] 문구 편집 및 이력 영역 -->
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <!-- [2] 문구 고치기 / [3] 적용 범위 / [4] 넣을 수 있는 값 -->
+                        <div class="dashboard-section" style="display: flex; flex-direction: column; gap: 16px;">
+                            
+                            <!-- 카드 헤더 -->
+                            <div class="section-caption" style="margin-bottom: 0; padding-bottom: 12px; border-bottom: 1px solid var(--content-border);">
+                                <div class="caption-group">
+                                    <i class="fa-solid fa-pen-to-square title-icon"></i>
+                                    <span>긴급 안부 확인 발생 &bull; 보호자 &bull; 앱 알림</span>
+                                </div>
+                            </div>
+
+                            <!-- 제목 입력 -->
+                            <div class="modal-form-group">
+                                <label class="modal-form-label">제목</label>
+                                <input type="text" class="filter-input" value="[안심 돌봄] {대상자 이름} 님 {탐지 유형} 감지" style="width: 100%; font-weight: 500;">
+                            </div>
+
+                            <!-- 본문 입력 -->
+                            <div class="modal-form-group">
+                                <label class="modal-form-label">본문</label>
+                                <textarea class="modal-form-textarea" style="min-height: 110px; line-height: 1.5; font-weight: 400;">{대상자 이름} 님의 위치에서 {탐지 유형}이(가) 감지되었습니다. {발생 시각} - {지자체} {읍면동}. 지금 연락해 보시고, 연락이 닿지 않으면 119에 신고해 주세요.</textarea>
+                            </div>
+
+                            <!-- [4] 넣을 수 있는 값 (파라미터 칩 버튼) -->
+                            <div style="display: flex; flex-direction: column; gap: 8px; background-color: var(--content-bg-soft); padding: 12px; border-radius: var(--content-radius-sm);">
+                                <span style="font-size: 12px; font-weight: 600; color: var(--content-text-sub);">넣을 수 있는 값 (클릭 시 커서 위치에 자동 입력)</span>
+                                <div class="guide-row">
+                                    <div class="chip-group">
+                                        <label>
+                                            <input type="radio" name="guide-error-status" value="">
+                                            <span class="chip-item">대상자 이름</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="guide-error-status" value="">
+                                            <span class="chip-item">탐지 유형</span>
+                                        </label>
+                                         <label>
+                                            <input type="radio" name="guide-error-status" value="">
+                                            <span class="chip-item">발생 시각</span>
+                                        </label>
+                                         <label>
+                                            <input type="radio" name="guide-error-status" value="">
+                                            <span class="chip-item">지자체</span>
+                                        </label>
+                                         <label>
+                                            <input type="radio" name="guide-error-status" value="">
+                                            <span class="chip-item">읍면동</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- [3] 적용 범위 안내 및 버튼 바 -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--content-border);">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span class="status-badge warning" style="padding: 3px 8px; font-size: 11px;">A시 커스텀 사용 중</span>
+                                    <a href="#" class="btn-link" style="font-size: 12px;">기본 문구로 되돌리기</a>
+                                </div>
+                                <button type="button" class="btn-default btn-type-02" style="padding: 0 24px; font-weight: 600;">저장</button>
+                            </div>
+                        </div>
+
+                        <!-- [5] 미리 보기 -->
+                        <div class="dashboard-section" style="display: flex; flex-direction: column; gap: 12px;">
+                            <div class="section-caption" style="margin-bottom: 0;">
+                                <div class="caption-group">
+                                    <i class="fa-solid fa-mobile-screen title-icon"></i>
+                                    <span>미리 보기</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 예시 시뮬레이션 Box -->
+                            <div style="padding: 16px; border: 1px solid var(--content-border-strong); border-radius: var(--content-radius-md); background-color: #ffffff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+                                <div style="font-size: 13px; font-weight: 700; color: var(--content-text); margin-bottom: 6px;">[안심 돌봄] 김영자 님 낙상 감지</div>
+                                <div style="font-size: 13px; color: var(--content-text-sub); line-height: 1.5;">김영자 님의 위치에서 낙상이 감지되었습니다. 08:42 - A시 가동. 지금 연락해 보시고, 연락이 닿지 않으면 119에 신고해 주세요.</div>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button type="button" class="btn-outline btn-type-01" style="padding: 0 16px;">나에게 시험 발송</button>
+                            </div>
+                        </div>
+
+                        <!-- [6] 고친 이력 -->
+                        <div class="dashboard-section" style="display: flex; flex-direction: column; gap: 12px;">
+                            <div class="section-caption" style="margin-bottom: 0;">
+                                <div class="caption-group">
+                                    <i class="fa-solid fa-clock-rotate-left title-icon"></i>
+                                    <span>고친 이력</span>
+                                </div>
+                            </div>
+
+                            <table class="list-table" style="font-size: 12px;">
+                                <colgroup>
+                                    <col style="width: 25%;">
+                                    <col style="width: 25%;">
+                                    <col style="width: 35%;">
+                                    <col style="width: 15%;">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>시각</th>
+                                        <th>고친 사람</th>
+                                        <th>적용 범위</th>
+                                        <th>상세</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>10-06 14:20</td>
+                                        <td>김담당</td>
+                                        <td>A시</td>
+                                        <td><a href="#" class="btn-link" style="font-size: 11px;">보기</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>09-22 10:05</td>
+                                        <td>홍길동</td>
+                                        <td>기본 (전체 지자체)</td>
+                                        <td><a href="#" class="btn-link" style="font-size: 11px;">보기</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
