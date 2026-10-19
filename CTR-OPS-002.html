@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 관제 포털 - 스마트 안심 돌봄</title>
+    <!-- FontAwesome 아이콘 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins & Pretendard) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="layout.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+    <script src="modal.js"></script>
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+    <!-- 사이드바 영역 -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">안</div>
+            <div class="brand-text">
+                <div class="title">안심 돌봄 서비스 운영시스템</div>
+                <div class="subtitle">관제 포털</div>
+            </div>
+        </div>
+
+       <nav class="sidebar-nav">
+            <div class="nav-group">
+                <div class="nav-item parent-item">
+                    <div class="nav-left">
+                        <span class="icon-box-blank"><i class="fa-solid fa-chart-pie"></i></span>
+                        <span class="nav-label">현황</span>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-group active"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box"><i class="fa-solid fa-gears"></i></span><span class="nav-label">운영</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-heart-pulse"></i></span><span class="nav-label">안부 확인</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-user-group"></i></span><span class="nav-label">사용자</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-clock"></i></span><span class="nav-label">디바이스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-handshake"></i></span><span class="nav-label">서비스</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-chart-column"></i></span><span class="nav-label">로그·통계</span></div></div></div>
+            <div class="nav-group"><div class="nav-item parent-item"><div class="nav-left"><span class="icon-box-blank"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="nav-label">시스템</span></div></div></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-card">
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="사용자 프로필">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">박수현 <span class="role-tag">상담원</span></div>
+                    <div class="user-role">관제2팀 근무 중</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+
+        <!-- 상단 헤더 -->
+        <div class="top-header">
+            <div class="header-welcome-text">
+                <i class="fa-regular fa-hand-wave"></i> 오늘도 안전한 관제를 시작하세요!
+            </div>
+            <div class="header-right">
+                <div class="user-status-info">
+                    <span class="user-title">ITeyes 관리자 홍길동 님</span>
+                    <span class="user-meta">(최근 접속 2026-10-05 17:42)</span>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </div>
+                <div class="user-avatar-btn">
+                    <img src="https://i.pravatar.cc/100?img=20" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 타이틀 바 -->
+        <div class="page-title-bar">
+            <div class="page-title-left">
+                <h2 class="page-main-title">도움 제공 연락명부</h2>
+                <span class="page-sub-desc"></span>
+            </div>
+            <div class="breadcrumb">
+                <span>운영</span> <i class="fa-solid fa-chevron-right"></i> <span class="active">도움 제공 연락명부</span>
+            </div>
+        </div>
+        
+        <!-- 컨텐츠 시작 영역 -->
+        <div class="content-body">
+            <div class="content-inner-box">
+         
+                <div class="tab-menu-wrap">
+                    <button type="button" class="tab-item-btn active">사람</button>
+                    <button type="button" class="tab-item-btn">기관</button>
+                    <button type="button" class="tab-item-btn">엑셀 일괄 등록</button>
+                </div>
+
+
+                
+                <div class="search-filter-finder">
+
+                   
+                    <div class="search-filter-grid">
+
+                        <!-- 맡는 읍면동 -->
+                        <div class="search-filter-row">
+                            <label class="search-filter-label" for="helpType">도움 유형</label>
+                            <div class="search-control-group">
+                                <select id="helpType" class="filter-select">
+                                    <option value="">도움 유형 전체</option>
+                                    <option value="visit">방문 확인</option>
+                                    <option value="face">대면 안부</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 상태 -->
+                        <div class="search-filter-row">
+                            <label class="search-filter-label" for="statusType">상태</label>
+                            <div class="search-control-group">
+                                <select id="statusType" class="filter-select">
+                                    <option value="in-use" selected>사용 중</option>
+                                    <option value="stopped">사용 중지</option>
+                                    <option value="">전체</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="search-filter-row">
+                        <label class="search-filter-label" for="regionType">맡는 읍면동</label>
+                        <div class="search-control-group">
+                            <select id="regionType" class="filter-select">
+                                <option value="">맡는 읍면동 전체</option>
+                                <option value="ga-dong">가동</option>
+                                <option value="na-dong">나동</option>
+                                <option value="all">전체</option>
+                                <option value="dam-yeon">다면</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 검색 -->
+                    <div class="search-filter-row">
+                        <label class="search-filter-label" for="recipientType">검색</label>
+                        <div class="search-keyword-group">
+                            <select id="recipientType" class="filter-select">
+                                <option value="all">전체</option>
+                                <option value="name">이름</option>
+                            </select>
+                            <input type="text" id="recipientKeyword" class="filter-input" placeholder="검색어를 입력하세요.">
+                        </div>
+                    </div>
+
+                    <!-- 검색 버튼 -->
+                    <div class="search-submit-row">
+                        <button type="button" class="btn-search">검색</button>
+                    </div>
+                </div>
+
+
+
+                <div class="section-caption section-caption-filter">
+                    <div class="caption-group">
+                        <i class="fa-solid fa-grip-vertical title-icon"></i>
+                        <span>사람 목록</span>
+                    </div>
+                </div>
+                <div class="table-toolbar">
+                    <div class="toolbar-info">
+                        <div class="table-count-text">
+                            전체 45건 
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <button type="button" class="btn-default btn-type-01">사람 등록</button>
+                    </div>
+                </div>
+
+                <table class="list-table">
+                    <colgroup>
+                        <col style="width: 20%;">
+                        <col style="width: 25%;">
+                        <col style="width: 20%;">
+                        <col style="width: 15%;">
+                        <col style="width: 20%;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>소속</th>
+                            <th>도움 유형</th>
+                            <th>맡는 읍면동</th>
+                            <th>전화번호</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#">박주무</a></td>
+                            <td>가동 행정복지센터</td>
+                            <td>방문 확인</td>
+                            <td>가동</td>
+                            <td>031-000-1234</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">이정희</a></td>
+                            <td>이웃 (통장)</td>
+                            <td>대면 안부</td>
+                            <td>가동</td>
+                            <td>010-3456-7890</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">김생활</a></td>
+                            <td>A시 보건소</td>
+                            <td>방문 확인 외 1</td>
+                            <td>전체</td>
+                            <td>031-000-9000</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">최지원</a></td>
+                            <td>OO종합사회복지관</td>
+                            <td>대면 안부</td>
+                            <td>나동, 다면</td>
+                            <td>031-000-5678</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">정기사</a></td>
+                            <td>A시 보건소</td>
+                            <td>기기 점검</td>
+                            <td>전체</td>
+                            <td>010-4567-8901</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">한교육</a></td>
+                            <td>OO종합사회복지관</td>
+                            <td>사용법 재교육</td>
+                            <td>전체</td>
+                            <td>010-5678-9012</td>
+                        </tr>
+                        <tr style="color: #94a3b8;">
+                            <td>윤전임</td>
+                            <td>다면 행정복지센터</td>
+                            <td>방문 확인</td>
+                            <td>다면</td>
+                            <td>사용 중지</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                 <!-- 페이징 영역 -->
+                <div class="pagination-area">
+                    <div class="pagination-num">
+                        <a href="#" title="처음 페이지"><i class="fa-solid fa-angles-left"></i></a>
+                        <a href="#" title="이전 페이지"><i class="fa-solid fa-angle-left"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span style="border: none; background: transparent; padding: 0 4px; color: #94a3b8;">...</span>
+                        <a href="#">8</a>
+                        <a href="#" title="다음 페이지"><i class="fa-solid fa-angle-right"></i></a>
+                        <a href="#" title="마지막 페이지"><i class="fa-solid fa-angles-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+   
+
+</body>
+</html>

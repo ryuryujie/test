@@ -14,93 +14,6 @@
     <script src="modal.js"></script>
     <!-- Chart.js 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-
-    .status-list {
-        display: flex;
-        flex-direction: column;
-        background-color: var(--content-bg, #ffffff);
-        border: 1px solid var(--content-border, #f1f5f9);
-        border-radius: var(--content-radius-md, 12px);
-        overflow: hidden;
-    }
-
-    .status-list-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 14px 16px;
-        min-width: 0;
-    }
-
-    .status-list-item + .status-list-item {
-        border-top: 1px solid var(--content-border, #f1f5f9);
-    }
-
-    .status-list-main {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-    }
-
-    .status-list-icon {
-        width: 32px;
-        height: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        border-radius: var(--content-radius-sm, 8px);
-        background-color: var(--content-primary-light, #fff2ef);
-        color: var(--content-primary, #F3703A);
-        font-size: 14px;
-    }
-
-    .status-list-name {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--content-text, #0f172a);
-        overflow-wrap: anywhere;
-    }
-
-    .status-list-detail {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 10px;
-        min-width: 0;
-    }
-
-    .status-list-description {
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--content-text-muted, #64748b);
-        text-align: right;
-    }
-
-    /* 모바일 */
-    @media (max-width: 600px) {
-        .status-list-item {
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .status-list-detail {
-            justify-content: flex-start;
-            flex-wrap: wrap;
-            padding-left: 42px;
-        }
-
-        .status-list-description {
-            text-align: left;
-            overflow-wrap: anywhere;
-        }
-    }
-    </style>
-
 </head>
 <body>
 
@@ -179,6 +92,66 @@
         <!-- 컨텐츠 시작 영역 -->
         <div class="content-body">
             <div class="content-inner-box">
+
+
+                <div class="summary-cards-grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 20px;">
+                    
+                    <!-- 처리 대기 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box warning">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="card-info card-info-right">
+                            <div class="card-title">처리 대기</div>
+                            <div class="card-value-area">
+                                <span class="card-number">3</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 처리 중 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box primary">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <div class="card-info card-info-right">
+                            <div class="card-title">처리 중</div>
+                            <div class="card-value-area">
+                                <span class="card-number">3</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 수행자·지자체 담당자 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box success">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="card-info card-info-right">
+                            <div class="card-title">수행자·지자체 담당자</div>
+                            <div class="card-value-area">
+                                <span class="card-number">4</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 수행자·ITeyes 관리자 -->
+                    <div class="summary-card">
+                        <div class="card-icon-box primary">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <div class="card-info card-info-right">
+                            <div class="card-title">수행자·ITeyes 관리자</div>
+                            <div class="card-value-area">
+                                <span class="card-number">2</span>
+                                <span class="card-unit">건</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
          
                 <!-- 검색 필터 영역 -->
                 <div class="search-filter-finder">
