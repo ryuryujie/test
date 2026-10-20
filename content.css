@@ -886,6 +886,35 @@ input[type="checkbox"]:checked {
     font-weight: 700;
 }
 
+/* 기본 링크 */
+.list-table a {
+    color: var(--content-primary, #F3703A);
+    font-weight: 600;
+    text-decoration: none;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+/* 마우스 오버 */
+.list-table a:hover {
+    color: var(--content-primary-hover, #e05536);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
+/* 키보드 접근성 */
+.list-table a:focus-visible {
+    outline: 2px solid var(--content-primary, #F3703A);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+/* 방문한 링크도 동일한 색상 유지 */
+.list-table a:visited {
+    color: var(--content-primary, #F3703A);
+}
+
+
 .u-text-left {
     padding-left: 14px !important;
     text-align: left !important;
