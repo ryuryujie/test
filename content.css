@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* ==========================================
-   1. 공통 디자인 변수
+   01. 공통 디자인 변수
    ========================================== */
 
 :root {
@@ -36,9 +36,12 @@
     --control-height: 36px;
 }
 
+
 /* ==========================================
-   2. 공통 컴포넌트 및 입력 요소
+   02. 공통 컴포넌트
    ========================================== */
+
+/* 공통 카드 */
 
 .dashboard-section,
 .content-section,
@@ -53,6 +56,12 @@
     border-radius: var(--content-radius);
     padding: 24px;
 }
+
+.dashboard-section {
+    margin-bottom: 0;
+}
+
+/* 섹션 제목 */
 
 .section-title {
     display: flex;
@@ -95,9 +104,58 @@
     box-shadow: 0 0 0 3px rgba(243, 112, 58, 0.12);
 }
 
+/* 라디오 및 체크박스 */
+
+input[type="radio"],
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"] {
+    border-radius: 4px;
+}
+
+input[type="radio"]:hover,
+input[type="checkbox"]:hover {
+    border-color: var(--content-primary, #F3703A);
+}
+
+input[type="radio"]:checked {
+    border-color: var(--content-primary, #F3703A);
+    background-color: #ffffff;
+    box-shadow: inset 0 0 0 4px var(--content-primary, #F3703A);
+}
+
+input[type="checkbox"]:checked {
+    border-color: var(--content-primary, #F3703A);
+    background-color: var(--content-primary, #F3703A);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
 /* ==========================================
-   3. 대시보드 상단
+   03. 대시보드 헤더 및 요약 카드
    ========================================== */
+
+/* 대시보드 상단 */
 
 .dashboard-header-top {
     display: flex;
@@ -114,9 +172,7 @@
     font-weight: 700;
 }
 
-/* ==========================================
-   4. 요약 카드
-   ========================================== */
+/* 요약 카드 그리드 */
 
 .summary-cards-grid {
     display: grid;
@@ -124,6 +180,8 @@
     gap: 16px;
     margin-bottom: 24px;
 }
+
+/* 요약 카드 */
 
 .summary-card {
     box-sizing: border-box;
@@ -140,6 +198,17 @@
     /* transform: translateY(-4px); */
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
 }
+
+.summary-card-sm {
+    min-width: 240px;
+    padding: 14px 20px !important;
+}
+
+.card-number-sm {
+    font-size: 22px !important;
+}
+
+/* 요약 카드 아이콘 */
 
 .summary-card .card-icon-box {
     display: flex;
@@ -171,6 +240,8 @@
     background-color: #fef3c7;
     color: #d97706;
 }
+
+/* 요약 카드 정보 */
 
 .summary-card .card-info {
     display: flex;
@@ -225,18 +296,7 @@
     font-weight: 700;
 }
 
-.summary-card-sm {
-    min-width: 240px;
-    padding: 14px 20px !important;
-}
-
-.card-number-sm {
-    font-size: 22px !important;
-}
-
-/* ==========================================
-   5. 원형 진행률
-   ========================================== */
+/* 원형 진행률 */
 
 .progress-ring-container {
     position: relative;
@@ -273,13 +333,10 @@
     font-size: 15px;
 }
 
-/* ==========================================
-   6. 섹션 제목 및 툴바
-   ========================================== */
 
-.dashboard-section {
-    margin-bottom: 0;
-}
+/* ==========================================
+   04. 섹션 제목 및 테이블 툴바
+   ========================================== */
 
 .section-header-flex {
     display: flex;
@@ -331,6 +388,8 @@
     margin-top: -16px;
 }
 
+/* 테이블 툴바 */
+
 .table-toolbar {
     display: flex;
     align-items: center;
@@ -358,10 +417,14 @@
     margin-left: auto;
     flex-shrink: 0;
 }
-.control-group button{
+
+.control-group button {
     height: 30px;
     padding: 0 10px;
-    font-size: 11px;}
+    font-size: 11px;
+}
+
+/* 필터 툴바 */
 
 .section-caption-filter {
     justify-content: space-between;
@@ -388,7 +451,6 @@
     display: flex;
     align-items: center;
 }
-
 
 .checkbox-group-inline,
 .radio-group-inline {
@@ -422,7 +484,7 @@
     flex: 1;
 }
 
-/* 기본 높이 통일: 셀렉트박스와 인풋 */
+/* 기본 높이 통일 */
 
 .filter-select {
     width: 130px;
@@ -438,7 +500,7 @@
     padding: 0 12px;
 }
 
-/* 검색 버튼 */
+/* 기본 검색 버튼 */
 
 .btn-search {
     box-sizing: border-box;
@@ -464,10 +526,9 @@
 }
 
 
-
 /* ==========================================
-   검색 필터 컴포넌트
-========================================== */
+   05. 검색 필터 컴포넌트
+   ========================================== */
 
 .search-filter-finder {
     display: flex;
@@ -481,9 +542,7 @@
     border-radius: var(--content-radius-md);
 }
 
-/* ==========================================
-   검색 조건 행
-========================================== */
+/* 검색 조건 행 */
 
 .search-filter-finder .search-filter-row {
     display: flex;
@@ -497,17 +556,16 @@
     font-size: 14px;
 }
 
-/* 전체 너비 행 구분선 */
 .search-filter-finder > .search-filter-row {
     border-bottom: 1px solid #e2e8f0;
 }
 
-/* 마지막 조건 행 */
 .search-filter-finder > .search-filter-row:last-of-type {
     border-bottom: 0;
 }
 
 /* 검색 라벨 */
+
 .search-filter-finder .search-filter-label {
     display: flex;
     align-items: center;
@@ -521,9 +579,7 @@
     font-weight: 600;
 }
 
-/* ==========================================
-   2열 그리드
-========================================== */
+/* 2열 그리드 */
 
 .search-filter-finder .search-filter-grid {
     display: grid;
@@ -536,9 +592,7 @@
     border-bottom: 0;
 }
 
-/* ==========================================
-   라디오 / 체크박스
-========================================== */
+/* 라디오 및 체크박스 그룹 */
 
 .search-filter-finder .radio-group-inline,
 .search-filter-finder .checkbox-group-inline {
@@ -573,9 +627,7 @@
     margin: 0;
 }
 
-/* ==========================================
-   셀렉트 + 인풋
-========================================== */
+/* 셀렉트 및 키워드 입력 */
 
 .search-filter-finder .search-keyword-group {
     display: flex;
@@ -608,9 +660,7 @@
     flex: 1 1 0;
 }
 
-/* ==========================================
-   날짜 범위
-========================================== */
+/* 날짜 범위 */
 
 .search-filter-finder .search-date-group {
     display: flex;
@@ -632,9 +682,7 @@
     font-size: 14px;
 }
 
-/* ==========================================
-   검색 버튼
-========================================== */
+/* 검색 실행 버튼 */
 
 .search-filter-finder .search-submit-row {
     display: flex;
@@ -680,11 +728,8 @@
     outline-offset: 2px;
 }
 
+/* 알림 배너 */
 
-
-/* ==========================================
-   새 안부 확인 알림 배너
-   ========================================== */
 .alert-notice-banner {
     display: flex;
     align-items: center;
@@ -731,16 +776,7 @@
     gap: 8px;
 }
 
-
-
-
-
-
-
-
-/* ==========================================
-   태블릿
-========================================== */
+/* 태블릿 검색 필터 */
 
 @media (max-width: 900px) {
     .search-filter-finder .search-filter-grid {
@@ -753,9 +789,7 @@
     }
 }
 
-/* ==========================================
-   모바일
-========================================== */
+/* 모바일 검색 필터 */
 
 @media (max-width: 640px) {
     .search-filter-finder {
@@ -804,17 +838,8 @@
 }
 
 
-
-
-
-
-
-
-
-
-
 /* ==========================================
-   8. 공통 테이블
+   06. 공통 테이블
    ========================================== */
 
 .list-table {
@@ -931,8 +956,9 @@
     width: 40px;
 }
 
+
 /* ==========================================
-   9. 상세 및 입력 폼 테이블
+   07. 상세 및 입력 폼 테이블
    ========================================== */
 
 .required {
@@ -988,8 +1014,9 @@
     color: var(--danger-red, #ef4444);
 }
 
+
 /* ==========================================
-   10. 프로그레스 바
+   08. 프로그레스 바
    ========================================== */
 
 .mini-progress-bar {
@@ -1007,8 +1034,9 @@
     transition: width 0.3s ease;
 }
 
+
 /* ==========================================
-   11. 상태 뱃지
+   09. 상태 배지
    ========================================== */
 
 .status-badge {
@@ -1065,8 +1093,9 @@
     background-color: #3b82f6;
 }
 
+
 /* ==========================================
-   12. 대시보드 레이아웃 및 상태 카드
+   10. 대시보드 레이아웃 및 상태 카드
    ========================================== */
 
 .dsh-main-grid {
@@ -1182,8 +1211,9 @@
     font-weight: 500;
 }
 
+
 /* ==========================================
-   13. 장비 현황
+   11. 장비 현황
    ========================================== */
 
 .dsh-device-grid {
@@ -1277,8 +1307,9 @@
     color: #d97706;
 }
 
+
 /* ==========================================
-   14. 2열 레이아웃
+   12. 대시보드 2열 레이아웃
    ========================================== */
 
 .dsh-2col-layout {
@@ -1309,8 +1340,9 @@
     height: 100%;
 }
 
+
 /* ==========================================
-   15. 공통 안내 박스
+   13. 공통 안내 박스
    ========================================== */
 
 .common-notice-box {
@@ -1332,8 +1364,9 @@
     margin-bottom: 0 !important;
 }
 
+
 /* ==========================================
-   16. 칩 컴포넌트
+   14. 칩 컴포넌트
    ========================================== */
 
 .chip-group {
@@ -1387,8 +1420,9 @@
 
 
 /* ==========================================
-   폼 입력 컴포넌트 (.form-input)
+   15. 폼 입력 컴포넌트
    ========================================== */
+
 .form-input {
     width: 100%;
     height: 36px;
@@ -1415,11 +1449,13 @@
     cursor: not-allowed;
 }
 
+
 /* ==========================================
-   17. 공통 버튼
+   16. 공통 버튼
    ========================================== */
 
 /* 기본 버튼 */
+
 .btn-default,
 .btn-outline {
     box-sizing: border-box;
@@ -1477,6 +1513,7 @@
 }
 
 /* 아웃라인 버튼 */
+
 .btn-outline {
     background-color: #ffffff;
 }
@@ -1512,7 +1549,7 @@
     background-color: #fef2f2;
 }
 
-/* 엑셀 다운로드 버튼 */
+/* 엑셀 다운로드 */
 
 .btn-default.btn-excel-download {
     border-color: #4F956B;
@@ -1608,8 +1645,9 @@
     gap: 8px;
 }
 
+
 /* ==========================================
-   18. 페이지네이션
+   17. 페이지네이션
    ========================================== */
 
 .pagination-area {
@@ -1658,8 +1696,9 @@
     font-weight: 600;
 }
 
+
 /* ==========================================
-   19. 모달
+   18. 모달
    ========================================== */
 
 .modal-overlay {
@@ -1828,7 +1867,10 @@
 }
 
 
- /* 탭 메뉴 스타일 정의 */
+/* ==========================================
+   19. 탭 메뉴
+   ========================================== */
+
 .tab-menu-wrap {
     display: flex;
     gap: 4px;
@@ -1836,6 +1878,7 @@
     border-bottom: 1px solid var(--content-border-strong, #cbd5e1);
     padding-bottom: 0;
 }
+
 .tab-item-btn {
     padding: 10px 20px;
     font-size: 14px;
@@ -1851,10 +1894,12 @@
     text-decoration: none;
     display: inline-block;
 }
+
 .tab-item-btn:hover {
     background-color: #e2e8f0;
     color: var(--content-text, #0f172a);
 }
+
 .tab-item-btn.active {
     background-color: #ffffff;
     color: var(--content-primary, #F3703A);
@@ -1864,6 +1909,9 @@
 }
 
 
+/* ==========================================
+   20. 상태 목록
+   ========================================== */
 
 .status-list {
     display: flex;
@@ -1929,28 +1977,9 @@
     text-align: right;
 }
 
-/* 모바일 */
-@media (max-width: 600px) {
-    .status-list-item {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .status-list-detail {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        padding-left: 42px;
-    }
-
-    .status-list-description {
-        text-align: left;
-        overflow-wrap: anywhere;
-    }
-}
 
 /* ==========================================
-   20. 공통 유틸리티
+   21. 공통 유틸리티
    ========================================== */
 
 .u-mb-0 {
@@ -1984,9 +2013,12 @@
     font-size: 11px;
 }
 
+
 /* ==========================================
-   21. 반응형 레이아웃
+   22. 반응형 레이아웃
    ========================================== */
+
+/* 태블릿 및 작은 데스크톱 */
 
 @media (max-width: 1200px) {
     .summary-cards-grid {
@@ -2011,6 +2043,8 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+/* 모바일 */
 
 @media (max-width: 600px) {
     .summary-cards-grid {
@@ -2091,7 +2125,31 @@
     }
 }
 
-/* 모션 최소화 */
+/* 상태 목록 모바일 */
+
+@media (max-width: 600px) {
+    .status-list-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .status-list-detail {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding-left: 42px;
+    }
+
+    .status-list-description {
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+}
+
+
+/* ==========================================
+   23. 모션 최소화 설정
+   ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
     .summary-card,
