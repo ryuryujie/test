@@ -69,20 +69,53 @@
     <!-- 버튼 컴포넌트 -->
     <div class="guide-section">
         <div class="guide-title">버튼 컴포넌트</div>
-        <div class="guide-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        
+<div class="guide-row" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; width: 100%;">
 
-            <button type="button" class="btn-default btn-type-01">등록</button>
-            <button type="button" class="btn-default btn-type-01">저장</button>
-            <button type="button" class="btn-default btn-type-02">임시저장</button>
-            <button type="button" class="btn-default btn-type-02">추가</button>
-            <button type="button" class="btn-default btn-type-03">삭제</button>
-            <button type="button" class="btn-default btn-excel-download">엑셀 다운로드</button>
+    <!-- 1. 주요 작업 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button type="button" class="btn-default btn-type-01">등록</button>
+        <button type="button" class="btn-default btn-type-01">저장</button>
+        <button type="button" class="btn-default btn-type-01">검색</button>
+        <button type="button" class="btn-default btn-type-01">확인</button>
+        <button type="button" class="btn-default btn-type-01">승인</button>
+        <button type="button" class="btn-default btn-type-01">적용</button>
+    </div>
 
-            <button type="button" class="btn-outline btn-type-01">목록</button>
-            <button type="button" class="btn-outline btn-type-02">취소</button>
-            <button type="button" class="btn-outline btn-type-03">삭제</button>
+    <!-- 2. 추가 및 변경 작업 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button type="button" class="btn-default btn-type-02">추가</button>
+        <button type="button" class="btn-default btn-type-02">수정</button>
+        <button type="button" class="btn-default btn-type-02">임시저장</button>
+        <button type="button" class="btn-default btn-type-02">재처리</button>
+        <button type="button" class="btn-default btn-type-02">재전송</button>
+    </div>
 
-        </div>
+    <!-- 3. 위험 및 취소성 작업 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button type="button" class="btn-default btn-type-03">삭제</button>
+        <button type="button" class="btn-default btn-type-03">반려</button>
+        <button type="button" class="btn-default btn-type-03">중지</button>
+        <button type="button" class="btn-default btn-type-03">사용 중지</button>
+    </div>
+
+    <!-- 5. 아웃라인 - 이동 및 보조 동작 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button type="button" class="btn-outline btn-type-01">목록</button>
+        <button type="button" class="btn-outline btn-type-02">닫기</button>
+        <button type="button" class="btn-outline btn-type-01">상세 보기</button>
+        <button type="button" class="btn-outline btn-type-01">미리보기</button>
+        <button type="button" class="btn-outline btn-type-01">이력 조회</button>
+        <button type="button" class="btn-outline btn-type-03">취소</button>
+    </div>
+
+    <!-- 6. 데이터 다운로드 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button type="button" class="btn-default btn-excel-download">엑셀 다운로드</button>
+    </div>
+
+</div>
+
     </div>
 
 
